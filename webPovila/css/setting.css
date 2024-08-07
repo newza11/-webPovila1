@@ -1,0 +1,51 @@
+.settings-section {
+    position: relative;
+    display: grid;
+    min-height: 400px;
+    background: var(--white);
+    padding: 20px 50px 20px 50px;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    margin: 2rem 20rem 2rem 20rem;
+    
+}
+
+.settings-section h1 {
+    margin-bottom: 10px;
+}
+
+.settings-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-form label {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: var(--dark);
+}
+
+.settings-form input[type="text"],
+.settings-form input[type="email"],
+.settings-form input[type="password"] {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.settings-form button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.settings-form button:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,116 @@
+@import url("https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap");
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+}
+nav {
+    margin: 0;
+   
+    padding: 1rem 13rem;
+    display: flex;
+    align-items: center;
+    background-color: #FCF7F3;
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  
+  
+  .nav__logo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-dark);
+  
+  }
+  
+  .nav__links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    
+  }
+  
+  .link a {
+    font-weight: 400;
+    font-size: 1.1em;
+    color: #000;
+    transition: 0.3s;
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .link a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+  }
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 30px auto;
+}
+.details, .form-container {
+    width: 48%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10rem;
+   
+}
+.details {
+    margin: 0px 10rem 20rem 0px;
+}
+.header h2, .customer-info h2 {
+    margin: 0 0 20px 0;
+    color: #333;
+}
+.summary {
+    background-color: #e6f7ff;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+.summary p {
+    margin: 5px 0;
+}
+.total {
+    font-size: 1.5em;
+    color: #d9534f;
+    font-weight: bold;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+input[type="text"], input[type="email"], select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+.submit-btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 1em;
+}
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+

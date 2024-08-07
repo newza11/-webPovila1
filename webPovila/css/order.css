@@ -1,0 +1,98 @@
+.order-section {
+    position: relative;
+    display: grid;
+    min-height: 500px;
+    background: var(--white);
+    padding: 20px;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    margin: 2rem;
+    
+
+}
+
+.order-section h1 {
+    margin-bottom: 20px;
+}
+
+.order-section table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.order-section table,
+th,
+td {
+    border: 1px solid #ddd;
+}
+
+.order-section th,
+.order-section td {
+    padding: 10px;
+    text-align: left;
+}
+
+.order-section th {
+    background-color: #f2f2f2;
+}
+.recentOrders {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table thead tr {
+    background: #f3f3f3;
+    text-align: left;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+table tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+table tbody tr:nth-of-type(even) {
+    background: #f9f9f9;
+}
+
+table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.status {
+    padding: 5px 10px;
+    color: #fff;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.status.delivered {
+    background: #4caf50;
+}
+
+.status.pending {
+    background: #ff9800;
+}
+
+.status.return {
+    background: #f44336;
+}
+
