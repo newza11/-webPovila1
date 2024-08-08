@@ -2,7 +2,7 @@
 session_start();
 if (isset($_SESSION['user_id'])) {
     if ($_SESSION['role'] === 'admin') {
-        header("Location: admin.php");
+        header("Location: admin/admin.php");
     } else {
         header("Location: index.php");
     }
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
             if ($user['role'] === 'admin') {
-                header("Location: admin.php");
+                header("Location: admin/admin.php");
             } else {
                 header("Location: index.php");
             }

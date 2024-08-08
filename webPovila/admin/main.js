@@ -21,7 +21,7 @@ toggle.onclick = function () {
 };
 // sign out
 document.getElementById('homeButton').addEventListener('click', function() {
-  window.location.href = 'login.php';
+  window.location.href = '../login.php';
 });
 
 // user

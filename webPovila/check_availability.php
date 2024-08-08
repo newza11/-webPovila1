@@ -1,29 +1,54 @@
 <?php
-include 'db_connection.php';
-
 session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode(['status' => 'not_logged_in']);
-    exit();
+$servername = "localhost";
+$username = "root";
+$password = ""; 
+$dbname = "my_website";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+header('Content-Type: application/json');
+
+try {
+    // Debugging: Output the request method
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        throw new Exception('Invalid request method: ' . $_SERVER['REQUEST_METHOD']);
+    }
+
     $checkin = $_POST['check_in'];
     $checkout = $_POST['check_out'];
-    $guests = $_POST['guests'];
+    $people = $_POST['people'];
     $room = $_POST['room'];
 
-    $sql = "SELECT * FROM orders_db WHERE (checkin_date <= ? AND checkout_date >= ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $checkout, $checkin);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    if ($result->num_rows > 0) {
-        echo json_encode(['status' => 'unavailable']);
-    } else {
-        echo json_encode(['status' => 'available']);
+    // Using prepared statements for security
+    $stmt = $conn->prepare("SELECT * FROM orders_db WHERE (checkin <= ? AND checkout >= ?) AND room = ?");
+    $stmt->bind_param("sss", $checkout, $checkin, $room);
+
+    if (!$stmt->execute()) {
+        throw new Exception($stmt->error);
     }
+
+    $result = $stmt->get_result();
+    $availability = ($result->num_rows > 0) ? 'เต็ม' : 'ว่าง';
+
+    echo json_encode([
+        'availability' => $availability,
+        'checkin' => $checkin,
+        'checkout' => $checkout,
+        'room' => $room,
+        'price' => '฿6,900',
+        'security_deposit' => 'ค่าประกัน3000'
+    ]);
+} catch (Exception $e) {
+    echo json_encode(['error' => $e->getMessage()]);
+} finally {
+    $conn->close();
 }
 ?>

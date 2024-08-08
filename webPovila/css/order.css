@@ -11,6 +11,24 @@
 
 }
 
+
+.cardHeader h1 {
+    margin: 0;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
 .order-section h1 {
     margin-bottom: 20px;
 }
@@ -95,4 +113,5 @@ table tbody tr:last-of-type {
 .status.return {
     background: #f44336;
 }
+
 

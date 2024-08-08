@@ -84,13 +84,26 @@
                 </div>
 
                 <div class="user-settings">
-                    <div class="user" onclick="toggleDropdown()">
-                        <img src="poo/customer01.jpg" alt="">
-                    </div>
-                    <div class="dropdown" id="userDropdown">
-                        <a href="setting.php">Settings</a>
-                        <a href="confirm_signout.php">SignOut</a>
-                    </div>
-                </div>
-            </div>
+    <div class="user" onclick="toggleDropdown()">
+        <img id="userProfilePic" src="path/to/default/profile.jpg" alt="">
+    </div>
+    <div class="dropdown" id="userDropdown">
+        <a href="setting.php">Settings</a>
+        <a href="confirm_signout.php">SignOut</a>
+    </div>
+</div>
+ </div>
+ <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const storedProfilePic = localStorage.getItem('profilePic');
+
+        if (storedProfilePic) {
+            document.getElementById('userProfilePic').src = storedProfilePic;
+        }
+    });
+
+    function toggleDropdown() {
+        document.getElementById('userDropdown').classList.toggle('show');
+    }
+</script>
         

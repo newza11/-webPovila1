@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirm Sign Out</title>
-    <link rel="stylesheet" href="confirm_signout.css">
-    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="../confirm_signout.css">
+    <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
     <!-- =============== Navigation ================ -->
@@ -20,7 +20,7 @@
     </div>
     <script>
         document.getElementById('confirmButton').addEventListener('click', function() {
-            window.location.href = 'logout.php';
+            window.location.href = '../logout.php';
         });
 
         document.getElementById('cancelButton').addEventListener('click', function() {
