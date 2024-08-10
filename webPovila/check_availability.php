@@ -1,9 +1,11 @@
 <?php
+// Start the session
 session_start();
 
+// Connect to the database
 $servername = "localhost";
 $username = "root";
-$password = ""; 
+$password = "";
 $dbname = "my_website";
 
 // Create connection
@@ -14,41 +16,50 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-header('Content-Type: application/json');
+// Retrieve the form data
+$check_in = $_POST['check_in'];
+$check_out = $_POST['check_out'];
+$room = $_POST['room'];
 
-try {
-    // Debugging: Output the request method
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        throw new Exception('Invalid request method: ' . $_SERVER['REQUEST_METHOD']);
-    }
+// Prepare the SQL query to check for availability
+$query = "SELECT COUNT(*) as total_booked FROM orders_db 
+          WHERE
+          checkin > ? AND checkout < ?";
 
-    $checkin = $_POST['check_in'];
-    $checkout = $_POST['check_out'];
-    $people = $_POST['people'];
-    $room = $_POST['room'];
+$stmt = $conn->prepare($query);
+$stmt->bind_param("ss", $check_in, $check_out);
 
-    // Using prepared statements for security
-    $stmt = $conn->prepare("SELECT * FROM orders_db WHERE (checkin <= ? AND checkout >= ?) AND room = ?");
-    $stmt->bind_param("sss", $checkout, $checkin, $room);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$total_booked = $row['total_booked'];
 
-    if (!$stmt->execute()) {
-        throw new Exception($stmt->error);
-    }
 
-    $result = $stmt->get_result();
-    $availability = ($result->num_rows > 0) ? 'เต็ม' : 'ว่าง';
-
-    echo json_encode([
-        'availability' => $availability,
-        'checkin' => $checkin,
-        'checkout' => $checkout,
-        'room' => $room,
-        'price' => '฿6,900',
-        'security_deposit' => 'ค่าประกัน3000'
-    ]);
-} catch (Exception $e) {
-    echo json_encode(['error' => $e->getMessage()]);
-} finally {
-    $conn->close();
+if ($row['total_booked'] > 0) {
+    // Room is fully booked during the requested period
+    $response = array(
+        "availability" => "เต็ม",
+        "checkin" => $check_in,
+        "checkout" => $check_out,
+        "room" => $room,
+        "price" => "฿6,900",
+        "security_deposit" => "ค่าประกัน3000"
+    );
+} else {
+    // Room is available during the requested period
+    $response = array(
+        "availability" => "ว่าง",
+        "checkin" => $check_in,
+        "checkout" => $check_out,
+        "room" => $room,
+        "price" => "฿6,900",
+        "security_deposit" => "ค่าประกัน3000"
+    );
 }
+
+// Return the response as a JSON object
+echo json_encode($response);
+
+$stmt->close();
+$conn->close();
 ?>

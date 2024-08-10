@@ -17,10 +17,11 @@
 
         <!-- ======================= Cards ================== -->
         <div class="cardBox">
-            <div class="card">
+            <div class="card" onclick="window.location.href='order.php';">
+                
                 <div>
                     <div class="numbers" id="totalOrders">0</div>
-                    <div class="cardName">Order</div>
+                    <div class="cardName" >Order</div>
                 </div>
 
                 <div class="iconBx">
@@ -39,7 +40,7 @@
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card" onclick="window.location.href='user.php';">
                 <div>
                     <div class="numbers" id="totalUsers">0</div>
                     <div class="cardName">จำนวน User</div>
@@ -268,9 +269,7 @@
     </script>
 
     <!-- ====== ionicons ======= -->
-    <script src="main.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <?php include '../mains.php'; ?>
 </body>
 
 </html>

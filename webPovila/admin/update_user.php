@@ -26,9 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = $conn->query($sql);
     $user = $result->fetch_assoc();
 
-    // If password is empty, use the existing password
+  
     if (empty($password)) {
-        $hashed_password = $user['password']; // Use the existing hashed password
+        $hashed_password = $user['password']; 
     } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     }
@@ -125,8 +125,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         });
     </script>
-    <script src="main.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+     <?php include '../mains.php'; ?>
 </body>
 </html>

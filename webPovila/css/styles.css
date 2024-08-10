@@ -304,7 +304,8 @@ border-radius: 10px;
   
 }
 .fontp p{
-  margin: 1px 9rem 1px 10px;
+  margin: 2px 8rem 1px 10px;
+  
 
 }
 .price{
@@ -437,6 +438,8 @@ position: absolute;
 
 .dropdown-content a:hover {
   background-color: #f1f1f1;
+  text-decoration: none;
+  
   
 }
 .dropdown :hover{
@@ -445,6 +448,40 @@ position: absolute;
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+.user {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Show the dropdown when hovering over the .user container */
+.user:hover .dropdown-content {
+  display: block;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
 }
 
 

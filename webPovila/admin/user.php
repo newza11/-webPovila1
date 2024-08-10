@@ -5,13 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/admin.css">
-    <link rel="stylesheet" href="../css/order.css"><link rel="stylesheet" href="../css/user.css">
+    <link rel="stylesheet" href="../css/order.css">
+    <link rel="stylesheet" href="../css/user.css">
     <title>User Management</title>
 </head>
 
 <body>
     <div class="container">
         <?php include 'menu.php'; ?>
+        
 
         <div class="details2">
             <div class="recentOrders">
@@ -46,7 +48,7 @@
                                 echo "<td>{$row['role']}</td>";
                                 echo "<td>
                                         <a href='update_user.php?id={$row['id']}' class='btn'>Edit</a>
-                                        <a href='delete_user.php?id={$row['id']}' class='btn'>Delete</a>
+                                        <a href='#' onclick='confirmDelete({$row['id']})' class='btn'>Delete</a>
                                       </td>";
                                 echo "</tr>";
                             }
@@ -62,9 +64,14 @@
         </div>
     </div>
     
-    <script src="main.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <?php include '../mains.php'; ?>
+    <script>
+        function confirmDelete(userId) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                window.location.href = `delete_user.php?id=${userId}`;
+            }
+        }
+    </script>
 </body>
 
 </html>

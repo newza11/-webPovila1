@@ -1,3 +1,35 @@
+<?php
+include 'db_connection.php';
+
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['id'];
+    $username = $_POST['username'];
+    
+    
+
+    // Fetch the current user information
+    $sql = "SELECT * FROM login_user WHERE id='$id'";
+    $result = $conn->query($sql);
+    $user = $result->fetch_assoc();
+
+  
+   
+    $sql = "UPDATE login_user SET name='$username' WHERE id='$id'";
+
+    if ($conn->query($sql) === TRUE) {
+        // Redirect to user.php after successful update
+        header("Location: setting.php");
+        exit();
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,19 +51,18 @@
     <!-- ======================= Settings Section ================== -->
     <div class="settings-section">
         <h1>Settings</h1>
-        <form class="settings-form" id="settingsForm">
+        <form class="settings-form" id="settingsForm" action="settings.php" method="POST">
             <div class="profile-pic">
                 <label for="profilePicInput">
                     <img id="profileImage" src="path/to/default/profile.jpg" alt="Profile Picture">
                 </label>
                 <input type="file" id="profilePicInput" accept="image/*" onchange="previewProfileImage(event)">
             </div>
-
+            
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            <input type="text" id="username" name="username"  required>
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            
 
             <button type="submit">Save Changes</button>
         </form>
@@ -45,7 +76,7 @@
         // Load stored data on page load
         const storedProfilePic = localStorage.getItem('profilePic');
         const storedUsername = localStorage.getItem('username');
-        const storedEmail = localStorage.getItem('email');
+        
 
         if (storedProfilePic) {
             document.getElementById('profileImage').src = storedProfilePic;
@@ -54,9 +85,7 @@
         if (storedUsername) {
             document.getElementById('username').value = storedUsername;
         }
-        if (storedEmail) {
-            document.getElementById('email').value = storedEmail;
-        }
+       
     });
 
     let newProfilePic = null;
@@ -80,23 +109,22 @@
         event.preventDefault();
 
         const username = document.getElementById('username').value;
-        const email = document.getElementById('email').value;
+        
 
         if (newProfilePic) {
             localStorage.setItem('profilePic', newProfilePic);
-            document.getElementById('userProfilePic').src = newProfilePic; // Update profile pic in user settings dropdown
+            document.getElementById('userProfilePic').src = newProfilePic;
         }
 
         localStorage.setItem('username', username);
-        localStorage.setItem('email', email);
+        
 
         alert('Settings saved!');
     });
 </script>
 
 <!-- ====== ionicons ======= -->
-<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<?php include '../mains.php'; ?>
 </body>
 
 </html>

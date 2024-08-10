@@ -1,8 +1,35 @@
 <?php
 session_start();
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "my_website";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$profile_picture = 'default_profile.png'; // Default profile picture
+
 if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+
+    $query = "SELECT profile_picture FROM login_user WHERE id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    $profile_picture = $user['profile_picture'] ?: 'default_profile.png';
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,28 +49,70 @@ if (isset($_SESSION['user_id'])) {
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="css/tabel.css">
+    <style>
+        .nav__links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav__links .link {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav__links .link img {
+            margin-left: 10px;
+            border-radius: 50%;
+        }
+    </style>
 </head>
 
 <body>
-    <nav>
-        <div class="nav__logo">
-            <img src="https://scontent.fkdt1-1.fna.fbcdn.net/v/t1.15752-9/451463161_439508502254984_1564988875763696941_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeFLxpw7P5hzAbD0zGFx4wcQ_iqw6XCTKgf-KrDpcJMqB2ssTrxaM93qmoZDROCA15lSca9F0AG3_Aum4HlxxYYy&_nc_ohc=BErgEdBJnUwQ7kNvgGYDR0P&_nc_ht=scontent.fkdt1-1.fna&oh=03_Q7cD1QG_QMJ_iS3LVLg9FVnCJhM17wgMqHFgMIkqJvWW2npLGA&oe=66BF59DB" alt="Logo" width="22" height="80" style="display: flex; width: 100%;">
-        </div>
-        <ul class="nav__links">
-            <li class="link"><a href="#">Home</a></li>
+<nav>
+    <div class="nav__logo">
+        <img src="https://scontent.fkdt1-1.fna.fbcdn.net/v/t1.15752-9/451463161_439508502254984_1564988875763696941_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeFLxpw7P5hzAbD0zGFx4wcQ_iqw6XCTKgf-KrDpcJMqB2ssTrxaM93qmoZDROCA15lSca9F0AG3_Aum4HlxxYYy&_nc_ohc=BErgEdBJnUwQ7kNvgGYDR0P&_nc_ht=scontent.fkdt1-1.fna&oh=03_Q7cD1QG_QMJ_iS3LVLg9FVnCJhM17wgMqHFgMIkqJvWW2npLGA&oe=66BF59DB" alt="Logo" width="22" height="80" style="display: flex; width: 100%;">
+    </div>
+    <ul class="nav__links">
+        <li class="link">
+            <a href="#">Home</a>
             <?php if (isset($_SESSION['user_id'])): ?>
-                <div class="dropdown">
-                    <button class="dropbtn"><?php echo $_SESSION['user_name']; ?></button>
-                    <div class="dropdown-content">
+                <div class="user">
+                    <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" width="50" height="50" style="border-radius: 50%; margin-left: 30px;">
+                    <div id="dropdownContent" class="dropdown-content">
                         <a href="settings.php">Settings</a>
                         <a href="logout.php">Logout</a>
                     </div>
                 </div>
-            <?php else: ?>
-                <li class="link"><a href="login.php">Login</a></li>
             <?php endif; ?>
-        </ul>
-    </nav>
+        </li>
+        <?php if (!isset($_SESSION['user_id'])): ?>
+            <li class="link"><a href="login.php">Login</a></li>
+        <?php endif; ?>
+    </ul>
+</nav>
+
+<script>
+function toggleDropdown() {
+    var dropdown = document.getElementById("dropdownContent");
+    dropdown.classList.toggle("show");
+}
+
+window.onclick = function(event) {
+    if (!event.target.matches('.user img')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+}
+</script>
+
+<style>
+
+</style>
 
     <?php include 'main_index.php'; ?>
 
@@ -64,7 +133,7 @@ if (isset($_SESSION['user_id'])) {
                     </div>
                     <div class="form__group">
                         <div class="input__group">
-                            <input type="text" id="guests" name="guests" placeholder="Guests" oninput="validateGuests(this)" required>
+                            <input type="text" id="people" name="people" placeholder="Guests" oninput="validateGuests(this)" required>
                         </div>
                     </div>
                     <div class="form__group">
@@ -119,11 +188,11 @@ if (isset($_SESSION['user_id'])) {
                         <div class="fontf" style="display: flex;">
                             <div style="margin: 0 0 1rem 0;">
                                 <p>check_in</p>
-                                <p id="checkin-date">รอ date</p>
+                                <p id="checkin-date" style="width: fit-content; text-wrap: nowrap;">รอ date</p>
                             </div>
                             <div>
                                 <p>check_out</p>
-                                <p id="checkout-date">รอ date</p>
+                                <p id="checkout-date" style="width: fit-content; text-wrap: nowrap;">รอ date</p>
                             </div>
                         </div>
                         <div>
@@ -131,11 +200,11 @@ if (isset($_SESSION['user_id'])) {
                             <p id="room-type">รอ Room</p>
                         </div>
                         <div style="margin: 5px 0 0;">
-                            <p class="price" id="price">฿6,900</p>
+                            <p class="price" id="price">0฿</p>
                             <p id="security-deposit">ค่าประกัน3000</p>
                         </div>
                         <div class="button">
-                            <button onclick="window.location='booking.php'">จอง</button>
+                            <button id="bookingButton">จอง</button>
                         </div>
                     </div>
                 </div>
@@ -172,45 +241,86 @@ if (isset($_SESSION['user_id'])) {
                 }
                 return date;
             }
+        })
 
-            $("#availabilityForm").on("submit", function(event) {
-                event.preventDefault();
-                $.ajax({
-                    url: 'check_availability.php',
-                    type: 'POST',
-                    data: $(this).serialize(),
-                    success: function(response) {
-                        try {
-                            var data = JSON.parse(response);
-                            if (data.error) {
-                                $("#availability").text(data.error);
-                            } else {
-                                $("#availability").text(data.availability);
-                                $("#status").text(data.availability).css("color", data.availability === "เต็ม" ? "red" : "green");
-                                $("#checkin-date").text(data.checkin);
-                                $("#checkout-date").text(data.checkout);
-                                $("#room-type").text(data.room);
-                                $("#price").text(data.price);
-                                $("#security-deposit").text(data.security_deposit);
-                            }
-                        } catch (e) {
-                            $("#availability").text("Invalid response from server.");
-                        }
-                    },
-                    error: function() {
-                        $("#availability").text("Error checking availability.");
+            $(function() {
+    $("#availabilityForm").on("submit", function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: 'check_availability.php',
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                console.log (response)
+                try {
+                    var data = JSON.parse(response);
+                    if (data.availability) {
+                        $("#status").text(data.availability).css("color", data.availability === "เต็ม" ? "red" : "green");
+                        $("#checkin-date").text(data.checkin);
+                        $("#checkout-date").text(data.checkout);
+                        $("#room-type").text(data.room);
+                        $("#price").text(data.price);
+                        $("#security-deposit").text(data.security_deposit);
+                    } else {
+                        $("#availability").text("No availability data.");
                     }
-                });
-            });
+                } catch (e) {
+                    console.log(e);
+                    $("#availability").text("Invalid response from server.");
+                }
+            },
+            error: function() {
+                $("#availability").text("Error checking availability.");
+            }
         });
+    });
+});
 
         function validateGuests(input) {
             if (parseInt(input.value) > 20) {
                 input.value = 20;
             }
         }
+        document.getElementById('bookingButton').addEventListener('click', function() {
+            const checkin = document.getElementById('checkin').value;
+            const checkout = document.getElementById('checkout').value;
+            const people = document.getElementById('people').value;
+            const room = document.getElementById('room').value;
+
+            if (!checkin || !checkout || !people || !room) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'กรุณากรอกข้อมูลให้ครบถ้วนก่อนทำการจอง',
+                    confirmButtonText: 'ตกลง'
+                });
+                return;
+            }
+
+            const checkinDate = new Date(checkin);
+            const checkoutDate = new Date(checkout);
+
+            if (checkoutDate <= checkinDate) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Check-out date must be after the check-in date.',
+                    confirmButtonText: 'ตกลง'
+                });
+                return;
+            }
+
+            <?php if (isset($_SESSION['user_id'])): ?>
+                window.location = 'booking.php';
+            <?php else: ?>
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'กรุณาเข้าสู่ระบบก่อนทำการจอง',
+                    confirmButtonText: 'เข้าสู่ระบบ'
+                }).then(() => {
+                    window.location = 'login.php';
+                });
+            <?php endif; ?>
+        });
     </script>
-    
 
     <map class="map">
         <div class="search_container map_container">
