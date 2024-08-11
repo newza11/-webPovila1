@@ -37,11 +37,20 @@
                         <span class="title">Messages</span>
                     </a>
                 </li>
+                <li>
+                    <a href="room_price_list.php">
+                        <span class="icon">
+                        <ion-icon name="cash-outline"></ion-icon>
+                        </span>
+                        <span class="title">room_price</span>
+                    </a>
+                </li>
+
 
                 <li>
                     <a href="user.php">
                         <span class="icon">
-                            <ion-icon name="help-outline"></ion-icon>
+                        <ion-icon name="person-circle-outline"></ion-icon>
                         </span>
                         <span class="title">user</span>
                     </a>

@@ -15,24 +15,26 @@
         <?php include 'menu.php'; ?>
         <div class="order-section">
             <div class="recentOrders">
-            <div class="cardHeader">
-                <h1>Order List</h1>
-                <a href="add_order.php"><button>Add Order</button></a>
-                <table>
-                    <thead>
-                        <tr>
-                            <td>Name</td>
-                            <td>Price</td>
-                            <td>People</td>
-                            <td>Check In</td>
-                            <td>Check Out</td>
-                            <td>Status</td>
-                            <td>Actions</td>
-                        </tr>
-                    </thead>
-                    <tbody id="orderTableBody"></tbody>
-                </table>
-            </div>
+                <div class="cardHeader">
+                    <h1>Order List</h1>
+                    <a href="add_order.php"><button>Add Order</button></a>
+                    <a href="Room_Price_List.php"><button>Edit Price</button></a>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Name</td>
+                                <td>Price</td>
+                                <td>People</td>
+                                <td>Check In</td>
+                                <td>Check Out</td>
+                                <td>Status</td>
+                                <td>Slip</td> <!-- New column for viewing slip -->
+                                <td>Actions</td>
+                            </tr>
+                        </thead>
+                        <tbody id="orderTableBody"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -54,7 +56,8 @@
                         <td>${order.checkin}</td>
                         <td>${order.checkout}</td>
                         <td><span class="status ${getStatusClass(order.status)}">${order.status}</span></td>
-                        <td>
+                        <td><a href="${order.slipUrl}" target="_blank"><button>View Slip</button></a></td> <!-- Link to the slip -->
+        <td>
                             <a href="edit_order.php?id=${order.id}"><button>Edit</button></a>
                             <button onclick="deleteOrder(${order.id})">Delete</button>
                         </td>
@@ -66,10 +69,17 @@
 
         function getStatusClass(status) {
             switch (status) {
-                case 'Completed': return 'delivered';
-                case 'Cancel': return 'return';
-                case 'Waiting to enter': return 'pending';
-                default: return '';
+                case 'check':
+                    return 'check';
+                case 'Completed':
+                    return 'delivered';
+                case 'Cancel':
+                    return 'return';
+                case 'Waiting to enter':
+                    return 'pending';
+
+                default:
+                    return '';
             }
         }
 
@@ -85,6 +95,7 @@
             }
         }
     </script>
-     <?php include '../mains.php'; ?>
+    <?php include '../mains.php'; ?>
 </body>
+
 </html>

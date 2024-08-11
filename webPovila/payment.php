@@ -39,23 +39,63 @@
     </script>
 </body>
 </html>
-
 <?php
+session_start();
+require 'db_connect.php'; // Include the database connection
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Check if the payment slip was uploaded without errors
     if (isset($_FILES['paymentSlip']) && $_FILES['paymentSlip']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = 'uploads/';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }
+        
         $uploadFile = $uploadDir . basename($_FILES['paymentSlip']['name']);
-
+        
         if (move_uploaded_file($_FILES['paymentSlip']['tmp_name'], $uploadFile)) {
+            // Retrieve booking details from session
+            $check_in = $_SESSION['checkin'] ?? 'ไม่ระบุ';
+            $check_out = $_SESSION['checkout'] ?? 'ไม่ระบุ';
+            $room = $_SESSION['room'] ?? 'ไม่ระบุ';
+            $room_price = $_SESSION['price'] ?? 0;
+            $people =  $_SESSION['people'] ?? 0;
+            $status = 'check'; // Default status
+            
+            // Assuming the form data has already been captured in the session or database
+            $name = $_SESSION['name'] ?? 'ไม่ระบุ';
+            $first_name = $_SESSION['firstname'] ?? 'ไม่ระบุ';
+            $last_name = $_SESSION['lastname'] ?? 'ไม่ระบุ';
+            $phone = $_SESSION['phone'] ?? 'ไม่ระบุ';
+
+            // Prepare SQL query to update orders_db with the slip path
+            $sql = "INSERT INTO orders_db (name, price, people, checkin, checkout, status, phone, room, firstname, lastname, slip) 
+                    VALUES (:name, :price, :people, :checkin, :checkout, :status, :phone, :room, :firstname, :lastname, :slip)";
+            
+            $stmt = $pdo->prepare($sql);
+            
+            // Execute the query with the data from the form and session
+            $stmt->execute([
+                ':name' => $name,
+                ':price' => $room_price,
+                ':people' => $people,
+                ':checkin' => $check_in,
+                ':checkout' => $check_out,
+                ':status' => $status,
+                ':phone' => $phone,
+                ':room' => $room,
+                ':firstname' => $first_name,
+                ':lastname' => $last_name,
+                ':slip' => $uploadFile
+            ]);
+            
+            // Redirect to a completion page
             header('Location: Completed.php');
             exit();
         } else {
             echo 'Failed to upload file.';
         }
-    } 
-    
+    } else {
+        echo 'No file uploaded or there was an upload error.';
+    }
 }
-?>

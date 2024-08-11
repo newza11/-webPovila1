@@ -7,29 +7,24 @@
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/order.css">
     <link rel="stylesheet" href="../css/user.css">
-    <title>User Management</title>
+    <title>Room Price List</title>
 </head>
 
 <body>
     <div class="container">
         <?php include 'menu.php'; ?>
-        
-
         <div class="details2">
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h2>User Management</h2>
-                    <a href="add_user.php" class="btn">Add User</a>
-                    
+                    <h2>Room Price List</h2>
+                    <a href="add_room.php" class="btn">Add Room</a>
                 </div>
 
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Role</th>
+                            <th>Room Number</th>
+                            <th>Price</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -37,24 +32,22 @@
                         <?php
                         include 'db_connection.php';
 
-                        $sql = "SELECT * FROM login_user";
+                        $sql = "SELECT room, price FROM room_pirce";
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
                                 echo "<tr>";
-                                echo "<td>{$row['id']}</td>";
-                                echo "<td>{$row['name']}</td>";
-                                echo "<td>{$row['email']}</td>";
-                                echo "<td>{$row['role']}</td>";
+                                echo "<td>{$row['room']}</td>";
+                                echo "<td>{$row['price']}</td>";
                                 echo "<td>
-                                        <a href='update_user.php?id={$row['id']}' class='btn'>Edit</a>
-                                        <a href='#' onclick='confirmDelete({$row['id']})' class='btn'>Delete</a>
+                                        <a href='edit_price.php?id={$row['room']}' class='btn'>Edit Price</a>
+                                        <a href='#' onclick='confirmDelete({$row['room']})' class='btn'>Delete</a>
                                       </td>";
                                 echo "</tr>";
                             }
                         } else {
-                            echo "<tr><td colspan='5'>No users found</td></tr>";
+                            echo "<tr><td colspan='3'>No rooms found</td></tr>";
                         }
 
                         $conn->close();
@@ -64,15 +57,16 @@
             </div>
         </div>
     </div>
-    
-    <?php include '../mains.php'; ?>
+
     <script>
-        function confirmDelete(userId) {
-            if (confirm('Are you sure you want to delete this user?')) {
-                window.location.href = `delete_user.php?id=${userId}`;
+        function confirmDelete(roomId) {
+            if (confirm('Are you sure you want to delete this room?')) {
+                window.location.href = `delete_room.php?id=${roomId}`;
             }
         }
     </script>
+
+    <?php include '../mains.php'; ?>
 </body>
 
 </html>

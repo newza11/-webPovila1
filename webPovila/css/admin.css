@@ -364,6 +364,14 @@ body {
   font-size: 14px;
   font-weight: 500;
 }
+.status.check {
+  padding: 2px 4px;
+  background: #1560d7;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
 .status.pending {
   padding: 2px 4px;
   background: #e9b10a;
@@ -569,6 +577,7 @@ button:hover {
   padding: 5px 10px;
   border-radius: 5px;
   color: white;
+  
 }
 
 .delivered {
@@ -581,4 +590,7 @@ button:hover {
 
 .pending {
   background-color: orange;
+}
+.check {
+  background-color: rgb(15, 67, 255);
 }

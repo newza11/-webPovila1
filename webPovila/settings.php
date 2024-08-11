@@ -63,6 +63,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt->execute()) {
             $_SESSION['user_name'] = $name;
             $message = 'Your information has been updated.';
+            header("Location: index.php");
+            exit();
         } else {
             $message = 'Something went wrong. Please try again.';
         }
@@ -88,6 +90,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings | MyWebsite</title>
     <link rel="stylesheet" href="css/settings.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>

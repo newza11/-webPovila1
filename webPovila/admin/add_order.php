@@ -104,6 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <select id="status" name="status" required>
                     <option value="Completed">Completed</option>
                     <option value="Cancel">Cancel</option>
+                    <option value="Check">Check</option>
                     <option value="Waiting to enter">Waiting to enter</option>
                 </select>
                 <button type="submit">Add Order</button>

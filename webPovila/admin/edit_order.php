@@ -130,6 +130,7 @@ $conn->close();
                 <select id="editStatus" name="status" required>
                     <option value="Completed" <?php if ($order['status'] == 'Completed') echo 'selected'; ?>>Completed</option>
                     <option value="Cancel" <?php if ($order['status'] == 'Cancel') echo 'selected'; ?>>Cancel</option>
+                    <option value="Check" <?php if ($order['status'] == 'check') echo 'selected'; ?>>Check</option>
                     <option value="Waiting to enter" <?php if ($order['status'] == 'Waiting to enter') echo 'selected'; ?>>Waiting to enter</option>
                 </select>
                 <button type="submit">Update Order</button>

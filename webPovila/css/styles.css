@@ -8,6 +8,7 @@
   --text-dark: #333333;
   --text-light: #767268;
   --extra-light: #FCF7F3;
+  --extra-light1: #C79A70;
   --white: #ffffff;
   --max-width: 1200px;
   --primary-color1: #2c3855;
@@ -40,11 +41,14 @@ body {
 
 nav {
   margin: 0;
- 
+  
   padding: 1rem 13rem;
   display: flex;
   align-items: center;
   background-color: #FCF7F3;
+  
+  border-bottom-style: solid ;
+  border-color: #e4b58a;
   width: 100%;
   justify-content: space-between;
 }
@@ -363,9 +367,9 @@ position: absolute;
 .footer {
   background-color: var(--extra-light);
   font-family: "Kanit", sans-serif;
-  padding: 1.5rem 13rem;
+  padding: 1.2rem 13rem;
   border-top-style: solid;
-  border-color: #b7b7b7;
+  border-color: #e4b58a;
   margin-top: 2rem;
 }
 

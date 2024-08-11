@@ -115,7 +115,7 @@
 
                 // Sort recent orders by status
                 data.recentOrders.sort((a, b) => {
-                    const statusOrder = ['Waiting to enter', 'Completed', 'Cancel'];
+                    const statusOrder = ['Waiting to enter','check', 'Completed', 'Cancel'];
                     return statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status);
                 });
 
@@ -261,6 +261,7 @@
         function getStatusClass(status) {
             switch (status) {
                 case 'Completed': return 'delivered';
+                case 'check': return 'check';
                 case 'Cancel': return 'return';
                 case 'Waiting to enter': return 'pending';
                 default: return '';
