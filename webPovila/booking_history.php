@@ -58,7 +58,7 @@ if (isset($_SESSION['user_id'])) {
             <a href="index.php">Home</a>
             <?php if (isset($_SESSION['user_id'])): ?>
                 <div class="user">
-                    <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" width="50" height="50"  onclick="toggleDropdown()">
+                    <img src="<?php echo $profile_picture; ?>" alt="Profile Picture"  width="50" height="50"  onclick="toggleDropdown()">
                     <div id="dropdownContent" class="dropdown-content">
                         <a href="settings.php">Settings</a>
                         <a href="booking_history.php">Booking</a>
