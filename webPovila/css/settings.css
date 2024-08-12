@@ -195,7 +195,7 @@ button:hover {
 .settings-container {
   background-color: #fff;
   padding: 2rem;
-  
+  margin-top: 2rem;
    margin-left: auto;
   margin-right: auto;
   border-radius: 8px;

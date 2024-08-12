@@ -30,6 +30,8 @@
     }
     ?>
 
+
+
     <!DOCTYPE html>
     <html lang="en">
 
@@ -46,6 +48,7 @@
         <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <FontAwesomeIcon icon="fa-brands fa-line" />
         <link rel="stylesheet" href="css/tabel.css">
         <style>
             .nav__links {
@@ -103,6 +106,7 @@
                             <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" width="50" height="50" onclick="toggleDropdown()">
                             <div id="dropdownContent" class="dropdown-content">
                                 <a href="settings.php">Settings</a>
+                                <a href="booking_history.php">booking</a>
                                 <a href="logout.php">Logout</a>
                             </div>
                         </div>
@@ -229,7 +233,7 @@
                 </div>
             </div>
         </search>
-        
+
         <script>
             $(function() {
                 var dateFormat = "yy-mm-dd",
@@ -262,44 +266,44 @@
             });
 
             $(function() {
-    $("#availabilityForm").on("submit", function(event) {
-        event.preventDefault();
-        $.ajax({
-            url: 'check_availability.php',
-            type: 'POST',
-            data: $(this).serialize(),
-            success: function(response) {
-                console.log(response);
-                try {
-                    var data = JSON.parse(response);
-                    if (data.availability) {
-                        $("#status").text(data.availability).css("color", data.availability === "เต็ม" ? "red" : "green");
-                        $("#checkin-date").text(data.checkin);
-                        $("#checkout-date").text(data.checkout);
-                        $("#room-type").text(data.room);
-                        $("#price").text(data.price);  // Display the price here
-                        $("#security-deposit").text(data.security_deposit);
+                $("#availabilityForm").on("submit", function(event) {
+                    event.preventDefault();
+                    $.ajax({
+                        url: 'check_availability.php',
+                        type: 'POST',
+                        data: $(this).serialize(),
+                        success: function(response) {
+                            console.log(response);
+                            try {
+                                var data = JSON.parse(response);
+                                if (data.availability) {
+                                    $("#status").text(data.availability).css("color", data.availability === "เต็ม" ? "red" : "green");
+                                    $("#checkin-date").text(data.checkin);
+                                    $("#checkout-date").text(data.checkout);
+                                    $("#room-type").text(data.room);
+                                    $("#price").text(data.price); // Display the price here
+                                    $("#security-deposit").text(data.security_deposit);
 
-                        if (data.is_full) {
-                            $("#bookingButtonContainer").hide(); // Hide the booking button if the room is full
-                        } else {
-                            $("#bookingButtonContainer").show(); // Show the booking button if there's availability
+                                    if (data.is_full) {
+                                        $("#bookingButtonContainer").hide(); // Hide the booking button if the room is full
+                                    } else {
+                                        $("#bookingButtonContainer").show(); // Show the booking button if there's availability
+                                    }
+
+                                } else {
+                                    $("#availability").text("No availability data.");
+                                }
+                            } catch (e) {
+                                console.log(e);
+                                $("#availability").text("Invalid response from server.");
+                            }
+                        },
+                        error: function() {
+                            $("#availability").text("Error checking availability.");
                         }
-
-                    } else {
-                        $("#availability").text("No availability data.");
-                    }
-                } catch (e) {
-                    console.log(e);
-                    $("#availability").text("Invalid response from server.");
-                }
-            },
-            error: function() {
-                $("#availability").text("Error checking availability.");
-            }
-        });
-    });
-});
+                    });
+                });
+            });
 
 
             function validateGuests(input) {
@@ -367,11 +371,24 @@
             <div class="footer__container">
                 <div class="footer__col">
                     <h3>นันท์นภัส</h3>
+
+                    <p><a href="https://www.facebook.com/profile.php?id=61553502207847"><ion-icon name="logo-facebook"></ion-icon></a></p>
+                    <i class="fa-brands fa-line"></i>
+                    <p>
+                        <a href="https://lin.ee/yvY9Aal">
+                            <img src="poo/LINE_Brand_icon.png" width="30" height="30" alt="Facebook Profile">
+                        </a>
+                    </p>
                 </div>
                 <div class="footer__col">
                     <h4>Contact Us</h4>
                     <p>098 646 1451</p>
                     <p>nannaphas12345678@gmail.com</p>
+                </div>
+                <div class="footer__col">
+                    <h4></h4>
+
+
                 </div>
             </div>
         </footer>

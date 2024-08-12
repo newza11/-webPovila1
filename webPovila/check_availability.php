@@ -64,7 +64,6 @@ if ($is_full) {
         "security_deposit" => "ค่าประกัน3000"
     );
 }
-
 $_SESSION['checkin'] = $check_in;
 $_SESSION['checkout'] = $check_out;
 $_SESSION['room'] = $room;

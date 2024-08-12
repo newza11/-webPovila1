@@ -40,6 +40,7 @@
 </body>
 </html>
 <?php
+
 session_start();
 require 'db_connect.php'; // Include the database connection
 
@@ -55,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if (move_uploaded_file($_FILES['paymentSlip']['tmp_name'], $uploadFile)) {
             // Retrieve booking details from session
+            $id =  $_SESSION['user_id'] ?? 0;
             $check_in = $_SESSION['checkin'] ?? 'ไม่ระบุ';
             $check_out = $_SESSION['checkout'] ?? 'ไม่ระบุ';
             $room = $_SESSION['room'] ?? 'ไม่ระบุ';
@@ -69,8 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $phone = $_SESSION['phone'] ?? 'ไม่ระบุ';
 
             // Prepare SQL query to update orders_db with the slip path
-            $sql = "INSERT INTO orders_db (name, price, people, checkin, checkout, status, phone, room, firstname, lastname, slip) 
-                    VALUES (:name, :price, :people, :checkin, :checkout, :status, :phone, :room, :firstname, :lastname, :slip)";
+            $sql = "INSERT INTO orders_db (name, price, people, checkin, checkout, status, phone, room, firstname, lastname, slip, user_id) 
+                    VALUES (:name, :price, :people, :checkin, :checkout, :status, :phone, :room, :firstname, :lastname, :slip, :user_id)";
             
             $stmt = $pdo->prepare($sql);
             
@@ -86,7 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':room' => $room,
                 ':firstname' => $first_name,
                 ':lastname' => $last_name,
-                ':slip' => $uploadFile
+                ':slip' => $uploadFile,
+                ':user_id' => $id
             ]);
             
             // Redirect to a completion page
@@ -99,3 +102,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo 'No file uploaded or there was an upload error.';
     }
 }
+?>
+

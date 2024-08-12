@@ -516,7 +516,7 @@ body {
 }
 
 /* Small screens (mobile) */
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 868px) {
   .nav__logo img {
       width: 40px; /* Adjust the logo size */
   }
@@ -561,6 +561,16 @@ body {
   .footer__col h4, .footer__col p {
       font-size: 12px; /* Adjust footer text size */
   }
+}
+ion-icon{
+  font-size: 2rem;
+
+}
+
+.nav__links .link img {
+  margin-left: 10px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 

@@ -29,14 +29,14 @@
                     </a>
                 </li>
 
-                <li>
+                <!-- <li>
                     <a href="#">
                         <span class="icon">
                             <ion-icon name="chatbubble-outline"></ion-icon>
                         </span>
                         <span class="title">Messages</span>
                     </a>
-                </li>
+                </li> -->
                 <li>
                     <a href="room_price_list.php">
                         <span class="icon">
