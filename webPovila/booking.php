@@ -38,7 +38,7 @@
 
     }
     // Assuming a fixed price per night for simplicity
-    $price_per_night = $room_price+3000+2000; // Example price
+    $price_per_night = $room_price+3000+4000; // Example price
     $total_price = $price_per_night ; // You might calculate this differently based on the number of nights
     $booking_fee = 2000; // Example booking fee
 

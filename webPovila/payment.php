@@ -11,7 +11,7 @@
         <h1>Payment Details</h1>
         <p>Please complete payment by scanning the QR code.</p>
         <p>โอนจอง Povila</p>
-        <h4>ยอด 2000บาท</h4>
+        <h4>ยอด 4000บาท</h4>
         
         <div class="payment-details">
             <!-- QR code -->
