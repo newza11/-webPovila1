@@ -32,18 +32,7 @@
         $stmt = $pdo->prepare($sql);
         
         // Execute the query with the data from the form and session
-        $stmt->execute([
-            ':name' => $name,
-            ':price' => $room_price,
-            ':people' => $people,
-            ':checkin' => $check_in,
-            ':checkout' => $check_out,
-            ':status' => $status,
-            ':phone' => $phone,
-            ':room' => $room,
-            ':firstname' => $first_name,
-            ':lastname' => $last_name
-        ]);
+        
         header('Location: payment.php');
     exit;
 
