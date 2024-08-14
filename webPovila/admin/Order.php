@@ -34,6 +34,13 @@
                         </thead>
                         <tbody id="orderTableBody"></tbody>
                     </table>
+
+                    <!-- Pagination Controls -->
+                    <div class="pagination">
+                        <button class="prev-page" disabled>ก่อนหน้า</button>
+                        <span class="page-info">หน้าที่ 1 จาก 1</span>
+                        <button class="next-page">ถัดไป</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -46,34 +53,67 @@
     </div>
 
     <script>
-        fetch('fetch_orders.php')
-            .then(response => response.json())
-            .then(data => {
-                console.log('Orders fetched:', data); // ตรวจสอบข้อมูลที่ถูกส่งมา
-                const tableBody = document.getElementById('orderTableBody');
-                tableBody.innerHTML = '';
+        const itemsPerPage = 10; // จำนวนรายการที่จะแสดงต่อหน้า
+        let currentPage = 1;
+        let totalPages = 1;
 
-                data.forEach(order => {
-                    console.log(order); // ตรวจสอบแต่ละออเดอร์
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                <td>${order.name}</td>
-                <td>${order.price}</td>
-                <td>${order.people}</td>
-                <td>${order.checkin}</td>
-                <td>${order.checkout}</td>
-                <td><span class="status ${getStatusClass(order.status)}">${order.status}</span></td>
-                <td><button onclick="viewSlip('${order.slip}')">View Slip</button></td>
-                <td>
-                    <a href="edit_order.php?id=${order.id}"><button>Edit</button></a>
-                    <button onclick="deleteOrder(${order.id})">Delete</button>
-                </td>
-            `;
-                    tableBody.appendChild(row);
-                });
-            })
-            .catch(error => console.error('Error fetching orders:', error));
+        document.addEventListener('DOMContentLoaded', function () {
+            loadOrders(currentPage);
 
+            document.querySelector('.prev-page').addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    loadOrders(currentPage);
+                }
+            });
+
+            document.querySelector('.next-page').addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    loadOrders(currentPage);
+                }
+            });
+        });
+
+        function loadOrders(page) {
+            fetch('fetch_orders.php')
+                .then(response => response.json())
+                .then(data => {
+                    totalPages = Math.ceil(data.length / itemsPerPage);
+                    displayOrders(data.slice((page - 1) * itemsPerPage, page * itemsPerPage));
+                    updatePagination();
+                })
+                .catch(error => console.error('Error fetching orders:', error));
+        }
+
+        function displayOrders(orders) {
+            const tableBody = document.getElementById('orderTableBody');
+            tableBody.innerHTML = '';
+
+            orders.forEach(order => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${order.name}</td>
+                    <td>${order.price}</td>
+                    <td>${order.people}</td>
+                    <td>${order.checkin}</td>
+                    <td>${order.checkout}</td>
+                    <td><span class="status ${getStatusClass(order.status)}">${order.status}</span></td>
+                    <td><button onclick="viewSlip('${order.slip}')">View Slip</button></td>
+                    <td>
+                        <a href="edit_order.php?id=${order.id}"><button>Edit</button></a>
+                        <button onclick="deleteOrder(${order.id})">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function updatePagination() {
+            document.querySelector('.page-info').textContent = `หน้าที่ ${currentPage} จาก ${totalPages}`;
+            document.querySelector('.prev-page').disabled = currentPage === 1;
+            document.querySelector('.next-page').disabled = currentPage === totalPages;
+        }
 
         function getStatusClass(status) {
             switch (status) {
@@ -96,24 +136,20 @@
                     .then(response => response.json())
                     .then(data => {
                         alert(data.message);
-                        location.reload();
+                        loadOrders(currentPage); // Reload orders for the current page
                     })
                     .catch(error => console.error('Error deleting order:', error));
             }
         }
 
         function viewSlip(slip) {
-            console.log('Slip URL:', slip); // ตรวจสอบว่า slipUrl มีค่าอะไร
-            const baseURL = window.location.origin; // ดึง base URL ของเว็บไซต์
-            const fullSlip = `${baseURL}/webPovila/webPovila/${slip}`; // สร้าง full URL โดยใช้ baseURL และ slipUrl
-
             const modal = document.getElementById("slipModal");
             const modalImg = document.getElementById("slipImage");
             modal.style.display = "block";
-            modalImg.src = fullSlip; // ใช้ full URL ในการแสดงรูปภาพ
+            modalImg.src = slip;
 
             const span = document.getElementsByClassName("close")[0];
-            span.onclick = function() {
+            span.onclick = function () {
                 modal.style.display = "none";
             }
         }
@@ -158,8 +194,37 @@
             text-decoration: none;
             cursor: pointer;
         }
-    </style>
 
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            padding: 8px 16px;
+            margin: 0 5px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .pagination button:hover {
+  background: #0056b3;
+}
+
+        .pagination button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .pagination .page-info {
+            font-size: 16px;
+            margin: 0 10px;
+        }
+    </style>
     <?php include '../mains.php'; ?>
 </body>
 

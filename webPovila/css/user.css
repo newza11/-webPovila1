@@ -132,4 +132,36 @@ table th, table td {
   border-bottom: 1px solid #ddd;
 }
 
-    
+    /* Pagination styling */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination a.btn {
+  padding: 8px 16px;
+  margin: 0 5px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination a.btn:hover {
+  background: #0056b3;
+}
+
+.pagination .page-info {
+  font-size: 16px;
+  margin: 0 10px;
+}
+
+.pagination a.btn[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
