@@ -1,48 +1,51 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins',sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
-host{
-    position:  fixed;
+
+host {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 0.8rem 13rem;    
+    padding: 0.8rem 13rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 99;
     background-color: #FCF7F3;
-    
 }
+
 .naigation a {
     font-size: 1.1em;
     color: #000;
 }
-.naigation .btnLogin-poppup{
+
+.naigation .btnLogin-poppup {
     width: 130px;
     height: 50px;
-    background: transparent ;
+    background: transparent;
     border: 2px solid #000000;
     outline: none;
-    border-radius:  6px;
-    cursor:  pointer;
+    border-radius: 6px;
+    cursor: pointer;
     font-size: 1.1em;
-    color:#000000;
+    color: #000000;
     font-weight: 500;
     margin-left: 40px;
     transition: .5s;
 }
 
-.naigation .btnLogin-poppup:hover{
+.naigation .btnLogin-poppup:hover {
     background: #fff;
     color: #162938;
 }
-body{
+
+body {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,31 +54,30 @@ body{
     background-image: url('23.jpg');
     backdrop-filter: blur(25px);
 }
-.login{
+
+.login {
     display: flex;
     justify-content: center;
     flex-direction: column;
-     position: relative;
+    position: relative;
     width: 440px;
     height: 500px;
     padding: 30px;
     background-color: transparent;
-    border: 2px solid rgba(255, 255, 255 ,5);
+    border: 2px solid rgba(255, 255, 255, 5);
     border-radius: 20px;
     backdrop-filter: blur(20px);
-    box-shadow: 0 0 30px rgba(0, 0, 0 ,5);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 5);
     overflow: hidden;
     transition: height .2s ease;
     background: #eae9e9;
-    
-    
-    
 }
+
 .login .active {
     height: 520px;
-    
 }
-.login .icon-close{
+
+.login .icon-close {
     position: absolute;
     top: 0;
     right: 0;
@@ -88,20 +90,22 @@ body{
     justify-content: center;
     align-items: center;
     border-bottom-left-radius: 20px;
-    cursor:  pointer;
+    cursor: pointer;
     z-index: 1;
 }
-.login-header{
+
+.login-header {
     text-align: center;
-    
     margin: 20px 0 20px 0;
 }
-.login-header header{
+
+.login-header header {
     color: #333;
     font-size: 30px;
     font-weight: 600;
 }
-.register{
+
+.register {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -110,44 +114,47 @@ body{
     height: 550px;
     padding: 30px;
     background-color: transparent;
-    border: 2px solid rgba(255, 255, 255 ,5);
+    border: 2px solid rgba(255, 255, 255, 5);
     border-radius: 20px;
     backdrop-filter: blur(15px);
-    box-shadow: 0 0 15px rgba(0, 0, 0 ,5);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 5);
     overflow: hidden;
     background: #eae9e9;
 }
+
 .register .active {
     height: 520px;
-    
 }
-.register .icon-close{
+
+.register .icon-close {
     position: absolute;
     top: 0;
     right: 0;
     width: 45px;
     height: 45px;
     background: #222;
-    font-size:  2em;
+    font-size: 2em;
     color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
     border-bottom-left-radius: 20px;
-    cursor:  pointer;
+    cursor: pointer;
     z-index: 1;
 }
-.register-header{
+
+.register-header {
     text-align: center;
     margin: 20px 0 40px 0;
 }
-.register-header header{
+
+.register-header header {
     color: #333;
     font-size: 30px;
     font-weight: 600;
 }
 
-.input-box .input-field{
+.input-box .input-field {
     width: 100%;
     height: 60px;
     font-size: 17px;
@@ -155,46 +162,54 @@ body{
     margin-bottom: 15px;
     border-radius: 30px;
     border: none;
-    box-shadow: 0px 5px 10px 1px rgba(0,0,0, 0.05);
+    box-shadow: 0px 5px 10px 1px rgba(0, 0, 0, 0.05);
     outline: none;
     transition: .3s;
 }
 
-::placeholder{
+::placeholder {
     font-weight: 500;
     color: #222;
 }
-.input-field:focus{
+
+.input-field:focus {
     width: 105%;
 }
-.forgot{
+
+.forgot {
     display: flex;
     justify-content: space-between;
     margin-bottom: 40px;
 }
-section{
+
+section {
     display: flex;
     align-items: center;
     font-size: 14px;
     color: #555;
 }
-#check{
+
+#check {
     margin-right: 10px;
 }
-a{
+
+a {
     text-decoration: none;
 }
-a:hover{
+
+a:hover {
     text-decoration: underline;
 }
-section a{
+
+section a {
     color: #555;
 }
-.input-submit{
+
+.input-submit {
     position: relative;
 }
 
-.submit-btn{
+.submit-btn {
     width: 100%;
     height: 60px;
     background: #222;
@@ -203,7 +218,8 @@ section a{
     cursor: pointer;
     transition: .3s;
 }
-.submit1-btn{
+
+.submit1-btn {
     width: 100%;
     height: 60px;
     background: #222;
@@ -213,43 +229,123 @@ section a{
     transition: .3s;
     margin: 10px 0 20px 0;
     color: #ffffff;
-    
 }
-.navigation1 a{
+
+.navigation1 a {
     background-color: #000;
 }
-.input-submit label{
+
+.input-submit label {
     position: absolute;
     top: 45%;
     left: 50%;
     color: #fff;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     cursor: pointer;
 }
-.submit-btn:hover{
+
+.submit-btn:hover {
     background: #000;
-    transform: scale(1.05,1);
+    transform: scale(1.05, 1);
 }
-.sign-up-link{
+
+.sign-up-link {
     text-align: center;
     font-size: 15px;
     margin-top: 20px;
-    
 }
-.sign-up-link a{
+
+.sign-up-link a {
     color: #000;
     font-weight: 600;
-    
 }
-.login-up-link{
+
+.login-up-link {
     text-align: center;
     font-size: 15px;
     margin-top: 0px;
-    
 }
-.login-up-link a{
+
+.login-up-link a {
     color: #000;
     font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    host {
+        padding: 0.8rem 3rem;
+    }
+
+    .login,
+    .register {
+        width: 100%;
+        padding: 20px;
+        height: auto;
+        border-radius: 15px;
+        box-shadow: none;
+        margin: 0 12rem;
+    }
+
+    .login-header header,
+    .register-header header {
+        font-size: 24px;
+    }
+
+    .input-box .input-field {
+        height: 50px;
+        font-size: 15px;
+        padding: 0 20px;
+    }
+
+    .submit-btn,
+    .submit1-btn {
+        height: 50px;
+        font-size: 16px;
+    }
+}
+@media (max-width: 576px) {
+    host {
+        padding: 0.8rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        flex: 1;
+    }
+
+    .naigation {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end; /* ชิดทางขวา */
+    }
+
+    .login,
+    .register {
+        width: 100%;
+        padding: 10px; /* ปรับขนาด margin ให้เล็กลง */
+        height: auto;
+        border-radius: 15px;
+        box-shadow: none;
+        margin: 0 20px; /* ลด margin สำหรับ login และ register */
+    }
+
+    .login-header header,
+    .register-header header {
+        font-size: 20px;
+    }
+
+    .input-box .input-field {
+        height: 45px;
+        font-size: 14px;
+        padding: 0 15px;
+    }
+
+    .submit-btn,
+    .submit1-btn {
+        height: 45px;
+        font-size: 14px;
+    }
 }

@@ -53,12 +53,12 @@ if (isset($_SESSION['user_id'])) {
     <div class="nav__logo">
         <img src="https://scontent.fkdt1-1.fna.fbcdn.net/v/t1.15752-9/451463161_439508502254984_1564988875763696941_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeFLxpw7P5hzAbD0zGFx4wcQ_iqw6XCTKgf-KrDpcJMqB2ssTrxaM93qmoZDROCA15lSca9F0AG3_Aum4HlxxYYy&_nc_ohc=BErgEdBJnUwQ7kNvgGYDR0P&_nc_ht=scontent.fkdt1-1.fna&oh=03_Q7cD1QG_QMJ_iS3LVLg9FVnCJhM17wgMqHFgMIkqJvWW2npLGA&oe=66BF59DB" alt="Logo" width="22" height="80" style="display: flex; width: 100%;">
     </div>
-    <ul class="nav__links">
-        <li class="link">
+    <ul class="nav__links1">
+        <li class="link1">
             <a href="index.php">Home</a>
             <?php if (isset($_SESSION['user_id'])): ?>
                 <div class="user">
-                    <img src="<?php echo $profile_picture; ?>" alt="Profile Picture"  width="50" height="50"  onclick="toggleDropdown()">
+                    <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" style="border-radius: 50%;" width="50" height="50"  onclick="toggleDropdown()">
                     <div id="dropdownContent" class="dropdown-content">
                         <a href="settings.php">Settings</a>
                         <a href="booking_history.php">Booking</a>
@@ -115,15 +115,15 @@ if (isset($_SESSION['user_id'])) {
                         <td><?php echo $row['price']; ?></td>
                         <td><?php echo $row['status']; ?></td>
                         <td>
-                            <?php if ($row['status'] === 'check'): ?>
-                                <button type="button" class="btn btn-secondary" disabled>รอตรวจสอบ</button>
-                            <?php else: ?>
-                                <form action="generate_receipt.php" method="post" target="_blank">
-                                    <input type="hidden" name="booking_id" value="<?php echo $row['id']; ?>">
-                                    <button type="submit" class="btn btn-primary">Generate Receipt</button>
-                                </form>
-                            <?php endif; ?>
-                        </td>
+    <?php if ($row['status'] === 'check'): ?>
+        <button type="button" class="btn btn-secondary" disabled>กำลังตรวจสอบ</button>
+    <?php else: ?>
+        <form action="generate_receipt.php" method="post" target="_blank">
+            <input type="hidden" name="booking_id" value="<?php echo $row['id']; ?>">
+            <button type="submit" class="btn btn-primary">Generate Receipt</button>
+        </form>
+    <?php endif; ?>
+</td>
                     </tr>
                 <?php endwhile; ?>
             <?php else: ?>

@@ -38,9 +38,9 @@
 
     }
     // Assuming a fixed price per night for simplicity
-    $price_per_night = $room_price+3000+4000; // Example price
+    $price_per_night = $room_price+3000; // Example price
     $total_price = $price_per_night ; // You might calculate this differently based on the number of nights
-    $booking_fee = 2000; // Example booking fee
+    $booking_fee = 4000; // Example booking fee
 
     ?>
 
@@ -72,10 +72,10 @@
                     <p>ห้อง: <?php echo htmlspecialchars($room, ENT_QUOTES, 'UTF-8'); ?></p>
                 </div>
                 <div class="summary">
-                    <p>ราคาต่อคืน: THB <?php echo number_format($room_price); ?></p>
-                    <p>ยอดจอง: THB <?php echo number_format($booking_fee); ?></p>
-                    <p>ประกัน: 3000 THB </p>
-                    <p class="total">ยอดรวม: THB <?php echo number_format($total_price); ?></p>
+                    <p>ราคาต่อคืน: <?php echo number_format($room_price); ?>฿</p>
+                    <p>ยอดจอง: <?php echo number_format($booking_fee); ?>฿</p>
+                    <p>ประกัน: 3000 ฿ </p>
+                    <p class="total">ยอดรวม: <?php echo number_format($total_price); ?> ฿</p>
                 </div>
             </div>
             <div class="form-container">

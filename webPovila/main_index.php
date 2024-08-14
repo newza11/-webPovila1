@@ -1,13 +1,64 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "my_website";
+
+// สร้างการเชื่อมต่อ
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// ตรวจสอบการเชื่อมต่อ
+if ($conn->connect_error) {
+    die("การเชื่อมต่อล้มเหลว: " . $conn->connect_error);
+}
+
+// ดึงข้อมูลจากตาราง villa_home_content
+$sql_home_content = "SELECT title, description FROM villa_home_content WHERE id = 2"; // ปรับ WHERE ตามต้องการ
+$result_home_content = $conn->query($sql_home_content);
+
+if ($result_home_content->num_rows > 0) {
+    while ($row = $result_home_content->fetch_assoc()) {
+        $title = $row["title"];
+        $description = $row["description"];
+
+        // แสดงผลข้อมูลจาก villa_home_content
+    }
+}
+
+// รับค่า id จาก URL หรือใช้ id เริ่มต้นเป็น 1
+
+// ดึงข้อมูลจากตาราง villa_details
+$sql_villa_details = "SELECT detail_type, detail_description FROM villa_details  ";
+$result_villa_details = $conn->query($sql_villa_details);
+
+if ($result_villa_details->num_rows > 0) {
+    
+
+    $villaDetails = [];
+    while ($row = $result_villa_details->fetch_assoc()) {
+        $villaDetails[] = $row; // เก็บข้อมูลแต่ละแถวเป็นอาร์เรย์ใน $villaDetails
+        
+
+        
+    }
+  }
+
+$conn->close();
+?>
 
 
-<div class="container" style="margin-top: 2rem;" >
+
+
+
+
+<div class="container" style="margin-top: 4rem;" >
       <div class="d-flex flex-column align-items-center" id="list-title">
         <h1>นันท์นภัส</h1>
         <h2>นันท์นภัส พลูวิลล่า อัมพวา</h2>
       </div>
     </div>
     <!-- tabel -->
-    <div class="container">
+    <div class="container" style="margin-bottom: 7rem;">
       <div id="list-tab" role="tablist">
         <a
           class="active"
@@ -101,13 +152,9 @@
           </div>
           
           <div class="text">
-            <h1>บ้านนันท์นภัส พลูวิลล่า อัมพวา</h1>
+            <h1><?= $title ?></h1>
             <p>
-            Luxury Pool Villa <br />บ้านพัก 6 ห้องนอน 6 ห้องน้ำ <br />รองรับลูกค้าถึง 20 ท่าน/คืน<br />ตกแต่งสไตล์
-              Luxury มีความหรูหรา <br />มาพร้อมห้องคาราโอเกะที่กว้างขวาง
-              <br /> มีสระว่ายน้ำ สไลด์เดอร์ 
-              อุปกรณ์เครื่องครัวครบครัน ใกล้สถานที่ท่องเที่ยวมากมาย <br />
-              พร้อมให้บริการลูกค้าทุกท่าน
+            <?= $description?>
             </p>
           </div>
         </div>
@@ -126,11 +173,9 @@
                     alt=""
                   />
                   <div>
-                    <h1>ราคาเหมาทั้งหลัง (6 ห้องนอน)</h1>
+                    <h1><h1><?= $villaDetails[0]['detail_type']; ?></h1>
                     <h2>
-                    วันอาทิตย์ - วันพฤหัส ราคาเหมา 9,900.- บาท/คืน
-                      <br />วันศุกร์ ราคาเหมา 12,900.- บาท/คืน<br />วันเสาร์/วันหยุดนขัตฤกษ์
-                      ราคาเหมา 14,900.- บาท/คืน <br />วันขึ้นปีใหม่ วันสงกรานต์ ราคาเหมา 16,900.-                      บาท/คืน
+                    <?= $villaDetails[0]['detail_description']; ?>
                     </h2>
                   </div>
                 </div>
@@ -142,16 +187,9 @@
                   alt=""
                   />
                   <div>
-                  <h1>รายละเอียดแต่ละห้อง</h1>
+                 <h1><?= $villaDetails[1]['detail_type']; ?></h1>
                     <h2>
-                      - ห้องนอนที่ 1 ติดสระว่ายน้ำ ประกอบด้วย เตียงนอนขนาด  5 ฟุต <br/> 2 เตียง
-                        ห้องน้ำในตัว TV และโต๊ะเครื่องแป้ง<br />
-                      - ห้องนอนที่ 2 ประกอบด้วย เตียงนอนขนาด 5 ฟุต 2 เตียง <br/> ห้องน้ำในตัวพร้อม TV และโต๊ะเครื่องแป้ง<br />
-                      - ห้องนอนที่ 3 ห้องนอนเด็ก ประกอบด้วย เตียงนอนขนาด 5 ฟุต 2 เตียง <br />
-                      - ห้องนอนที่ 4 ประกอบด้วย เตียงนอนขนาด 5 ฟุต 2 เตียง TV และโต๊ะเครื่องแป้ง<br />
-                      - ห้องนอนที่ 5 ประกอบด้วย เตียงนอนขนาด 5 ฟุต 2 เตียง<br />
-                      - ห้องนอนที่ 6 ประกอบด้วย เตียงนอนขนาด 6 ฟุต 1 เตียง <br /> ห้องน้ำในตัว
-                        พร้อมอ่างจากุชชี่ TV และโต๊ะเครื่องแป้ง
+                    <?= $villaDetails[1]['detail_description']; ?>
                     </h2>
                   </div>
                 </div>
@@ -163,11 +201,9 @@
                     alt=""
                   />
                   <div>
-                  <h1>ราคาวันธรรมดา (วันอาทิตย์ - วันพฤหัส)</h1>
+                  <h1><?= $villaDetails[2]['detail_type']; ?></h1>
                     <h2>
-                      3 ห้อง ราคาเหมา 6,900.- บาท/คืน<br />
-                      4 ห้อง ราคาเหมา 7,900.- บาท/คืน<br />
-                      5 ห้อง ราคาเหมา 8,900.- บาท/คืน
+                    <?= $villaDetails[2]['detail_description']; ?>
                     </h2>
                   </div>
                 </div>
@@ -179,8 +215,10 @@
                     alt=""
                   />
                   <div>
-                    <h1>ลานจอดรถ</h1>
-                    <h2>จอดได้ 3 คัน</h2>
+                  <h1><?= $villaDetails[3]['detail_type']; ?></h1>
+                  <h2>
+                    <?= $villaDetails[3]['detail_description']; ?>
+                    </h2>
                   </div>
                 </div>
               </div>
@@ -191,8 +229,10 @@
                     alt=""
                   />
                   <div>
-                    <h1>ห้องทั้งหมด</h1>
-                    <h2>6ห้องนอน</h2>
+                  <h1><?= $villaDetails[4]['detail_type']; ?></h1>
+                  <h2>
+                    <?= $villaDetails[4]['detail_description']; ?>
+                    </h2>
                   </div>
                 </div>
               </div>
@@ -203,8 +243,10 @@
                   alt=""
                   />
                   <div>
-                    <h1>จำนวนคนเข้าพักสูงสุด</h1>
-                    <h2>20 คน</h2>
+                  <h1><?= $villaDetails[5]['detail_type']; ?></h1>
+                  <h2>
+                    <?= $villaDetails[5]['detail_description']; ?>
+                    </h2>
                   </div>
                 </div>
               </div>
@@ -216,8 +258,7 @@
           class="tab-pane fade"
           id="list-messages"
           role="tabpanel"
-          aria-labelledby="list-messages-list"
-        >
+          aria-labelledby="list-messages-list">
         <div class="accordion" id="accordion-list">
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
@@ -314,12 +355,13 @@
         role="tabpanel"
         aria-labelledby="list-settings-list"
       >
-        <div class="img-grid">
+        <div class="container-fluid img-grid">
           <!-- Main Image -->
           <div>
             <img
               src="poo/1.jpg"
-              class="img-fluid"
+              class="img-fluid Main_image"
+              
               style="height: 508px"
               alt="Main Image"
               data-bs-toggle="modal"

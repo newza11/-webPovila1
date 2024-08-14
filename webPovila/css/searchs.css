@@ -1,0 +1,149 @@
+/* ซ่อนเนื้อหานี้เป็นค่าเริ่มต้น */
+.mobile-container {
+    display: none;
+}
+
+/* ตั้งค่า CSS สำหรับมือถือ */
+@media (max-width: 576px) {
+    .mobile-container {
+        display: block;
+        width: 100%;
+        max-width: 576px;
+        max-height: 100vh; /* เพิ่มขนาดความสูงสูงสุด */
+        margin: 0 auto;
+        padding: 10px;
+        box-sizing: border-box;
+        background-image: -webkit-linear-gradient(90deg, #ffffff 0%, #FCF7F3 50%, #faf0e8 100%);
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+    }
+
+    body {
+        display: flex;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    .image-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr; /* แสดง 3 รูปต่อแถว */
+        grid-gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .grid-img {
+        width: 100%;
+        height: 80px; /* ขนาดของรูปภาพเล็กลง */
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .info-container {
+        padding: 7px 30px;
+        border-radius: 10px;
+    }
+
+    .check-dates {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* ปรับขนาดฟอนต์ */
+    .title-large {
+        font-size: 20px; /* ขนาดฟอนต์ที่เล็กลง */
+        margin: 0rem 1rem;
+        text-align: center;
+    }
+
+    .title-medium {
+        font-size: 16px; /* ขนาดฟอนต์ที่เล็กลง */
+        margin: 0rem 1rem;
+        text-align: center;
+    }
+
+    /* ปรับขนาดรูปภาพในกริด */
+    .grid-img {
+        width: 100%;
+        height: 80px; /* ปรับความสูงของรูปภาพให้เล็กลง */
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .info-container p {
+        font-size: 8px;
+    }
+
+    .check-dates {
+        display: flex;
+        justify-content: space-between; /* จัดให้ปุ่มอยู่ทางขวา */
+        align-items: center; /* จัดให้ปุ่มอยู่กลางแนวตั้ง */
+        margin-top: 15px;
+    }
+
+    .check-dates div {
+        display: flex;
+        flex-direction: column; /* จัดข้อความ check_in/check_out และ รอ date ให้อยู่ใต้กัน */
+    }
+
+    .check-dates p {
+        margin: 0;
+        padding: 0;
+    }
+
+    .check-button {
+        padding: 4px 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 10px; /* เพิ่มช่องว่างระหว่างปุ่มกับข้อความ */
+    }
+
+    .check-button:hover {
+        background-color: #0056b3;
+    }
+
+    .room-container {
+        display: flex;
+        justify-content: space-between; /* จัดให้ปุ่มอยู่ทางขวา */
+        align-items: center; /* จัดให้ปุ่มอยู่กลางแนวตั้ง */
+        margin-top: 15px;
+        font-size: 7px;
+    }
+
+    .room-container div {
+        display: flex;
+        flex-direction: column; /* จัดข้อความ Room และ รอ Room ให้อยู่ใต้กัน */
+    }
+
+    .room-container p {
+        margin: 0;
+        padding: 0;
+    }
+
+    .room-button button {
+        padding: 4px 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 10px; /* เพิ่มช่องว่างระหว่างปุ่มกับข้อความ */
+        
+    }
+
+    .room-button button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Adjust button placement for better appearance */
+    .button {
+        display: flex;
+        justify-content: center; /* Center the button */
+        margin: 1rem auto; /* Adjust margin for better alignment */
+        padding: 0.5rem 1rem; /* Adjust padding for better appearance */
+    }
+}

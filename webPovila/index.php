@@ -50,6 +50,7 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <FontAwesomeIcon icon="fa-brands fa-line" />
         <link rel="stylesheet" href="css/tabel.css">
+        <link rel="stylesheet" href="css/searchs.css">
         <style>
             .nav__links {
                 display: flex;
@@ -138,7 +139,7 @@
         </script>
         <?php include 'main_index.php'; ?>
 
-        <header class="section__container header__container">
+        <header class="section__container header__container" style="margin-bottom: 10rem;">
             <div class="header__image__container">
                 <div class="header__content"></div>
                 <div class="booking__container">
@@ -183,7 +184,7 @@
             <div class="section__container search_container">
                 <div class="search__image__container">
                     <div class="frame-content">
-                        <p class="top-left-text" style="font-size: 25px;">นันท์นภัส พลูวิลล่า อัมพวา</p>
+                        <p class="top-left-text" >นันท์นภัส พลูวิลล่า อัมพวา</p>
                         <p id="status" class="top-left-text1" style="font-size: 20px;"></p>
                         <div class="images_container1">
                             <img class="mainimg" src="poo/1.jpg" alt="">
@@ -199,10 +200,11 @@
                     </div>
 
                     <div class="font" style="display: flex; justify-content: center; flex-direction: column;">
-                        <p style="font-size: 25px; margin: 0rem 1rem;">Povila</p>
-                        <p style="font-size: 20px; margin: 0rem 1rem;"><a></a>guests<a></a> room</p>
-                        <p style="font-size: 12px; margin: 0rem 1rem;">
-                            <br>บ้านนันท์นภัส พลูวิลล่า อัมพวา<br> Luxury Pool Villa บ้านพัก 6 ห้องนอน 6 ห้องน้ำที่ตกแต่งไปด้วยสไตล์ Luxury มีความหรูหรา<br>มาพร้อมห้องคาราโอเกะที่กว้างขวาง พร้อมรองรับลูกค้าถึง 20 ท่าน มาพร้อมกับสระว่ายน้ำ สไลด์เดอร์<br> อุปกรณ์ครัวครบครันใกล้สถานที่ท่องเที่ยวมากมาย ณ อัมพวา พร้อมให้บริการลูกค้าทุกท่าน
+                        <p class ="title-large"style="font-size: 25px; margin: 0rem 1rem;">บ้านนันท์นภัส</p>
+                        <p class ="title-medium"style="font-size: 20px; margin: 0rem 1rem;"><a></a>พลูวิลล่า อัมพวา</p>
+                        
+                        <p class ="description" style="font-size: 12px; margin: 0rem 1rem;">
+                            <br><br> Luxury Pool Villa บ้านพัก 6 ห้องนอน 6 ห้องน้ำที่ตกแต่งไปด้วยสไตล์ Luxury มีความหรูหรา<br>มาพร้อมห้องคาราโอเกะที่กว้างขวาง พร้อมรองรับลูกค้าถึง 20 ท่าน มาพร้อมกับสระว่ายน้ำ สไลด์เดอร์<br> อุปกรณ์ครัวครบครันใกล้สถานที่ท่องเที่ยวมากมาย ณ อัมพวา พร้อมให้บริการลูกค้าทุกท่าน
                         </p>
                     </div>
                     <div class="toteo__container">
@@ -234,36 +236,38 @@
             </div>
         </search>
 
+        <?php include 'searchs.php'; ?>
+
         <script>
             $(function() {
-                var dateFormat = "yy-mm-dd",
-                    from = $("#checkin").datepicker({
-                        dateFormat: dateFormat,
-                        minDate: 0
-                    }).on("change", function() {
-                        var checkinDate = getDate(this);
-                        to.datepicker("option", "minDate", checkinDate);
-                        to.datepicker("option", "minDate", new Date(checkinDate.getTime() + 24 * 60 * 60 * 1000));
-                    }),
-                    to = $("#checkout").datepicker({
-                        dateFormat: dateFormat,
-                        minDate: 1
-                    }).on("change", function() {
-                        var checkoutDate = getDate(this);
-                        from.datepicker("option", "maxDate", checkoutDate);
-                        from.datepicker("option", "maxDate", new Date(checkoutDate.getTime() - 24 * 60 * 60 * 1000));
-                    });
+    $("#checkin").datepicker({
+        dateFormat: "yy-mm-dd",
+        minDate: 0,
+        onSelect: function(dateText) {
+            var checkinDate = new Date(dateText);
+            var dayOfWeek = checkinDate.getDay(); // 0 = Sunday, 5 = Friday, 6 = Saturday
 
-                function getDate(element) {
-                    var date;
-                    try {
-                        date = $.datepicker.parseDate(dateFormat, element.value);
-                    } catch (error) {
-                        date = null;
-                    }
-                    return date;
-                }
-            });
+            // Automatically set the room to "6ห้อง" and disable room selection if it's Friday or Saturday
+            if (dayOfWeek === 5 || dayOfWeek === 6) {
+                $("#room").val("6ห้อง");
+                $("#room").prop("disabled", true);
+                alert("ห้อง 6ห้อง ถูกเลือกอัตโนมัติเนื่องจากเป็นวันศุกร์หรือเสาร์ และราคาจะปรับตามวัน");
+            } else {
+                $("#room").prop("disabled", false);
+            }
+
+            // Automatically set the checkout date to the next day after check-in
+            var checkoutDate = new Date(checkinDate.getTime() + 24 * 60 * 60 * 1000);
+            $("#checkout").datepicker("setDate", checkoutDate);
+            $("#checkout").datepicker("option", "minDate", checkoutDate);
+        }
+    });
+
+    $("#checkout").datepicker({
+        dateFormat: "yy-mm-dd",
+        minDate: 1
+    });
+});
 
             $(function() {
                 $("#availabilityForm").on("submit", function(event) {
@@ -279,15 +283,24 @@
                                 if (data.availability) {
                                     $("#status").text(data.availability).css("color", data.availability === "เต็ม" ? "red" : "green");
                                     $("#checkin-date").text(data.checkin);
-                                    $("#checkout-date").text(data.checkout);
+                                    $("#checkin-date1").text(data.checkin);
+                                    $("#checkout-date").text(data.checkout); 
+                                    $("#checkout-date1").text(data.checkout);
                                     $("#room-type").text(data.room);
-                                    $("#price").text(data.price); // Display the price here
+                                    $("#room-type1").text(data.room);
+                                    $("#price").text(data.price);
+                                    $("#price1").text(data.price); // Display the price here
                                     $("#security-deposit").text(data.security_deposit);
 
                                     if (data.is_full) {
                                         $("#bookingButtonContainer").hide(); // Hide the booking button if the room is full
                                     } else {
                                         $("#bookingButtonContainer").show(); // Show the booking button if there's availability
+                                    }
+                                    if (data.is_full) {
+                                        $("#bookingButtonContainer1").hide(); // Hide the booking button if the room is full
+                                    } else {
+                                        $("#bookingButtonContainer1").show(); // Show the booking button if there's availability
                                     }
 
                                 } else {
@@ -354,18 +367,159 @@
                     });
                 <?php endif; ?>
             });
-        </script>
+            document.getElementById('bookingButton1').addEventListener('click', function() {
+                const checkin = document.getElementById('checkin').value;
+                const checkout = document.getElementById('checkout').value;
+                const people = document.getElementById('people').value;
+                const room = document.getElementById('room').value;
 
-        <map class="map">
-            <div class="search_container map_container">
-                <div style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
-                    <p style="font-size: 30px;">นันท์นภัส พลูวิลล่า</p>
-                    <p>เลขที่ 88/1 ถนน รพช. สส. 3046 อ.เมืองสมุทรสงคราม จ.สมุทรสงคราม</p>
-                    <p style="border:1px solid black; border-radius: 20px; padding: 5px 15px; font-weight: 450;">GOOGLE MAP</p>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15524.73099838592!2d99.9906226632576!3d13.401008204121686!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e2d3856ac61931%3A0xb0bc2911e11f479e!2z4LiV4Liz4Lia4LilIOC5geC4oeC5iOC4geC4peC4reC4hyDguK3guLPguYDguKDguK3guYDguKHguLfguK3guIfguKrguKHguLjguJfguKPguKrguIfguITguKPguLLguKEg4Liq4Lih4Li44LiX4Lij4Liq4LiH4LiE4Lij4Liy4LihIDc1MDAw!5e0!3m2!1sth!2sth!4v1721819468748!5m2!1sth!2sth" width="700" height="550" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
+                if (!checkin || !checkout || !people || !room) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'กรุณากรอกข้อมูลให้ครบถ้วนก่อนทำการจอง',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'ตกลง'
+                    });
+                    return;
+                }
+
+                const checkinDate = new Date(checkin);
+                const checkoutDate = new Date(checkout);
+
+                if (checkoutDate <= checkinDate) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Check-out date must be after the check-in date.',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'ตกลง'
+                    });
+                    return;
+                }
+
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    window.location = 'booking.php';
+                <?php else: ?>
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'กรุณาเข้าสู่ระบบก่อนทำการจอง',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'เข้าสู่ระบบ'
+                    }).then(() => {
+                        window.location = 'login.php';
+                    });
+                <?php endif; ?>
+            });
+        </script>
+        
+
+<style>
+    .map {
+        width: 100%;
+    }
+    .gmap{
+        /* style="border:1px solid black; border-radius: 20px; padding: 5px 15px; font-weight: 450;" */
+        border: 1px solid;
+        border-color: black;
+        border-radius: 20px;
+        padding: 5px 15px;
+        font-weight: 450;
+    }
+
+    .search_container {
+        padding: 20px;
+    }
+
+    
+    .map_container .p1 {
+        font-size: 2rem; /* Default font size */
+    }
+    .map_container .p2 {
+        font-size: 1.2rem; /* Default font size */
+    }
+
+    .search_container .map_container {
+        width: 100%;
+        max-width: 700px;
+    }
+
+    .search_container iframe {
+        width: 100%;
+        height: 550px;
+    }
+
+    @media only screen and (max-width: 768px) {
+        .map_container .p1 {
+        font-size: 1.5rem; /* Default font size */
+    }
+    .map_container .p2 {
+        font-size: 1rem; /* Default font size */
+    }
+    .gmap{
+        /* style="border:1px solid black; border-radius: 20px; padding: 5px 15px; font-weight: 450;" */
+        border: 1px solid;
+        border-color: black;
+        border-radius: 20px;
+        padding: 3px 12px;
+        font-weight: 400;
+    }
+
+        .search_container iframe {
+            height: 400px; /* Reduce height for smaller screens */
+        }
+
+        .search_container p[style*="border"] {
+            padding: 5px 10px; /* Adjust padding */
+            font-size: 1rem; /* Adjust font size */
+        }
+    }
+
+    @media only screen and (max-width: 480px) {
+        .map_container .p1 {
+        font-size: 1rem; /* Default font size */
+    }
+    .map_container .p2 {
+        font-size: 0.6rem; /* Default font size */
+    }
+    .gmap{
+        /* style="border:1px solid black; border-radius: 20px; padding: 5px 15px; font-weight: 450;" */
+        border: 1px solid;
+        border-color: black;
+        border-radius: 20px;
+        padding: 2px 5px;
+        font-weight: 400;
+        font-size: 10px;
+    }
+
+        .search_container iframe {
+            height: 300px; /* Further reduce height for smaller screens */
+        }
+
+        .search_container p[style*="border"] {
+            padding: 5px 8px; /* Adjust padding for smaller screens */
+            font-size: 0.9rem; /* Adjust font size */
+        }
+    }
+</style>
+
+<map class="map">
+    <div class="search_container map_container">
+        <div style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
+            <p  class="p1">นันท์นภัส พลูวิลล่า </p>
+            <p class="p2" >เลขที่ 88/1 ถนน รพช. สส. 3046 อ.เมืองสมุทรสงคราม จ.สมุทรสงคราม</p>
+            <p class="gmap" >GOOGLE MAP</p>
+            <div class="map_container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15524.73099838592!2d99.9906226632576!3d13.401008204121686!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e2d3856ac61931%3A0xb0bc2911e11f479e!2z4LiV4Liz4Lia4LilIOC5geC4oeC5iOC4geC4peC4reC4hyDguK3guLPguYDguKDguK3guYDguKHguLfguK3guIfguKrguKHguLjguJfguKPguKrguIfguITguKPguLLguKEg4Liq4Lih4Li44LiX4Lij4Liq4LiH4LiE4Lij4Liy4LihIDc1MDAw!5e0!3m2!1sth!2sth!4v1721819468748!5m2!1sth!2sth" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
-        </map>
+        </div>
+    </div>
+</map>
+
+
 
         <footer class="footer">
             <div class="footer__container">
@@ -382,14 +536,10 @@
                 </div>
                 <div class="footer__col">
                     <h4>Contact Us</h4>
-                    <p>098 646 1451</p>
+                    <p>T. 098 646 1451</p>
                     <p>nannaphas12345678@gmail.com</p>
                 </div>
-                <div class="footer__col">
-                    <h4></h4>
-
-
-                </div>
+                
             </div>
         </footer>
     </body>

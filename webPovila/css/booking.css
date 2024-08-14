@@ -1,62 +1,62 @@
 @import url("https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap");
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Arial', sans-serif;
 }
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
 nav {
     margin: 0;
-   
     padding: 1rem 13rem;
     display: flex;
     align-items: center;
     background-color: #FCF7F3;
     width: 100%;
     justify-content: space-between;
-  }
-  
-  
-  
-  .nav__logo {
+}
+
+.nav__logo {
     font-size: 1.5rem;
     font-weight: 600;
     color: var(--text-dark);
-  
-  }
-  
-  .nav__links {
+}
+
+.nav__links {
     list-style: none;
     display: flex;
     align-items: center;
     gap: 2rem;
-    
-  }
-  
-  .link a {
+}
+
+.link a {
     font-weight: 400;
     font-size: 1.1em;
     color: #000;
     transition: 0.3s;
     text-decoration: none;
     font-family: "Poppins", sans-serif;
-  }
-  
-  .link a:hover {
+}
+
+.link a:hover {
     color: var(--primary-color);
     text-decoration: underline;
-  }
+}
 
 .container {
     display: flex;
     justify-content: space-between;
     width: 80%;
     margin: 30px auto;
+    flex-wrap: wrap; /* ทำให้ container สามารถแสดงในหลายแถวบนหน้าจอขนาดเล็ก */
 }
+
 .details, .form-container {
     width: 48%;
     background-color: #fff;
@@ -64,34 +64,38 @@ nav {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 10rem;
-   
+    
+    
 }
-.details {
-    margin: 0px 10rem 20rem 0px;
-}
+
 .header h2, .customer-info h2 {
     margin: 0 0 20px 0;
     color: #333;
 }
+
 .summary {
     background-color: #e6f7ff;
     padding: 15px;
     border-radius: 5px;
     margin-top: 20px;
 }
+
 .summary p {
     margin: 5px 0;
 }
+
 .total {
     font-size: 1.5em;
     color: #d9534f;
     font-weight: bold;
 }
+
 label {
     display: block;
     margin-bottom: 5px;
     color: #333;
 }
+
 input[type="text"], input[type="email"], select {
     width: 100%;
     padding: 10px;
@@ -100,6 +104,7 @@ input[type="text"], input[type="email"], select {
     border-radius: 5px;
     box-sizing: border-box;
 }
+
 .submit-btn {
     background-color: #007bff;
     color: #fff;
@@ -110,7 +115,83 @@ input[type="text"], input[type="email"], select {
     transition: background-color 0.3s;
     font-size: 1em;
 }
+
 .submit-btn:hover {
     background-color: #0056b3;
 }
 
+/* Responsive Design */
+@media only screen and (max-width: 1024px) {
+    nav {
+        padding: 1rem 5rem; /* ลดขนาด padding เมื่อหน้าจอเล็กลง */
+    }
+
+    .container {
+        width: 90%; /* เพิ่มความกว้างของ container เพื่อใช้พื้นที่มากขึ้น */
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    nav {
+        padding: 1rem 2rem; /* ลด padding ให้มากขึ้นเมื่อหน้าจอแคบ */
+    }
+
+    .container {
+        flex-direction: column; /* จัดเรียงองค์ประกอบในแนวตั้ง */
+        width: 100%; /* ขยาย container ให้เต็มหน้าจอ */
+    }
+
+    .details, .form-container {
+        width: 100%; /* ขยายรายละเอียดและฟอร์มให้เต็มความกว้าง */
+        margin-bottom: 2rem; /* ลด margin bottom */
+    }
+
+    .details {
+        margin: 0 0 2rem 0; /* ลด margin เมื่ออยู่ในหน้าจอเล็ก */
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    nav {
+        padding: 1rem 1rem; /* ลด padding ให้เหมาะสมกับมือถือ */
+    }
+
+    .nav__logo {
+        font-size: 1.2rem; /* ลดขนาดโลโก้ในมือถือ */
+    }
+
+    .link a {
+        font-size: 0.9em; /* ลดขนาดฟอนต์ในเมนู */
+    }
+
+    .submit-btn {
+        padding: 10px 15px; /* ลดขนาด padding ของปุ่ม */
+        font-size: 0.9em; /* ลดขนาดฟอนต์ของปุ่ม */
+    }
+
+    /* ลดขนาดทั้งหมดลง 5px */
+    .nav__logo {
+        font-size: 1.15rem; /* จาก 1.2rem ลดลง */
+    }
+
+    .link a {
+        font-size: 0.85em; /* จาก 0.9em ลดลง */
+    }
+
+    .submit-btn {
+        padding: 5px 10px; /* จาก 10px 15px ลดลง */
+        font-size: 0.85em; /* จาก 0.9em ลดลง */
+    }
+
+    .details, .form-container {
+        padding: 15px; /* ลด padding ของ container ลง */
+    }
+
+    label, input[type="text"], input[type="email"], select {
+        font-size: 0.9em; /* ลดขนาดฟอนต์ในฟอร์ม */
+    }
+
+    .total {
+        font-size: 1.25em; /* ลดขนาดฟอนต์ของยอดรวม */
+    }
+}

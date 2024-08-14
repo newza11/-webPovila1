@@ -4,6 +4,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Mitr", sans-serif;
+  
 }
 
 #list-title {
@@ -11,14 +12,16 @@ body {
 }
 
 #list-title h1 {
-  font-size: 100px;
+  font-size: 120px;
   font-weight: 300;
   width: 100%;
   text-align: center;
+  font-family: "Mitr", sans-serif;
 }
 
 #list-title h2 {
   font-size: 20px;
+  font-family: "Mitr", sans-serif;
 }
 
 #list-tab-content .tab-pane {
@@ -42,6 +45,7 @@ body {
   color: #9b9b9b;
   font-weight: 500;
   font-size: large;
+  font-family: "Mitr", sans-serif;
 }
 
 #list-tab a.active {
@@ -66,88 +70,223 @@ body {
 }
 
 #list-home .text {
-  width: 40%;
-  padding: 50px;
+  width: 100%;
+  padding: 20px;
   background-color: #494949;
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  box-sizing: border-box; /* สำคัญเพื่อให้ padding ไม่เกินขอบ */
+  font-family: "Mitr", sans-serif;
 }
 
 #list-home .text h1 {
-  font-size: 30px;
-  padding-bottom: 5px;
+  font-size: 27px; /* ขนาดปกติ */
+  padding-bottom: 10px;
+}
+
+#list-home .text p {
+  font-size: 17px; /* ขนาดปกติ */
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  #list-home .text h1 {
+    font-size: 20px; /* ขนาดเล็กลงสำหรับแท็บเล็ต */
+  }
+
+  #list-home .text p {
+    font-size: 14px; /* ขนาดเล็กลงสำหรับแท็บเล็ต */
+  }
+}
+
+@media (max-width: 576px) {
+  #list-home .text h1 {
+    font-size: 13px; /* ขนาดเล็กลงสำหรับมือถือ */
+  }
+
+  #list-home .text p {
+    font-size: 10px; /* ขนาดเล็กลงสำหรับมือถือ */
+    line-height: 1.4;
+  }
 }
 
 #list-profile {
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: center;
-  padding: 0 100px;
+  align-items: center;
+  font-family: "Mitr", sans-serif;
 }
 
-#list-profile .profile {
+#list-profile .text {
+  width: 100%;
+  padding: 20px;
+  background-color: #494949;
+  color: white;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
-#list-profile .profile img {
-  height: 50px;
-  width: 50px;
+#list-profile h1 {
+  font-size: 20px;
+  padding-bottom: 10px;
+}
+
+#list-profile .text p {
+  font-size: 1px;
+  line-height: 1.5;
+}
+
+#list-profile h2 {
+  font-size: 13px;
+}
+
+#list-profile img {
+  width: 2rem;
+  height: 30px;
   object-fit: cover;
-  margin-right: 20px;
 }
 
-#list-profile .profile h1 {
-  font-size: 15px;
-  font-weight: 500;
-  color: #494949;
+@media (max-width: 768px) {
+  #list-profile h1 {
+    font-size: 11px;
+  }
+
+  #list-profile h2 {
+    font-size: 6px;
+  }
+
+  #list-profile img {
+    width: 1.4rem;
+    height: 30px;
+  }
+
+  #list-profile .text p {
+    font-size: 14px;
+  }
 }
 
-#list-profile .profile h2 {
-  font-size: 12px;
-  font-weight: 500;
-}
+@media (max-width: 576px) {
+  #list-profile h1 {
+    font-size: 11px;
+  }
 
-/* #list-profile .image {
-  width: 300px;
-  height: 300px;
-  padding: 5px;
-  background-color: #a1a1a1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
+  #list-profile h2 {
+    font-size: 6px;
+  }
 
-#list-profile .image img {
-  max-height: 250px;
-  border: 2px solid rgba(255, 255, 255, 5);
-  backdrop-filter: blur(20px);
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 5);
+  #list-profile img {
+    width: 1.8rem;
+    height: 30px;
+  }
+
+  #list-profile .text p {
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  #list-profile .text {
+    padding: 10px;
+  }
 }
 
 #list-tab-message {
   display: flex;
   flex-direction: column;
+  font-family: "Mitr", sans-serif;
 }
 
-#list-messages img {
-  height: 430px;
+#list-messages .text {
+  width: 100%;
+  padding: 20px;
+  background-color: #494949;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+#list-messages .text h1 {
+  font-size: 24px;
+  padding-bottom: 10px;
+}
+
+#list-messages .text p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  #list-messages h1 {
+    font-size: 10px;
+  }
+
+  #list-messages button {
+    font-size: 10px;
+  }
+
+  #list-messages div {
+    font-size: 10px;
+  }
+
+  #list-messages .text p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  #list-messages h1 {
+    font-size: 10px;
+  }
+
+  #list-messages {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #list-messages button {
+    font-size: 10px;
+  }
+
+  #list-messages div {
+    font-size: 10px;
+  }
+
+  #list-messages .text p {
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  #list-messages .text {
+    padding: 10px;
+  }
+}
+
+#list-messages .image img {
+  width: 100%;
+  height: 470px;
   object-fit: cover;
 }
 
-#list-messages .accordion-button {
-  font-weight: 500;
+@media (max-width: 768px) {
+  #list-messages img {
+    height: 300px;
+    width: 200px;
+  }
 }
 
-#list-messages .accordion-button:not(.collapsed) {
-  color: #910000;
-}
-
-#list-messages .accordion-button:focus {
-  box-shadow: none;
+@media (max-width: 576px) {
+  #list-messages img {
+    height: 1000px;
+    width: 200px;
+  }
 }
 
 .img-grid {
@@ -160,8 +299,8 @@ body {
   width: 100%;
   object-fit: cover;
   height: 250px;
-  /* height: auto; */
 }
+
 .Main_image {
   height: 500px;
 }
@@ -184,6 +323,7 @@ body {
 
 .modal-title {
   color: #fff;
+  font-family: "Mitr", sans-serif;
 }
 
 .btn-close {
@@ -204,7 +344,7 @@ body {
   overflow-x: auto;
   white-space: nowrap;
   width: 100%;
-  padding-left: 10px; /* ปรับดู */
+  padding-left: 10px;
 }
 
 .preview-images img {
@@ -213,7 +353,7 @@ body {
 }
 
 .footer-thumbnail {
-  width: auto; /* ขนาดรูป */
+  width: auto;
   height: 100px;
   transition: border 0.3s;
 }
@@ -249,4 +389,239 @@ body {
 
 .carousel-control-next {
   right: 10px;
+}
+
+/* Media Queries for Responsive Design */
+
+/* สำหรับหน้าจอขนาดแท็บเล็ต */
+@media (max-width: 768px) {
+  .img-grid {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .img-grid img {
+    height: 100px;
+  }
+  .img-grid .img-fluid {
+    height: 200px; /* ลดขนาดความสูงของรูปภาพ */
+    width: 250px; /* รูปภาพจะปรับขนาดตามความกว้างของเนื้อหา */
+    flex-shrink: 0; /* ป้องกันไม่ให้รูปภาพหดตัว */
+    max-height: 150px;
+  }
+  .Main_image {
+    height: 508px;
+    max-height: 200px;
+    object-fit: cover;
+    display: none; /* ลดขนาดความสูงของรูปภาพหลัก */
+  }
+
+  
+}
+
+/* สำหรับหน้าจอขนาดมือถือ */
+@media (max-width: 576px) {
+  .img-grid {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 10px;
+    justify-content: center;
+  }
+  .accordion-button{
+    padding: 5px;
+  }
+
+  .img-grid .img-fluid {
+    height: 150px; /* ลดขนาดความสูงของรูปภาพ */
+    width: auto; /* รูปภาพจะปรับขนาดตามความกว้างของเนื้อหา */
+    flex-shrink: 0; /* ป้องกันไม่ให้รูปภาพหดตัว */
+    max-height: 100px;
+  }
+
+  .Main_image {
+    height: 508px;
+    max-height: 200px;
+    object-fit: cover;
+    display: none; /* ลดขนาดความสูงของรูปภาพหลัก */
+  }
+
+  .modal-header {
+    padding: 10px; /* ลดขนาด padding ของหัวข้อ modal */
+  }
+
+  .modal-title {
+    font-size: 18px; /* ลดขนาดตัวอักษรของหัวข้อ modal */
+  }
+}
+
+/* Styles for Mobile Devices (<= 576px) */
+@media (max-width: 576px) {
+  #list-title h1 {
+    font-size: 40px;
+  }
+
+  #list-title h2 {
+    font-size: 14px;
+  }
+
+  #list-tab a {
+    padding: 5px 10px;
+    font-size: medium;
+  }
+
+  #list-home-carousel img {
+    height: 200px;
+  }
+
+  #list-home .text {
+    width: 100%;
+    padding: 10px;
+  }
+
+  #list-profile {
+    flex-direction: column;
+    padding: 0 10px;
+  }
+
+  #list-profile .profile {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #list-profile .profile img {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  #list-messages img {
+    height: 150px;
+  }
+
+  .img-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .img-grid img {
+    height: 100px;
+  }
+
+  .footer-thumbnail {
+    height: 40px;
+  }
+}
+
+/* Styles for Tablet Devices (> 576px and <= 768px) */
+@media (min-width: 577px) and (max-width: 768px) {
+  #list-title h1 {
+    font-size: 60px;
+  }
+
+  #list-title h2 {
+    font-size: 16px;
+  }
+
+  #list-tab a {
+    padding: 10px 20px;
+    font-size: large;
+  }
+
+  #list-home-carousel img {
+    height: 300px;
+  }
+
+  #list-home .text {
+    width: 60%;
+    padding: 20px;
+  }
+
+  #list-profile {
+    flex-direction: column;
+    padding: 0 20px;
+  }
+
+  #list-profile .profile {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #list-profile .profile img {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  #list-messages img {
+    height: 250px;
+  }
+
+  .img-grid {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .img-grid img {
+    height: 150px;
+  }
+
+  .footer-thumbnail {
+    height: 60px;
+  }
+}
+
+/* Styles for Desktop Devices (> 768px) */
+@media (min-width: 769px) {
+  #list-title h1 {
+    font-size: 100px;
+  }
+
+  #list-title h2 {
+    font-size: 18px;
+  }
+
+  #list-tab a {
+    padding: 15px 50px;
+    font-size: large;
+  }
+
+  #list-home-carousel img {
+    height: 470px;
+  }
+
+  #list-home .text {
+    width: 50%;
+    padding: 30px;
+  }
+
+  #list-profile {
+    flex-direction: row;
+    padding: 0 100px;
+  }
+
+  #list-profile .profile {
+    flex-direction: row;
+  }
+
+  #list-profile .profile img {
+    margin-right: 20px;
+  }
+
+  #list-messages img {
+    height: 400px;
+  }
+
+  .img-grid {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+
+  .img-grid img {
+    height: 250px;
+  }
+
+  .footer-thumbnail {
+    height: 100px;
+  }
 }

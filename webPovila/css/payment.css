@@ -17,26 +17,27 @@ h1 {
     text-align: center;
     color: #333;
 }
+
 h3 {
     text-align: center;
     color: #333;
     font-size: 15px;
 }
+
 h4 {
     text-align: center;
     color: #333;
     font-size: 20px;
 }
+
 p {
     text-align: center;
 }
+
 .payment-details {
     margin-top: 20px;
     text-align: center;
-margin: 2%;
-
-
-    
+    margin: 2%;
 }
 
 img {
@@ -50,6 +51,7 @@ form {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
 }
 
 label {
@@ -64,11 +66,13 @@ button {
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.3s;
+    margin-top: 10px; /* Add space above the button */
 }
 
 button:hover {
     background-color: #0056b3;
 }
+
 .return-link {
     display: inline-block;
     padding: 10px 20px;
@@ -78,11 +82,12 @@ button:hover {
     border-radius: 5px;
     transition: background-color 0.3s;
 }
+
 .return-link:hover {
     background-color: #0056b3;
 }
-/* Existing CSS styles remain the same */
 
+/* Message confirmation */
 .hidden {
     display: none;
 }
@@ -95,4 +100,59 @@ button:hover {
     border-radius: 4px;
     margin-top: 10px;
     text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    form {
+        flex-direction: column;
+        align-items: center; /* Center the file upload section */
+    }
+
+    label {
+        margin-right: 0;
+        margin-bottom: 10px;
+        text-align: center; /* Center label text */
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    h1, h3, h4 {
+        font-size: 16px;
+    }
+
+    button, .return-link {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    form {
+        width: 100%; /* Ensure the form takes full width on very small screens */
+        justify-content: center; /* Center align the content */
+    }
+
+    label {
+        width: 100%;
+        text-align: center;
+    }
 }

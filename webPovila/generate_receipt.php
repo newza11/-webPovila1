@@ -98,6 +98,8 @@ if (!$booking) {
         .btn-primary {
             background-color: #007bff;
             border-color: #007bff;
+            border-radius: 40px;
+            
             transition: background-color 0.3s, border-color 0.3s;
         }
 

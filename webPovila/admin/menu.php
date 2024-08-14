@@ -98,6 +98,7 @@
     </div>
     <div class="dropdown" id="userDropdown">
         <a href="setting.php">Settings</a>
+        <a href="../index.php">back to Home</a>
         <a href="confirm_signout.php">SignOut</a>
     </div>
 </div>
