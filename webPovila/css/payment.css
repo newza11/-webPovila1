@@ -1,21 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    padding: 20px;
+    font-family: "Poppins", sans-serif;
+    padding: 50px 20px;
+    background-image: -webkit-linear-gradient(90deg, #ffffff 0%, #FCF7F3 50%, #faf0e8 100%);
+    background-repeat: no-repeat;
+    background-size: cover; 
 }
+
 
 .container {
     max-width: 600px;
     margin: 0 auto;
     background-color: #fff;
-    padding: 20px;
+    padding: 30px 10px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-bottom-style: solid;
+    border-color: #e4b58a;
+}
+.bank-details  .ddd {
+    border: 1px solid #e4b58a; /* Black border */
+    margin: 0 1rem;
+    
+    
+    border-radius: 10px; /* Rounded corners */
+    background-color: #fafafa; /* Light background color */
+    margin-top: 1rem;
+    
+}
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* Adds space between each option */
 }
 
+.payment-options label {
+    display: flex;
+    align-items: center;
+}
 h1 {
     text-align: center;
     color: #333;
+    border-bottom-style: solid;
+    border-color: #e4b58a;
+    padding-bottom: 1rem;
+    
 }
 
 h3 {
@@ -28,10 +58,13 @@ h4 {
     text-align: center;
     color: #333;
     font-size: 20px;
+    margin-bottom: 3rem;
+    margin-top: 2rem;
 }
 
 p {
     text-align: center;
+    
 }
 
 .payment-details {
@@ -66,7 +99,7 @@ button {
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.3s;
-    margin-top: 10px; /* Add space above the button */
+    
 }
 
 button:hover {
@@ -121,6 +154,9 @@ button:hover {
         margin-right: 0;
         margin-bottom: 10px;
         text-align: center; /* Center label text */
+    }
+    .payment-slip #paymentSlip{
+        align-items: center;
     }
 
     button {

@@ -45,6 +45,7 @@ header {
     position: relative;
     display: flex;
     align-items: center;
+    
 }
 
 .user-settings .user {
@@ -204,6 +205,8 @@ button:hover {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 320px;
+    border-bottom-style: solid;
+    border-color: #e4b58a;
 }
 
 .settings-container h1 {

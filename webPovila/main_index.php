@@ -173,7 +173,7 @@ $conn->close();
                     alt=""
                   />
                   <div>
-                    <h1><h1><?= $villaDetails[0]['detail_type']; ?></h1>
+                    <h1><?= $villaDetails[0]['detail_type']; ?></h1>
                     <h2>
                     <?= $villaDetails[0]['detail_description']; ?>
                     </h2>

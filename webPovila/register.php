@@ -81,13 +81,16 @@ $conn->close();
     
     </host>
     <div class="register">
-        <?php if ($message): ?>
-            <p><?php echo $message; ?></p>
-        <?php endif; ?>
+        
         <form action="register.php" method="POST">
+            
             <div class="register-header">
                 <header>Register</header>
+                <?php if ($message): ?>
+            <p><?php echo $message; ?></p>
+        <?php endif; ?>
             </div>
+            
             <div class="input-box">
                 <input type="text" class="input-field" placeholder="Email" name="email" required>
             </div>

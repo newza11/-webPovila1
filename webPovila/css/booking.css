@@ -4,12 +4,30 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
 }
 
 body {
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif;
+    background-image: -webkit-linear-gradient(90deg, #ffffff 0%, #FCF7F3 50%, #faf0e8 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    
+
+}
+.header p {
+    margin: 6px 0;
+}
+.details{
+    border-bottom-style: solid;
+    border-color: #e4b58a;
+}
+.form-container{
+    border-bottom-style: solid;
+    border-color: #e4b58a;
 }
 
 nav {
@@ -20,6 +38,8 @@ nav {
     background-color: #FCF7F3;
     width: 100%;
     justify-content: space-between;
+    border-bottom-style: solid;
+    border-color: #e4b58a;
 }
 
 .nav__logo {
@@ -55,6 +75,7 @@ nav {
     width: 80%;
     margin: 30px auto;
     flex-wrap: wrap; /* ทำให้ container สามารถแสดงในหลายแถวบนหน้าจอขนาดเล็ก */
+    
 }
 
 .details, .form-container {
@@ -76,8 +97,8 @@ nav {
 .summary {
     background-color: #e6f7ff;
     padding: 15px;
-    border-radius: 5px;
-    margin-top: 20px;
+    border-radius: 15px;
+    margin-top: 30px;
 }
 
 .summary p {
@@ -134,11 +155,14 @@ input[type="text"], input[type="email"], select {
 @media only screen and (max-width: 768px) {
     nav {
         padding: 1rem 2rem; /* ลด padding ให้มากขึ้นเมื่อหน้าจอแคบ */
+        
     }
 
     .container {
         flex-direction: column; /* จัดเรียงองค์ประกอบในแนวตั้ง */
         width: 100%; /* ขยาย container ให้เต็มหน้าจอ */
+       padding: 2rem;
+        
     }
 
     .details, .form-container {
@@ -154,6 +178,15 @@ input[type="text"], input[type="email"], select {
 @media only screen and (max-width: 480px) {
     nav {
         padding: 1rem 1rem; /* ลด padding ให้เหมาะสมกับมือถือ */
+    }
+    h2 {
+        font-size: 18px;
+    }
+    p{
+        font-size: 14px;
+    }
+    .fff{
+        font-size: 14px;
     }
 
     .nav__logo {

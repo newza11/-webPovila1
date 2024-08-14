@@ -63,7 +63,7 @@
             }
 
             .nav__links .link img {
-                margin-left: 10px;
+                
                 border-radius: 50%;
                 cursor: pointer;
             }
