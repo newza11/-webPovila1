@@ -305,13 +305,13 @@ section a {
     }
 }
 @media (max-width: 576px) {
-    host {
+    .host {
         padding: 0.8rem 1rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
-
+    
     .logo {
         flex: 1;
     }
@@ -325,16 +325,16 @@ section a {
     .login,
     .register {
         width: 100%;
-        padding: 10px; /* ปรับขนาด margin ให้เล็กลง */
+        padding: 20px; /* ปรับขนาด margin ให้เล็กลง */
         height: auto;
         border-radius: 15px;
         box-shadow: none;
-        margin: 0 20px; /* ลด margin สำหรับ login และ register */
+        margin: 0 30px; /* ลด margin สำหรับ login และ register */
     }
 
     .login-header header,
     .register-header header {
-        font-size: 20px;
+        font-size: 30px;
     }
 
     .input-box .input-field {
@@ -347,5 +347,8 @@ section a {
     .submit1-btn {
         height: 45px;
         font-size: 14px;
+        
+        
+        
     }
 }

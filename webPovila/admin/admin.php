@@ -89,15 +89,15 @@
 
             <!-- Chart Section -->
             <div class="recentCustomers">
-                <div class="cardHeader">
-                    <h2>Monthly Revenue</h2>
-                </div>
-                <canvas id="revenueChart" width="400" height="200"></canvas>
-                <div class="cardHeader">
-                    <h2>Yearly Revenue</h2>
-                </div>
-                <canvas id="yearlyRevenueChart" width="400" height="200"></canvas>
-            </div>
+    <div class="cardHeader">
+        <h2>Monthly Revenue</h2>
+    </div>
+    <canvas id="revenueChart"></canvas> <!-- ไม่ต้องตั้ง width/height ใน canvas -->
+    <div class="cardHeader">
+        <h2>Yearly Revenue</h2>
+    </div>
+    <canvas id="yearlyRevenueChart"></canvas>
+</div>
         </div>
     </div>
 

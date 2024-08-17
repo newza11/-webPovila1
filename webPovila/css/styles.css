@@ -19,12 +19,15 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  cursor: url();
 }
 
 .section__container {
   max-width: var(--max-width);
   margin: auto;
   padding: 0rem 0rem;
+  
+  
 }
 
 .section__header {
@@ -33,10 +36,74 @@
   color: var(--text-dark);
   text-align: center;
  
+
 }
+/* เปลี่ยนสีพื้นหลังและขอบของวันที่เต็ม */
+.ui-datepicker td.full-booked  {
+  background-color: red !important;
+  color: white !important; /* เปลี่ยนสีตัวอักษร */
+  border: 1px solid #ff0000 !important; /* เพิ่มขอบสีแดง */
+  text-decoration: line-through !important; /* เพิ่มเส้นขีดผ่าน */
+}
+
+
+
+/* สีพื้นหลังและสีตัวอักษรสำหรับวันที่ว่าง */
+.ui-datepicker td.available {
+  background-color: rgb(0, 165, 0) !important; /* พื้นหลังสีเขียวสำหรับวันที่ว่าง */
+  color: white !important; /* สีตัวอักษรสีขาว */
+  border: 1px solid rgb(0, 165, 0)!important; /* เพิ่มขอบสีแดง */
+  
+ 
+}
+
+
+
+
+            .nav__links {
+                display: flex;
+                align-items: center;
+            }
+
+            .nav__links .link {
+                display: flex;
+                align-items: center;
+            }
+
+            .nav__links .link img {
+                
+                border-radius: 50%;
+                cursor: pointer;
+            }
+
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+                z-index: 1;
+            }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+            .dropdown-content a:hover {
+                background-color: #f1f1f1;
+            }
+
+            .show {
+                display: block;
+            }
+ 
 
 body {
   font-family: "Kanit", "Poppins", sans-serif;
+  background-color: hsl(0, 0%, 99%);
 }
 
 nav {
@@ -94,6 +161,8 @@ nav {
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
+  margin: 0 20px;
+  
 }
 
 .header__content {
@@ -286,17 +355,19 @@ nav {
   display: flex;
   justify-content: flex-end;
   position: absolute;
-  margin: -1.9rem 12rem -2.5rem;
+  margin: -2.5rem 11.5rem -2.5rem;
 }
 
 .button button {
-  background-color: #007bff;
+  background-color: var(--primary-color);
   color: white;
   border: none;
-  border-radius: 12px;
-  padding: 3px 13px;
+  border-radius: 15px;
+  padding: 5px 15px;
   font-size: 16px;
   cursor: pointer;
+  
+  
 }
 
 button:hover {
@@ -343,10 +414,32 @@ button:hover {
   text-align: center;
 }
 
+.footer {
+    text-align: center;
+    padding: 20px 0;
+}
+
+
+
+.footer__col {
+    display: flex;
+    flex-direction: column;
+    
+    margin-right: 20px;
+}
+
+
+
+
 .footer__container {
   display: grid;
-  grid-template-columns: 2 fr repeat(3, 1fr); /* แบ่งออกเป็น 3 คอลัมน์ */
-  gap: 5rem;
+  display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  
+  gap: 8rem;
   max-width: 1200px; /* จำกัดความกว้างสูงสุด */
   width: 100%; /* ให้ขยายเต็มที่เท่าที่สามารถทำได้ */
   justify-content: center; /* จัดให้อยู่ตรงกลาง */
@@ -357,20 +450,23 @@ button:hover {
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--text-dark);
+  
 }
 
 .footer__col h4 {
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
+  margin-top: 1.5rem;
+  font-size: 1.5rem;
   font-weight: 600;
   color: var(--text-dark);
+  
 }
 
 .footer__col p {
-  margin-bottom: 1rem;
+ 
   color: var(--text-light);
   cursor: pointer;
   transition: 0.3s;
+  margin: 10px 0;
 }
 
 .footer__col p:hover {
@@ -394,6 +490,12 @@ button:hover {
       grid-template-columns: 1fr; /* 1 คอลัมน์ในมือถือ */
       gap: 1rem;
   }
+  .booking__container .btn{
+    font-size: 13px;
+     margin: 15px;
+     margin-bottom: 20px;
+  }
+ 
 
   .footer__col {
       text-align: center; /* จัดข้อความให้อยู่กลางในหน้าจอเล็ก */
@@ -406,6 +508,7 @@ button:hover {
   .footer__col p {
       font-size: 0.9rem;
   }
+
 }
 
 /* Medium screens (tablets) */
@@ -483,10 +586,105 @@ button:hover {
     flex-direction: column;
     padding: 2rem 1rem;
     gap: 0.5rem;
-    
-    bottom: -9rem;
   }
 }
+
+
+    .map {
+        width: 100%;
+    }
+    .gmap{
+        /* style="border:1px solid black; border-radius: 20px; padding: 5px 15px; font-weight: 450;" */
+        border: 1px solid;
+        border-color: black;
+        border-radius: 20px;
+        padding: 5px 15px;
+        font-weight: 450;
+    }
+
+    .search_container {
+        padding: 20px;
+    }
+
+    
+    .map_container .p1 {
+        font-size: 2rem; /* Default font size */
+    }
+    .map_container .p2 {
+        font-size: 1.2rem; /* Default font size */
+    }
+
+    .search_container .map_container {
+        width: 100%;
+        max-width: 700px;
+    }
+
+    .search_container iframe {
+        width: 100%;
+        height: 550px;
+    }
+
+    @media only screen and (max-width: 768px) {
+        .map_container .p1 {
+        font-size: 1.5rem; /* Default font size */
+    }
+    .map_container .p2 {
+        font-size: 1rem; /* Default font size */
+    }
+    .gmap{
+        /* style="border:1px solid black; border-radius: 20px; padding: 5px 15px; font-weight: 450;" */
+        border: 1px solid;
+        border-color: black;
+        border-radius: 20px;
+        padding: 3px 12px;
+        font-weight: 400;
+    }
+
+        .search_container iframe {
+            height: 400px; /* Reduce height for smaller screens */
+        }
+
+        .search_container p[style*="border"] {
+            padding: 5px 10px; /* Adjust padding */
+            font-size: 1rem; /* Adjust font size */
+        }
+    }
+
+    @media only screen and (max-width: 480px) {
+        .map_container .p1 {
+        font-size: 1rem; /* Default font size */
+    }
+    .map_container .p2 {
+        font-size: 0.6rem; /* Default font size */
+    }
+    
+    .gmap{
+        /* style="border:1px solid black; border-radius: 20px; padding: 5px 15px; font-weight: 450;" */
+        border: 1px solid;
+        border-color: black;
+        border-radius: 20px;
+        padding: 2px 5px;
+        font-weight: 400;
+        font-size: 10px;
+    }
+    .nav__links .link img{
+      width:40px ;
+      height:40px ;
+    }
+    .nav__links .link a{
+      font-size: 15px;
+    }
+
+        .search_container iframe {
+            height: 300px; /* Further reduce height for smaller screens */
+        }
+
+        .search_container p[style*="border"] {
+            padding: 5px 8px; /* Adjust padding for smaller screens */
+            font-size: 0.9rem; /* Adjust font size */
+        }
+    }
+
 
   @media only screen and (max-width: 568px) {
     .booking__container form {
@@ -501,6 +699,7 @@ button:hover {
   .header__image__container{
     width: 100%;
     height: 100px;
+    margin: 0 ;
     
   }
   .search {
@@ -538,10 +737,7 @@ button:hover {
     margin: 0 auto;
   }
 
-  .footer__container {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
+
 
 
 ion-icon {

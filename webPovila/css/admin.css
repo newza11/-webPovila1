@@ -396,6 +396,10 @@ body {
   font-size: 14px;
   font-weight: 500;
 }
+.recentCustomers canvas {
+  max-width: 100%; /* กำหนดความกว้างเต็ม container */
+  height: auto; /* ให้ความสูงปรับตามสัดส่วนของความกว้าง */
+}
 
 .recentCustomers {
   position: relative;
@@ -440,6 +444,50 @@ body {
 .recentCustomers table tr:hover td h4 span {
   color: var(--white);
 }
+/* สำหรับหน้าจอแล็ปท็อป */
+@media (min-width: 768px) and (max-width: 1366px) {
+
+
+  /* ปรับขนาดของ cardBox */
+  .cardBox {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* แสดง 2 คอลัมน์ */
+      gap: 20px; /* เพิ่มระยะห่างระหว่างการ์ด */
+  }
+  .details {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+      padding: 20px; /* เพิ่ม padding ในการ์ดให้สวยงาม */
+      font-size: 1rem; /* ขนาดตัวอักษรในการ์ด */
+  }
+
+  /* ปรับความสูงของ card ให้อยู่ในระดับเดียวกัน */
+  .card .numbers {
+      font-size: 1.8rem; /* ขนาดตัวเลขในการ์ด */
+  }
+
+  /* ปรับความกว้างของตารางในส่วน recentOrders */
+  .recentOrders table {
+      width: 100%;
+      font-size: 0.9rem; /* ปรับขนาดตัวอักษรของตาราง */
+      
+  }
+
+  /* ปรับขนาด canvas ของกราฟให้เหมาะสม */
+  .recentCustomers canvas {
+      max-width: 100%; /* กราฟให้เต็มหน้าจอ */
+      height: auto;
+  }
+
+  /* ปรับขนาดปุ่ม */
+  .btn {
+      font-size: 0.9rem; /* ปรับขนาดตัวอักษรในปุ่ม */
+      padding: 10px 15px; /* ปรับขนาด padding */
+  }
+}
+
 
 /* ====================== Responsive Design ========================== */
 @media (max-width: 991px) {

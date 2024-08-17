@@ -144,10 +144,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         } else {
             echo 'Invalid file type. Only JPG, JPEG, and PNG files are allowed.';
-        }
+        }   
     } else {
         echo 'No file uploaded or there was an upload error.';
     }
 }
+
 
 ?>

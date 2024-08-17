@@ -13,19 +13,18 @@ if ($conn->connect_error) {
 }
 
 // ดึงข้อมูลจากตาราง villa_home_content
-$sql_home_content = "SELECT title, description FROM villa_home_content WHERE id = 2"; // ปรับ WHERE ตามต้องการ
+$sql_home_content = "SELECT title, description ,image_path FROM villa_home_content "; // ปรับ WHERE ตามต้องการ
 $result_home_content = $conn->query($sql_home_content);
 
 if ($result_home_content->num_rows > 0) {
-    while ($row = $result_home_content->fetch_assoc()) {
-        $title = $row["title"];
-        $description = $row["description"];
-
-        // แสดงผลข้อมูลจาก villa_home_content
+  while ($row = $result_home_content->fetch_assoc()) {
+    $villa_home[] = $row;
+    
+    
     }
 }
 
-// รับค่า id จาก URL หรือใช้ id เริ่มต้นเป็น 1
+
 
 // ดึงข้อมูลจากตาราง villa_details
 $sql_villa_details = "SELECT detail_type, detail_description FROM villa_details  ";
@@ -43,9 +42,32 @@ if ($result_villa_details->num_rows > 0) {
     }
   }
 
+  $sql_accordion_items = "SELECT id, title, description ,image_path FROM accordion_items";
+  $result_accordion_items = $conn->query($sql_accordion_items);
+  
+  $accordionItems = [];
+  if ($result_accordion_items->num_rows > 0) {
+      while ($row = $result_accordion_items->fetch_assoc()) {
+          $accordionItems[] = $row; // เก็บข้อมูลแต่ละแถวเป็นอาร์เรย์ใน $accordionItems
+      }
+  }
+
+  
+  $sql_villa_images = "SELECT id, image_path FROM villa_images";
+$result_villa_images = $conn->query($sql_villa_images);
+
+$villaImages = [];
+if ($result_villa_images->num_rows > 0) {
+    while ($row = $result_villa_images->fetch_assoc()) {
+        $villaImages[] = $row; // เก็บข้อมูลแต่ละแถวเป็นอาร์เรย์ใน $villaImages
+    }
+}
+  
+ 
+  
+
 $conn->close();
 ?>
-
 
 
 
@@ -110,51 +132,52 @@ $conn->close();
             <div class="carousel-item active">
               <img
                 class="d-block"
-                src="css\home1.jpg"
+                src=<?= $villa_home[0]['image_path']; ?>
                 alt=""
               />
             </div>
             <div class="carousel-item">
               <img
                 class="d-block"
-                src="poo/home4.jpg"
+                src=<?= $villa_home[1]['image_path']; ?>
                 alt=""
               />
             </div>
             <div class="carousel-item">
               <img
                 class="d-block"
-                src="poo/home3.jpg"
+                src=<?= $villa_home[2]['image_path']; ?>
                 alt=""
               />
             </div>
             <div class="carousel-item">
               <img
                 class="d-block"
-                src="poo/home7.jpg"
+                src=<?= $villa_home[3]['image_path']; ?>
             alt=""
               />
             </div>
             <div class="carousel-item">
               <img
                 class="d-block"
-                src="poo/home9.jpg"
+                src=<?= $villa_home[4]['image_path']; ?>
                 alt=""
               />
             </div>
             <div class="carousel-item">
               <img
                 class="d-block"
-                src="poo/home5.jpg"
+                src=<?= $villa_home[5]['image_path']; ?>
                 alt=""
               />
             </div>
           </div>
           
           <div class="text">
-            <h1><?= $title ?></h1>
+            <h1><?= $villa_home[0]['title']; ?></h1>
             <p>
-            <?= $description?>
+            <?= $villa_home[0]['description']; ?>
+            
             </p>
           </div>
         </div>
@@ -270,7 +293,7 @@ $conn->close();
                 aria-expanded="true"
                 aria-controls="collapseOne"
               >
-                สระว่ายนำ้
+              <?= $accordionItems[0]['title']; ?>
               </button>
             </h2>
             <div
@@ -280,10 +303,7 @@ $conn->close();
               data-bs-parent="#accordion-list"
             >
               <div class="accordion-body">
-                ให้คุณว่ายน้ำ หรือเล่นสไลด์เดอร์เพื่อความสนุกสนาน
-                เล่นน้ำหย่อนใจอย่างสมบูรณ์แบบและนั่งเล่นริมสระ
-                มอบความเป็นส่วนตัวในการพักผ่อน
-                มีสระสำหรับเด็กๆเล่นอย่างปลอดภัยมีชูชิพ และน้องเป็ดเหลืองเล่นน้ำเป็นเพื่่อนอีกด้วย
+                <?= $accordionItems[0]['description']; ?>
               </div>
             </div>
           </div>
@@ -297,7 +317,7 @@ $conn->close();
                 aria-expanded="false"
                 aria-controls="collapseTwo"
               >
-                ห้องคาราโอเกะ
+              <?= $accordionItems[1]['title']; ?>
               </button>
             </h2>
             <div
@@ -307,9 +327,7 @@ $conn->close();
               data-bs-parent="#accordion-list"
             >
               <div class="accordion-body">
-              มีห้องคาราโอเกะ พร้อมโต๊ะสนุ๊กให้บริการสำหรับผู้ที่ชื่นชอบเสียงเพลง
-                  พร้อมทั้งมีไฟเทค เสริมความสนุกสนานของร้องเพลง
-                  ภายในห้องดีไซน์แบบ Luxury มีความหรูหราอย่างลงตัว
+              <?= $accordionItems[1]['description']; ?>
               </div>
             </div>
           </div>
@@ -323,7 +341,7 @@ $conn->close();
                 aria-expanded="false"
                 aria-controls="collapseThree"
               >
-                ห้องครัว
+              <?= $accordionItems[2]['title']; ?>
               </button>
             </h2>
             <div
@@ -333,18 +351,17 @@ $conn->close();
               data-bs-parent="#accordion-list"
             >
               <div class="accordion-body">
-                ห้องครัวอุปกรณ์ครัวครบครันใกล้สระว่ายนำ้
-                มีทั้งครัวไทยละครัวฝรั่ง สามารถทำอาหารได้หลากหลายอย่างละ
-                มีเตาย่างบาร์บีคิวโต๊ะกินข้าวบริเวณริมสระน้ำ
+              <?= $accordionItems[2]['description']; ?>
               </div>
             </div>
           </div>
         </div>
-
+        
         <div>
           <img
             id="image-display"
-            src="poo\home2.jpg"
+            
+            src=<?= $accordionItems[0]['image_path']; ?>
             alt=""
           />
         </div>
@@ -359,7 +376,7 @@ $conn->close();
           <!-- Main Image -->
           <div>
             <img
-              src="poo/1.jpg"
+            src=<?= $villaImages[0]['image_path']; ?>
               class="img-fluid Main_image"
               
               style="height: 508px"
@@ -372,7 +389,7 @@ $conn->close();
           <!-- Side Images -->
           <div class="d-flex flex-column">
             <img
-              src="poo/2.jpg"
+            src=<?= $villaImages[1]['image_path']; ?>
               class="img-fluid mb-2"
               alt="Image 2"
               data-bs-toggle="modal"
@@ -380,7 +397,7 @@ $conn->close();
               data-bs-image="1"
             />
             <img
-              src="poo/3.jpg"
+            src=<?= $villaImages[2]['image_path']; ?>
               class="img-fluid mb-2"
               alt="Image 3"
               data-bs-toggle="modal"
@@ -390,7 +407,7 @@ $conn->close();
           </div>
           <div class="d-flex flex-column">
             <img
-              src="poo/4.jpg"
+            src=<?= $villaImages[3]['image_path']; ?>
               class="img-fluid mb-2"
               alt="Image 4"
               data-bs-toggle="modal"
@@ -398,7 +415,7 @@ $conn->close();
               data-bs-image="3"
             />
             <img
-              src="poo/5.jpg"
+            src=<?= $villaImages[4]['image_path']; ?>
               class="img-fluid mb-2"
               alt="Image 5"
               data-bs-toggle="modal"
@@ -579,23 +596,25 @@ $conn->close();
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // Attach click event listeners to the accordion buttons
+        var imagePaths = [
+                "<?= htmlspecialchars($accordionItems[0]['image_path']); ?>",
+                "<?= htmlspecialchars($accordionItems[1]['image_path']); ?>",
+                "<?= htmlspecialchars($accordionItems[2]['image_path']); ?>"
+            ];
         document
           .getElementById("headingOne")
           .addEventListener("click", function () {
-            document.getElementById("image-display").src =
-              "poo\\home2.jpg";
+            document.getElementById("image-display").src = imagePaths[0];
           });
         document
           .getElementById("headingTwo")
           .addEventListener("click", function () {
-            document.getElementById("image-display").src =
-              "poo\\home11.jpg";
+            document.getElementById("image-display").src = imagePaths[1];
           });
         document
           .getElementById("headingThree")
           .addEventListener("click", function () {
-            document.getElementById("image-display").src =
-              "https://scontent.fkdt1-1.fna.fbcdn.net/v/t1.15752-9/450599974_859459252179176_5786387763904064612_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeFLpEwRQIlVXDn_XSCEomAn36SjwFptOdrfpKPAWm052qhOfgOOHQmfE0qruJcukS3ZPfqj_ieY5ZzNm3QJC-wb&_nc_ohc=Elvmp8FCXhIQ7kNvgFgtvZR&_nc_ht=scontent.fkdt1-1.fna&oh=03_Q7cD1QFfo2NIVl_Uks2qGCx44BvcAb-DU99ebclMvLCpaOhMMw&oe=66BF3518";
+            document.getElementById("image-display").src = imagePaths[2];
           });
 
         const accordions = document.querySelectorAll(".accordion-collapse");

@@ -153,16 +153,17 @@ body {
 
 @media (max-width: 768px) {
   #list-profile h1 {
-    font-size: 11px;
+    font-size: 14px;
   }
 
   #list-profile h2 {
-    font-size: 6px;
+    font-size: 10px;
   }
 
   #list-profile img {
-    width: 1.4rem;
+    width: 1.7rem;
     height: 30px;
+    
   }
 
   #list-profile .text p {
@@ -246,9 +247,11 @@ body {
 
   #list-messages {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    grid-template-columns: 1fr;
+    
   }
 
   #list-messages button {
@@ -278,7 +281,7 @@ body {
 @media (max-width: 768px) {
   #list-messages img {
     height: 300px;
-    width: 200px;
+    width: 300px;
   }
 }
 
@@ -499,7 +502,8 @@ body {
   }
 
   #list-messages img {
-    height: 150px;
+    height: 250px;
+    width: 400px;
   }
 
   .img-grid {

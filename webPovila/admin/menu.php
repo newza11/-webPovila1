@@ -2,9 +2,9 @@
 <div class="navigation">
     <ul>
         <li class="active">
-            <a href="admin.php">
+            <a href="index.php">
                 <span class="icon">
-                    <ion-icon name="home-outline"></ion-icon>
+                <ion-icon name="storefront-outline"></ion-icon>
                 </span>
                 <span class="title">Povila</span>
             </a>
@@ -13,7 +13,7 @@
         <li>
             <a href="admin.php">
                 <span class="icon">
-                    <ion-icon name="home-outline"></ion-icon>
+                <ion-icon name="bar-chart-outline"></ion-icon>
                 </span>
                 <span class="title">Dashboard</span>
             </a>
@@ -26,6 +26,15 @@
                 </span>
                 <span class="title">Order</span>
             </a>
+        </li>
+        <li>
+            <a href="villa_setting.php">
+                <span class="icon">
+                <ion-icon name="home-outline"></ion-icon>
+                </span>
+                <span class="title">Villa Management</span>
+            </a>
+            
         </li>
 
         <li>
@@ -86,9 +95,7 @@
 }
 
 
-.active{
-    background-color: #0f59b4;
-}
+
 .navigation .icon {
     margin-right: 10px;
 }
@@ -120,6 +127,7 @@
     </div>
 </div>
  </div>
+ 
  <script>
     document.addEventListener('DOMContentLoaded', () => {
         const storedProfilePic = localStorage.getItem('profilePic');

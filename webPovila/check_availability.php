@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 
 $check_in = $_POST['check_in'];
 
-// Calculate the check-out date as one day after the check-in date
+// Calculate the check-out date as one day after the check-in date (แต่ไม่ต้องใช้ในการเช็ค)
 $check_out = date('Y-m-d', strtotime($check_in . ' +1 day'));
 
 $people = $_POST['people'];
@@ -46,14 +46,12 @@ if ($check_in_day == 5) { // Friday
     $room_price += 5000;
 }
 
+// เช็คเฉพาะวันที่ checkin ว่าถูกจองเต็มหรือไม่
 $query = "SELECT COUNT(*) as total_booked FROM orders_db 
-          WHERE (
-              (checkin <= ? AND checkout > ?) OR
-              (checkin < ? AND checkout >= ?)
-          )";   
+          WHERE checkin = ?";   
 
 $stmt = $conn->prepare($query);
-$stmt->bind_param("ssss", $check_out, $check_in, $check_in, $check_out);
+$stmt->bind_param("s", $check_in);
 $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();
@@ -62,7 +60,7 @@ $total_booked = $row['total_booked'];
 $is_full = $total_booked > 0;
 
 if ($is_full) {
-    // Room is fully booked during the requested period
+    // Room is fully booked on the check-in date
     $response = array(
         "availability" => "เต็ม",
         "is_full" => true,
@@ -73,7 +71,7 @@ if ($is_full) {
         "security_deposit" => "ค่าประกัน3000"
     );
 } else {
-    // Room is available during the requested period
+    // Room is available on the check-in date
     $response = array(
         "availability" => "ว่าง",
         "is_full" => false,
@@ -86,7 +84,7 @@ if ($is_full) {
 }
 
 $_SESSION['checkin'] = $check_in;
-$_SESSION['checkout'] = $check_out;
+$_SESSION['checkout'] = $check_out; // สามารถใช้ checkout เป็นค่าแสดงผลได้ แต่ไม่ใช้ในการเช็คห้อง
 $_SESSION['room'] = $room;
 $_SESSION['people'] = $people;
 $_SESSION['price'] = $room_price;

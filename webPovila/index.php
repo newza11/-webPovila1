@@ -51,53 +51,15 @@
         <FontAwesomeIcon icon="fa-brands fa-line" />
         <link rel="stylesheet" href="css/tabel.css">
         <link rel="stylesheet" href="css/searchs.css">
-        <style>
-            .nav__links {
-                display: flex;
-                align-items: center;
-            }
 
-            .nav__links .link {
-                display: flex;
-                align-items: center;
-            }
+        <link rel="icon" type="image/png" href="poo/logo2.png">
 
-            .nav__links .link img {
-                
-                border-radius: 50%;
-                cursor: pointer;
-            }
-
-            .dropdown-content {
-                display: none;
-                position: absolute;
-                background-color: #f9f9f9;
-                min-width: 160px;
-                box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-                z-index: 1;
-            }
-
-            .dropdown-content a {
-                color: black;
-                padding: 12px 16px;
-                text-decoration: none;
-                display: block;
-            }
-
-            .dropdown-content a:hover {
-                background-color: #f1f1f1;
-            }
-
-            .show {
-                display: block;
-            }
-        </style>
     </head>
 
     <body>
         <nav>
             <div class="nav__logo">
-                <img src="https://scontent.fkdt1-1.fna.fbcdn.net/v/t1.15752-9/451463161_439508502254984_1564988875763696941_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeFLxpw7P5hzAbD0zGFx4wcQ_iqw6XCTKgf-KrDpcJMqB2ssTrxaM93qmoZDROCA15lSca9F0AG3_Aum4HlxxYYy&_nc_ohc=BErgEdBJnUwQ7kNvgGYDR0P&_nc_ht=scontent.fkdt1-1.fna&oh=03_Q7cD1QG_QMJ_iS3LVLg9FVnCJhM17wgMqHFgMIkqJvWW2npLGA&oe=66BF59DB" alt="Logo" width="22" height="80" style="display: flex; width: 100%;">
+                <img src="poo/logo1.jpg" alt="Logo" width="22" height="80" style="display: flex; width: 100%;">
             </div>
             <ul class="nav__links">
                 <li class="link">
@@ -156,7 +118,7 @@
                         </div>
                         <div class="form__group">
                             <div class="input__group">
-                                <input type="text" id="people" name="people" placeholder="Guests" oninput="validateGuests(this)" required>
+                                <input type="number" id="people" name="people" placeholder="Guests" oninput="validateGuests(this)" required>
                             </div>
                         </div>
                         <div class="form__group">
@@ -184,7 +146,7 @@
             <div class="section__container search_container">
                 <div class="search__image__container">
                     <div class="frame-content">
-                        <p class="top-left-text" >นันท์นภัส พลูวิลล่า อัมพวา</p>
+                        <p class="top-left-text">นันท์นภัส พลูวิลล่า อัมพวา</p>
                         <p id="status" class="top-left-text1" style="font-size: 20px;"></p>
                         <div class="images_container1">
                             <img class="mainimg" src="poo/1.jpg" alt="">
@@ -200,10 +162,10 @@
                     </div>
 
                     <div class="font" style="display: flex; justify-content: center; flex-direction: column;">
-                        <p class ="title-large"style="font-size: 25px; margin: 0rem 1rem;">บ้านนันท์นภัส</p>
-                        <p class ="title-medium"style="font-size: 20px; margin: 0rem 1rem;"><a></a>พลูวิลล่า อัมพวา</p>
-                        
-                        <p class ="description" style="font-size: 12px; margin: 0rem 1rem;">
+                        <p class="title-large" style="font-size: 25px; margin: 0rem 1rem;">บ้านนันท์นภัส</p>
+                        <p class="title-medium" style="font-size: 20px; margin: 0rem 1rem;"><a></a>พลูวิลล่า อัมพวา</p>
+
+                        <p class="description" style="font-size: 12px; margin: 0rem 1rem;">
                             <br><br> Luxury Pool Villa บ้านพัก 6 ห้องนอน 6 ห้องน้ำที่ตกแต่งไปด้วยสไตล์ Luxury มีความหรูหรา<br>มาพร้อมห้องคาราโอเกะที่กว้างขวาง พร้อมรองรับลูกค้าถึง 20 ท่าน มาพร้อมกับสระว่ายน้ำ สไลด์เดอร์<br> อุปกรณ์ครัวครบครันใกล้สถานที่ท่องเที่ยวมากมาย ณ อัมพวา พร้อมให้บริการลูกค้าทุกท่าน
                         </p>
                     </div>
@@ -239,35 +201,66 @@
         <?php include 'searchs.php'; ?>
 
         <script>
-            $(function() {
-    $("#checkin").datepicker({
-        dateFormat: "yy-mm-dd",
-        minDate: 0,
-        onSelect: function(dateText) {
-            var checkinDate = new Date(dateText);
-            var dayOfWeek = checkinDate.getDay(); // 0 = Sunday, 5 = Friday, 6 = Saturday
+         $(function() {
+    var fullDates = []; // เก็บวันที่เต็ม
 
-            // Automatically set the room to "6ห้อง" and disable room selection if it's Friday or Saturday
-            if (dayOfWeek === 5 || dayOfWeek === 6) {
-                $("#room").val("6ห้อง");
-                $("#room").prop("disabled", true);
-                alert("ห้อง 6ห้อง ถูกเลือกอัตโนมัติเนื่องจากเป็นวันศุกร์หรือเสาร์ และราคาจะปรับตามวัน");
-            } else {
-                $("#room").prop("disabled", false);
-            }
+    // ดึงวันที่เต็มจากเซิร์ฟเวอร์
+    $.ajax({
+        url: 'check_full_dates.php', // ไฟล์ PHP ที่ดึงข้อมูลวันที่เต็ม
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            fullDates = response; // เก็บวันที่เต็มในตัวแปร fullDates
 
-            // Automatically set the checkout date to the next day after check-in
-            var checkoutDate = new Date(checkinDate.getTime() + 24 * 60 * 60 * 1000);
-            $("#checkout").datepicker("setDate", checkoutDate);
-            $("#checkout").datepicker("option", "minDate", checkoutDate);
+            console.log("วันที่ถูกจองเต็ม:", fullDates); // ตรวจสอบวันที่เต็มใน console
+
+            // ตั้งค่า datepicker สำหรับ Check In
+            $("#checkin").datepicker({
+                dateFormat: "yy-mm-dd",
+                minDate: 0,
+                beforeShowDay: function(date) {
+                    var formattedDate = $.datepicker.formatDate('yy-mm-dd', date);
+                    if (fullDates.indexOf(formattedDate) !== -1) {
+                        return [false, "full-booked", "เต็ม"]; // ปิดวันที่เต็มและใส่คลาส CSS full-booked
+                    } else {
+                        return [true, "available", "ว่าง"]; // เปิดวันที่ว่างและใส่คลาส CSS available
+                    }
+                },
+                onSelect: function(dateText) {
+                    var checkinDate = new Date(dateText);
+                    var dayOfWeek = checkinDate.getDay(); // 0 = Sunday, 5 = Friday, 6 = Saturday
+
+                    // หากเป็นวันศุกร์หรือเสาร์ เลือก "6ห้อง" อัตโนมัติ
+                    if (dayOfWeek === 5 || dayOfWeek === 6) {
+                        $("#room").val("6ห้อง");
+                        $("#room").prop("disabled", true);
+                        alert("ห้อง 6ห้อง ถูกเลือกอัตโนมัติเนื่องจากเป็นวันศุกร์หรือเสาร์ และราคาจะปรับตามวัน");
+                    } else {
+                        $("#room").prop("disabled", false);
+                    }
+
+                    // แสดงวันที่ Check Out เป็นวันถัดไป
+                    var checkoutDate = new Date(checkinDate.getTime() + 24 * 60 * 60 * 1000);
+                    var formattedCheckoutDate = $.datepicker.formatDate('yy-mm-dd', checkoutDate);
+                    $("#checkout").val(formattedCheckoutDate);
+                }
+            });
+
+            // ตั้งค่า datepicker สำหรับ Check Out
+            $("#checkout").prop('readonly', true);
+        },
+        error: function(xhr, status, error) {
+            console.log("เกิดข้อผิดพลาดในการดึงวันที่เต็ม: " + error);
         }
     });
-
-    $("#checkout").datepicker({
-        dateFormat: "yy-mm-dd",
-        minDate: 1
-    });
 });
+
+
+
+
+
+
+
 
             $(function() {
                 $("#availabilityForm").on("submit", function(event) {
@@ -284,7 +277,7 @@
                                     $("#status").text(data.availability).css("color", data.availability === "เต็ม" ? "red" : "green");
                                     $("#checkin-date").text(data.checkin);
                                     $("#checkin-date1").text(data.checkin);
-                                    $("#checkout-date").text(data.checkout); 
+                                    $("#checkout-date").text(data.checkout);
                                     $("#checkout-date1").text(data.checkout);
                                     $("#room-type").text(data.room);
                                     $("#room-type1").text(data.room);
@@ -410,114 +403,27 @@
                 <?php endif; ?>
             });
         </script>
-        
 
-<style>
-    .map {
-        width: 100%;
-    }
-    .gmap{
-        /* style="border:1px solid black; border-radius: 20px; padding: 5px 15px; font-weight: 450;" */
-        border: 1px solid;
-        border-color: black;
-        border-radius: 20px;
-        padding: 5px 15px;
-        font-weight: 450;
-    }
 
-    .search_container {
-        padding: 20px;
-    }
 
-    
-    .map_container .p1 {
-        font-size: 2rem; /* Default font size */
-    }
-    .map_container .p2 {
-        font-size: 1.2rem; /* Default font size */
-    }
 
-    .search_container .map_container {
-        width: 100%;
-        max-width: 700px;
-    }
-
-    .search_container iframe {
-        width: 100%;
-        height: 550px;
-    }
-
-    @media only screen and (max-width: 768px) {
-        .map_container .p1 {
-        font-size: 1.5rem; /* Default font size */
-    }
-    .map_container .p2 {
-        font-size: 1rem; /* Default font size */
-    }
-    .gmap{
-        /* style="border:1px solid black; border-radius: 20px; padding: 5px 15px; font-weight: 450;" */
-        border: 1px solid;
-        border-color: black;
-        border-radius: 20px;
-        padding: 3px 12px;
-        font-weight: 400;
-    }
-
-        .search_container iframe {
-            height: 400px; /* Reduce height for smaller screens */
-        }
-
-        .search_container p[style*="border"] {
-            padding: 5px 10px; /* Adjust padding */
-            font-size: 1rem; /* Adjust font size */
-        }
-    }
-
-    @media only screen and (max-width: 480px) {
-        .map_container .p1 {
-        font-size: 1rem; /* Default font size */
-    }
-    .map_container .p2 {
-        font-size: 0.6rem; /* Default font size */
-    }
-    .gmap{
-        /* style="border:1px solid black; border-radius: 20px; padding: 5px 15px; font-weight: 450;" */
-        border: 1px solid;
-        border-color: black;
-        border-radius: 20px;
-        padding: 2px 5px;
-        font-weight: 400;
-        font-size: 10px;
-    }
-
-        .search_container iframe {
-            height: 300px; /* Further reduce height for smaller screens */
-        }
-
-        .search_container p[style*="border"] {
-            padding: 5px 8px; /* Adjust padding for smaller screens */
-            font-size: 0.9rem; /* Adjust font size */
-        }
-    }
-</style>
-
-<map class="map">
-    <div class="search_container map_container">
-        <div style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
-            <p  class="p1">นันท์นภัส พลูวิลล่า </p>
-            <p class="p2" >เลขที่ 88/1 ถนน รพช. สส. 3046 อ.เมืองสมุทรสงคราม จ.สมุทรสงคราม</p>
-            <p class="gmap" >GOOGLE MAP</p>
-            <div class="map_container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15524.73099838592!2d99.9906226632576!3d13.401008204121686!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e2d3856ac61931%3A0xb0bc2911e11f479e!2z4LiV4Liz4Lia4LilIOC5geC4oeC5iOC4geC4peC4reC4hyDguK3guLPguYDguKDguK3guYDguKHguLfguK3guIfguKrguKHguLjguJfguKPguKrguIfguITguKPguLLguKEg4Liq4Lih4Li44LiX4Lij4Liq4LiH4LiE4Lij4Liy4LihIDc1MDAw!5e0!3m2!1sth!2sth!4v1721819468748!5m2!1sth!2sth" 
-                        style="border:0;" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
+        <map class="map">
+            <div class="search_container map_container">
+                <div style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
+                    <p class="p1">นันท์นภัส พลูวิลล่า </p>
+                    <p class="p2">เลขที่ 88/1 ถนน รพช. สส. 3046 อ.เมืองสมุทรสงคราม จ.สมุทรสงคราม</p>
+                    <p class="gmap">GOOGLE MAP</p>
+                    <div class="map_container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15524.73099838592!2d99.9906226632576!3d13.401008204121686!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e2d3856ac61931%3A0xb0bc2911e11f479e!2z4LiV4Liz4Lia4LilIOC5geC4oeC5iOC4geC4peC4reC4hyDguK3guLPguYDguKDguK3guYDguKHguLfguK3guIfguKrguKHguLjguJfguKPguKrguIfguITguKPguLLguKEg4Liq4Lih4Li44LiX4Lij4Liq4LiH4LiE4Lij4Liy4LihIDc1MDAw!5e0!3m2!1sth!2sth!4v1721819468748!5m2!1sth!2sth"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</map>
+        </map>
 
 
 
@@ -525,8 +431,11 @@
             <div class="footer__container">
                 <div class="footer__col">
                     <h3>นันท์นภัส</h3>
-
-                    <p><a href="https://www.facebook.com/profile.php?id=61553502207847"><ion-icon name="logo-facebook"></ion-icon></a></p>
+                    <p>
+                        <a href="https://www.facebook.com/profile.php?id=61553502207847">
+                            <ion-icon name="logo-facebook"></ion-icon>
+                        </a>
+                    </p>
                     <i class="fa-brands fa-line"></i>
                     <p>
                         <a href="https://lin.ee/yvY9Aal">
@@ -539,9 +448,12 @@
                     <p>T. 098 646 1451</p>
                     <p>nannaphas12345678@gmail.com</p>
                 </div>
-                
             </div>
         </footer>
+
+
+
+
     </body>
 
     </html>
