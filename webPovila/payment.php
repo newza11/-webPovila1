@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Page</title>
     <link rel="stylesheet" href="css/payment.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -46,8 +47,7 @@
             <!-- Payment slip attachment -->
             <form id="paymentForm" action="payment.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                 <label for="paymentSlip">Attach Payment Slip:</label>
-                <input type="file" id="paymentSlip" name="paymentSlip" accept=".jpg, .jpeg, .png" required>
-
+                <input type="file" id="paymentSlip" name="paymentSlip" accept=".jpg, .jpeg, .png" >
 
                 <button type="submit">Upload</button>
             </form>
@@ -71,7 +71,11 @@
         function validateForm() {
             const paymentSlip = document.getElementById('paymentSlip').files.length;
             if (paymentSlip === 0) {
-                alert('Please attach a payment slip before submitting.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'กรุณาแนบสลิปการชำระเงินก่อนทำการส่งข้อมูล',
+                });
                 return false;
             }
             return true;
@@ -80,6 +84,7 @@
 </body>
 
 </html>
+
 <?php
 
 session_start();

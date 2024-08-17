@@ -503,30 +503,36 @@ $conn->close();
       crossorigin="anonymous"
     ></script>
     <script>
+      
       const images = [
-        "poo/1.jpg",
-        "poo/2.jpg",
-        "poo/3.jpg",
-        "poo/4.jpg",
-        "poo/5.jpg",
-        "poo/6.jpg",
-        "poo/7.jpg",
-        "poo/8.jpg",
-        "poo/9.jpg",
-        "poo/10.jpg",
-        "poo/11.jpg",
-        "poo/12.jpg",
-        "poo/13.jpg",
-        "poo/14.jpg",
-        "poo/15.jpg",
-        "poo/16.jpg",
-        "poo/17.jpg",
-        "poo/18.jpg",
-        "poo/19.jpg",
-        "poo/20.jpg",
-        "poo/21.jpg",
-        "poo/22.jpg",
-        "poo/23.jpg",
+       
+        "<?= $villaImages[0]['image_path']; ?>",
+        "<?= $villaImages[1]['image_path']; ?>",
+        "<?= $villaImages[2]['image_path']; ?>",
+        "<?= $villaImages[3]['image_path']; ?>",
+        "<?= $villaImages[4]['image_path']; ?>",
+        "<?= $villaImages[5]['image_path']; ?>",
+        "<?= $villaImages[6]['image_path']; ?>",
+        "<?= $villaImages[7]['image_path']; ?>",
+        "<?= $villaImages[8]['image_path']; ?>",
+        "<?= $villaImages[9]['image_path']; ?>",
+        "<?= $villaImages[10]['image_path']; ?>",
+        "<?= $villaImages[11]['image_path']; ?>",
+        "<?= $villaImages[12]['image_path']; ?>",
+        "<?= $villaImages[13]['image_path']; ?>",
+        "<?= $villaImages[14]['image_path']; ?>",
+        "<?= $villaImages[15]['image_path']; ?>",
+        "<?= $villaImages[16]['image_path']; ?>",
+        "<?= $villaImages[17]['image_path']; ?>",
+        "<?= $villaImages[18]['image_path']; ?>",
+        "<?= $villaImages[19]['image_path']; ?>",
+        "<?= $villaImages[20]['image_path']; ?>",
+        "<?= $villaImages[21]['image_path']; ?>",
+        "<?= $villaImages[22]['image_path']; ?>",
+        
+
+        
+        
       ];
 
       let currentImageIndex = 0;

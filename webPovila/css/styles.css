@@ -390,9 +390,64 @@ button:hover {
 
 .map_container {
   display: grid;
-  padding: 5rem 1rem;
+  padding: 2rem 1rem 5rem 1rem;
   font-family: "Kanit", sans-serif;
 }
+.main {
+  width: 100%;
+  height: 100%;
+  
+  position: relative;
+}
+
+.main_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  font-family: "Kanit", sans-serif;
+  position: relative;
+  background-size: 120% auto; /* ปรับขนาดความกว้างของรูปเป็น 120% ของขนาดเดิม */
+  background-position: center;
+  background-repeat: no-repeat; /* ป้องกันการซ้ำของรูปภาพ */
+}
+
+/* Overlay เพื่อให้พื้นหลังดูดำขึ้น */
+.main_container::before {
+  content: "";
+  position: absolute;
+  
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* ความทึบแสง 50% เพื่อให้พื้นหลังมืดลง */
+  z-index: 1;
+}
+
+/* ปรับข้อความให้อยู่บนสุด */
+.main_container .p1,
+.main_container .p2,
+.main_container .p3 {
+  z-index: 2;
+  color: white; /* สีข้อความเป็นขาวเพื่อให้อ่านได้ชัด */
+}
+
+.main_container .p1 {
+  font-size: 1.7rem;
+  text-align: center;
+}
+
+.main_container .p2 {
+  font-size: 1.4rem;
+}
+
+.main_container .p3 {
+  font-size: 1.7rem;
+  margin-bottom: 2rem;
+}
+
+
 
 .font {
   display: flex;
@@ -408,7 +463,7 @@ button:hover {
   padding: 1.2rem 2rem;
   border-top-style: solid;
   border-color: #e4b58a;
-  margin-top: 2rem;
+  
   display: flex;
   justify-content: center; /* จัด footer container ให้อยู่ตรงกลาง */
   text-align: center;
@@ -416,7 +471,7 @@ button:hover {
 
 .footer {
     text-align: center;
-    padding: 20px 0;
+    padding: 40px 0;
 }
 
 
@@ -494,6 +549,22 @@ button:hover {
     font-size: 13px;
      margin: 15px;
      margin-bottom: 20px;
+  }
+  .main_container .p1 {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+  .main_container{
+    height: 30vh;
+  }
+  
+  .main_container .p2 {
+    font-size: 1rem;
+  }
+  
+  .main_container .p3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
   }
  
 
@@ -609,6 +680,7 @@ button:hover {
     
     .map_container .p1 {
         font-size: 2rem; /* Default font size */
+        margin-top: 3rem;
     }
     .map_container .p2 {
         font-size: 1.2rem; /* Default font size */
@@ -656,6 +728,24 @@ button:hover {
     }
     .map_container .p2 {
         font-size: 0.6rem; /* Default font size */
+    }
+
+    .main_container .p1 {
+      font-size: 14.2px;
+      text-align: center;
+    }
+    .main_container{
+      height: 20vh;
+    }
+    
+    
+    .main_container .p2 {
+      font-size: 9px;
+    }
+    
+    .main_container .p3 {
+      font-size: 13.2px;
+      margin-bottom: 1rem;
     }
     
     .gmap{

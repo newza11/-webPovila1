@@ -201,7 +201,7 @@
         <?php include 'searchs.php'; ?>
 
         <script>
-         $(function() {
+        $(function() {
     var fullDates = []; // เก็บวันที่เต็ม
 
     // ดึงวันที่เต็มจากเซิร์ฟเวอร์
@@ -234,20 +234,48 @@
                     if (dayOfWeek === 5 || dayOfWeek === 6) {
                         $("#room").val("6ห้อง");
                         $("#room").prop("disabled", true);
-                        alert("ห้อง 6ห้อง ถูกเลือกอัตโนมัติเนื่องจากเป็นวันศุกร์หรือเสาร์ และราคาจะปรับตามวัน");
+                        alert("ห้อง 6ห้อง ถูกเลือกอัตโนมัติเนื่องจากเป็นวันศุกร์หรือเสาร์");
                     } else {
                         $("#room").prop("disabled", false);
                     }
 
-                    // แสดงวันที่ Check Out เป็นวันถัดไป
-                    var checkoutDate = new Date(checkinDate.getTime() + 24 * 60 * 60 * 1000);
+                    // กำหนด Check Out ให้เป็นวันถัดไปอัตโนมัติ
+                    var checkoutDate = new Date(checkinDate.getTime() + 1 * 24 * 60 * 60 * 1000);
                     var formattedCheckoutDate = $.datepicker.formatDate('yy-mm-dd', checkoutDate);
                     $("#checkout").val(formattedCheckoutDate);
+
+                    // กำหนดช่วงวันที่เลือกได้ใน Check Out (1 ถึง 7 วันถัดไป แต่ไม่นับวัน Check Out)
+                    var checkoutMinDate = new Date(checkinDate.getTime() + 1 * 24 * 60 * 60 * 1000); // 1 วันถัดไป
+                    var checkoutMaxDate = new Date(checkinDate.getTime() + 6 * 24 * 60 * 60 * 1000); // สูงสุด 6 วันถัดไป (ไม่นับวัน Check Out)
+                    $("#checkout").datepicker("option", "minDate", checkoutMinDate);
+                    $("#checkout").datepicker("option", "maxDate", checkoutMaxDate);
+
+                    // ตั้งค่า beforeShowDay สำหรับ Check Out
+                    $("#checkout").datepicker("option", "beforeShowDay", function(date) {
+                        var formattedDate = $.datepicker.formatDate('yy-mm-dd', date);
+                        if (fullDates.indexOf(formattedDate) !== -1) {
+                            return [false, "full-booked", "เต็ม"]; // ปิดวันที่เต็ม
+                        } else {
+                            return [true, "available", "ว่าง"]; // เปิดวันที่ว่าง
+                        }
+                    });
+
+                    $("#checkout").prop('readonly', false); // ทำให้เลือก Check Out ได้อีกครั้ง
                 }
             });
 
             // ตั้งค่า datepicker สำหรับ Check Out
-            $("#checkout").prop('readonly', true);
+            $("#checkout").datepicker({
+                dateFormat: "yy-mm-dd",
+                beforeShowDay: function(date) {
+                    var formattedDate = $.datepicker.formatDate('yy-mm-dd', date);
+                    if (fullDates.indexOf(formattedDate) !== -1) {
+                        return [false, "full-booked", "เต็ม"]; // ปิดวันที่เต็ม
+                    } else {
+                        return [true, "available", "ว่าง"]; // เปิดวันที่ว่าง
+                    }
+                }
+            });
         },
         error: function(xhr, status, error) {
             console.log("เกิดข้อผิดพลาดในการดึงวันที่เต็ม: " + error);
@@ -255,61 +283,55 @@
     });
 });
 
+// เมื่อกดปุ่มตรวจสอบความว่าง
+$(function() {
+    $("#availabilityForm").on("submit", function(event) {
+        event.preventDefault(); // ป้องกันไม่ให้ฟอร์มรีเฟรชหน้า
 
+        // ส่งข้อมูลฟอร์มไปตรวจสอบความว่างของห้อง
+        $.ajax({
+            url: 'check_availability.php',
+            type: 'POST',
+            data: $(this).serialize(), // ส่งข้อมูลฟอร์ม
+            success: function(response) {
+                console.log(response);
 
+                try {
+                    var data = JSON.parse(response); // แปลง response เป็น JSON
+                    if (data.availability) {
+                        $("#status").text(data.availability).css("color", data.availability === "เต็ม" ? "red" : "green");
+                        $("#checkin-date").text(data.checkin);
+                        $("#checkin-date1").text(data.checkin);
+                        $("#checkout-date").text(data.checkout);
+                        $("#checkout-date1").text(data.checkout);
+                        $("#room-type").text(data.room);
+                        $("#room-type1").text(data.room);
+                        $("#price").text(data.price);
+                        $("#price1").text(data.price); // แสดงราคาที่นี่
+                        $("#security-deposit").text(data.security_deposit);
 
-
-
-
-
-            $(function() {
-                $("#availabilityForm").on("submit", function(event) {
-                    event.preventDefault();
-                    $.ajax({
-                        url: 'check_availability.php',
-                        type: 'POST',
-                        data: $(this).serialize(),
-                        success: function(response) {
-                            console.log(response);
-                            try {
-                                var data = JSON.parse(response);
-                                if (data.availability) {
-                                    $("#status").text(data.availability).css("color", data.availability === "เต็ม" ? "red" : "green");
-                                    $("#checkin-date").text(data.checkin);
-                                    $("#checkin-date1").text(data.checkin);
-                                    $("#checkout-date").text(data.checkout);
-                                    $("#checkout-date1").text(data.checkout);
-                                    $("#room-type").text(data.room);
-                                    $("#room-type1").text(data.room);
-                                    $("#price").text(data.price);
-                                    $("#price1").text(data.price); // Display the price here
-                                    $("#security-deposit").text(data.security_deposit);
-
-                                    if (data.is_full) {
-                                        $("#bookingButtonContainer").hide(); // Hide the booking button if the room is full
-                                    } else {
-                                        $("#bookingButtonContainer").show(); // Show the booking button if there's availability
-                                    }
-                                    if (data.is_full) {
-                                        $("#bookingButtonContainer1").hide(); // Hide the booking button if the room is full
-                                    } else {
-                                        $("#bookingButtonContainer1").show(); // Show the booking button if there's availability
-                                    }
-
-                                } else {
-                                    $("#availability").text("No availability data.");
-                                }
-                            } catch (e) {
-                                console.log(e);
-                                $("#availability").text("Invalid response from server.");
-                            }
-                        },
-                        error: function() {
-                            $("#availability").text("Error checking availability.");
+                        // แสดงหรือซ่อนปุ่มการจองตามความว่าง
+                        if (data.is_full) {
+                            $("#bookingButtonContainer").hide(); // ซ่อนปุ่มการจองหากห้องเต็ม
+                            $("#bookingButtonContainer1").hide(); // ซ่อนปุ่มการจองอีกปุ่ม
+                        } else {
+                            $("#bookingButtonContainer").show(); // แสดงปุ่มการจองหากห้องว่าง
+                            $("#bookingButtonContainer1").show(); // แสดงปุ่มการจองอีกปุ่ม
                         }
-                    });
-                });
-            });
+                    } else {
+                        $("#availability").text("No availability data.");
+                    }
+                } catch (e) {
+                    console.log(e);
+                    $("#availability").text("Invalid response from server.");
+                }
+            },
+            error: function() {
+                $("#availability").text("Error checking availability.");
+            }
+        });
+    });
+});
 
 
             function validateGuests(input) {
@@ -424,6 +446,20 @@
                 </div>
             </div>
         </map>
+
+        <map class="main">
+    <div class="search_container main_container" style="background-image: url('poo/home4.jpg'); background-size: cover; background-position: center; position: relative;">
+        <div style="display: flex; justify-content: center; flex-direction: column; align-items: center;  padding: 20px;">
+            <p class="p1" style="color: white;">ที่พักพูลวิลล่าของทางเราคือตัวเลือกที่ดีที่สุดสำหรับท่าน เพราะทางเราคัดสรร </p>
+            <p class="p3" style="color: white;">บ้านที่ลูกค้าอยู่แล้วประทับใจ และกลับมาใช้บริการอีกครั้ง</p>
+            <p class="p2" style="color: white;">เข้าพักได้อย่างปลอดภัย ได้บ้านที่ตรงปก</p>
+            <p class="p2" style="color: white;">พร้อมมีแอดมินตอบคำถามที่ลูกค้าสงสัยได้รวดเร็ว ทันใจ</p>
+        </div>
+    </div>
+</map>
+
+
+        
 
 
 
