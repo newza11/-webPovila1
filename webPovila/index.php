@@ -200,9 +200,9 @@
 
         <?php include 'searchs.php'; ?>
 
-        <script>
-        $(function() {
+        <script>$(function() {
     var fullDates = []; // เก็บวันที่เต็ม
+    var checkinDate = null; // ตัวแปรสำหรับเก็บวันที่ checkin
 
     // ดึงวันที่เต็มจากเซิร์ฟเวอร์
     $.ajax({
@@ -227,7 +227,7 @@
                     }
                 },
                 onSelect: function(dateText) {
-                    var checkinDate = new Date(dateText);
+                    checkinDate = new Date(dateText); // เก็บวันที่ checkin
                     var dayOfWeek = checkinDate.getDay(); // 0 = Sunday, 5 = Friday, 6 = Saturday
 
                     // หากเป็นวันศุกร์หรือเสาร์ เลือก "6ห้อง" อัตโนมัติ
@@ -253,10 +253,14 @@
                     // ตั้งค่า beforeShowDay สำหรับ Check Out
                     $("#checkout").datepicker("option", "beforeShowDay", function(date) {
                         var formattedDate = $.datepicker.formatDate('yy-mm-dd', date);
-                        if (fullDates.indexOf(formattedDate) !== -1) {
-                            return [false, "full-booked", "เต็ม"]; // ปิดวันที่เต็ม
+                        var checkinTime = checkinDate.getTime(); // เวลาของ checkin
+                        var dateCheck = date.getTime(); // เวลาของวันที่จะเช็ค (check_out)
+
+                        // ตรวจสอบวันที่เต็มเฉพาะช่วงก่อน check_out
+                        if (fullDates.indexOf(formattedDate) !== -1 && dateCheck > checkinTime) {
+                            return [false, "full-booked", "วันที่เต็มก่อน Check Out"];
                         } else {
-                            return [true, "available", "ว่าง"]; // เปิดวันที่ว่าง
+                            return [true, "available", "ว่าง"];
                         }
                     });
 
@@ -282,6 +286,10 @@
         }
     });
 });
+
+
+
+
 
 // เมื่อกดปุ่มตรวจสอบความว่าง
 $(function() {
