@@ -18,6 +18,12 @@ if ($id && $section) {
         case 'gallery':
             $table = 'villa_images';
             break;
+        case 'main':
+            $table = 'villa_main';
+            break;
+        case 'descriptions':
+            $table = 'villa_descriptions';
+            break;
         default:
             echo "Invalid section";
             exit;
@@ -27,6 +33,7 @@ if ($id && $section) {
     $sql = "SELECT * FROM $table WHERE id = $id";
     $result = $conn->query($sql);
     $data = $result->fetch_assoc();
+    
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // ตรวจสอบว่ามีการอัปโหลดรูปภาพใหม่หรือไม่
@@ -78,6 +85,7 @@ if ($id && $section) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -87,6 +95,7 @@ if ($id && $section) {
         body {
             background-color: #f4f4f9;
         }
+
         .container {
             margin-top: 50px;
             background-color: #fff;
@@ -94,21 +103,26 @@ if ($id && $section) {
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         h2 {
             text-align: center;
             margin-bottom: 30px;
             color: #333;
         }
+
         form label {
             font-weight: bold;
         }
+
         .form-control {
             margin-bottom: 20px;
         }
+
         .btn-primary {
             display: block;
             width: 100%;
         }
+
         .image-preview {
             max-width: 300px;
             margin-bottom: 20px;
@@ -116,31 +130,33 @@ if ($id && $section) {
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <h2>Edit Data</h2>
-    <form method="POST" enctype="multipart/form-data">
-        <?php
-        foreach ($data as $key => $value) {
-            if ($key !== 'id') {
-                echo "<div class='mb-3'>";
-                echo "<label for='$key'>" . ucfirst($key) . ":</label>";
-                if ($key === 'image_path') {
-                    // แสดงรูปภาพโดยใช้เส้นทางนอกโฟลเดอร์ admin
-                    $imagePath = '../' . htmlspecialchars($value); // ดึงรูปจาก ../uploads/
-                    echo "<br><img src='" . $imagePath . "' alt='Current Image' class='image-preview'><br>";
-                    echo "<input type='file' class='form-control' name='image' accept='image/*'><br>";
-                } else {
-                    echo "<input type='text' class='form-control' id='$key' name='$key' value='" . htmlspecialchars($value) . "'>";
+    <div class="container">
+        <h2>Edit Data</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <?php
+            foreach ($data as $key => $value) {
+                if ($key !== 'id') {
+                    echo "<div class='mb-3'>";
+                    echo "<label for='$key'>" . ucfirst($key) . ":</label>";
+                    if ($key === 'image_path') {
+                        // แสดงรูปภาพโดยใช้เส้นทางนอกโฟลเดอร์ admin
+                        $imagePath = '../' . htmlspecialchars($value); // ดึงรูปจาก ../uploads/
+                        echo "<br><img src='" . $imagePath . "' alt='Current Image' class='image-preview'><br>";
+                        echo "<input type='file' class='form-control' name='image' accept='image/*'><br>";
+                    } else {
+                        echo "<input type='text' class='form-control' id='$key' name='$key' value='" . htmlspecialchars($value) . "'>";
+                    }
+                    echo "</div>";
                 }
-                echo "</div>";
             }
-        }
-        ?>
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-    </form>
-</div>
+            ?>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+    </div>
 
 </body>
+
 </html>

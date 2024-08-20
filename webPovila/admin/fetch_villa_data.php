@@ -16,6 +16,12 @@ switch ($section) {
     case 'gallery':
         $sql = "SELECT * FROM villa_images"; // ดึงข้อมูลอัลบั้มภาพจากฐานข้อมูล
         break;
+    case 'main':
+        $sql = "SELECT * FROM villa_main"; // ดึงข้อมูลสิ่งอำนวยความสะดวกจากฐานข้อมูล
+        break;
+    case 'descriptions':
+        $sql = "SELECT * FROM villa_descriptions"; // ดึงข้อมูลสิ่งอำนวยความสะดวกจากฐานข้อมูล
+        break;
     default:
         echo "Invalid section";
         exit;
@@ -48,4 +54,3 @@ if ($result->num_rows > 0) {
 }
 
 $conn->close();
-?>

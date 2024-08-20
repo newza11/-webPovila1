@@ -28,7 +28,6 @@
             border-bottom: 1px solid #ccc;
             padding-bottom: 10px;
         }
-
         .content-block img {
             max-width: 300px;
             height: auto;
@@ -42,6 +41,49 @@
             color: #555;
         }
 
+        /* ปุ่ม dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* เมนู dropdown content ที่ถูกซ่อนเป็นค่าเริ่มต้น */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        /* เมนู dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* แสดง dropdown เมื่อ hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* ปุ่มที่เป็น dropdown */
+        .dropdown-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        .dropdown-btn:hover {
+            background-color: #0056b3;
+        }
 
         .content-block .edit-btn {
             display: inline-block;
@@ -57,17 +99,15 @@
             font-weight: bold;
             /* ตัวหนา */
         }
-
-        
-
-        .content-block .edit-btn:hover {
-            background-color: #0056b3;
-            transform: translateY(-3px);
-            /* ยกปุ่มขึ้นเมื่อโฮเวอร์ */
-            
-            /* เงาที่ชัดเจนขึ้นเมื่อโฮเวอร์ */
+        .dropdown-content .btn{
+            background-color: white;
+            color: #000;
+            padding: 1rem 0.5rem;
         }
 
+        #content-area {
+            margin-top: 30px;
+        }
         .selected-btn {
             background-color: #0056b3;
             /* สีฟ้าเข้ม เพื่อบอกว่าเป็นปุ่มที่ถูกเลือก */
@@ -82,24 +122,6 @@
             box-shadow: 0px 12px 20px rgba(0, 64, 153, 0.5);
             /* เงาเมื่อโฮเวอร์ */
         }
-
-        /* จัดการการแสดงผลภายในส่วนต่าง ๆ */
-        #content-area {
-            margin-top: 30px;
-        }
-
-        /* ข้อความที่ไม่พบข้อมูล */
-        .no-data {
-            text-align: center;
-            font-size: 1.2em;
-            color: #999;
-        }
-
-        /* ส่วนที่เป็นการแบ่งพื้นที่ */
-        hr {
-            margin: 30px 0;
-            border-color: #ddd;
-        }
     </style>
 </head>
 
@@ -111,10 +133,21 @@
             <div class="recentOrders">
                 <div class="cardHeader">
                     <h2>Villa Management</h2>
-                    <a href="#" class="btn" onclick="loadContent('concept')">แนวคิด</a>
-                    <a href="#" class="btn" onclick="loadContent('project')">ข้อมูลโครงการ</a>
-                    <a href="#" class="btn" onclick="loadContent('facilities')">สิ่งอำนวยความสะดวก</a>
-                    <a href="#" class="btn" onclick="loadContent('gallery')">อัลบั้มภาพ</a>
+
+                    <!-- เริ่มต้นส่วนของ Dropdown -->
+                    <div class="dropdown">
+                        <button class="dropdown-btn">Management</button>
+                        <div class="dropdown-content">
+                            <a href="#" class="btn" onclick="loadContent('concept')">แนวคิด</a>
+                            <a href="#" class="btn" onclick="loadContent('project')">ข้อมูลโครงการ</a>
+                            <a href="#" class="btn" onclick="loadContent('facilities')">สิ่งอำนวยความสะดวก</a>
+                            <a href="#" class="btn" onclick="loadContent('gallery')">อัลบั้มภาพ</a>
+                            <a href="#" class="btn" onclick="loadContent('main')">Main</a>
+                            <a href="#" class="btn" onclick="loadContent('descriptions')">Footer</a>
+                        </div>
+                    </div>
+                    <!-- จบส่วนของ Dropdown -->
+                    
                 </div>
 
                 <div id="content-area">
@@ -127,7 +160,7 @@
     <?php include '../mains.php'; ?>
 
     <script>
-        window.onload = function() {
+        window.onload = function () {
             loadContent('concept'); // โหลดเนื้อหาแนวคิดเมื่อเปิดหน้า
             highlightSelectedButton('concept'); // ไฮไลท์ปุ่ม "แนวคิด"
         };
@@ -135,7 +168,7 @@
         function loadContent(section) {
             const xhr = new XMLHttpRequest();
             xhr.open('GET', `fetch_villa_data.php?section=${section}`, true);
-            xhr.onload = function() {
+            xhr.onload = function () {
                 if (this.status === 200) {
                     document.getElementById('content-area').innerHTML = this.responseText;
                 }
@@ -147,7 +180,7 @@
 
         function highlightSelectedButton(section) {
             // ลบคลาส 'selected-btn' จากปุ่มทั้งหมด
-            document.querySelectorAll('.btn').forEach(function(btn) {
+            document.querySelectorAll('.btn').forEach(function (btn) {
                 btn.classList.remove('selected-btn');
             });
 

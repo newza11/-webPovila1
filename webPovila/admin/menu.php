@@ -42,7 +42,7 @@
                 <span class="icon">
                     <ion-icon name="cash-outline"></ion-icon>
                 </span>
-                <span class="title">room_price</span>
+                <span class="title">Room_price</span>
             </a>
         </li>
 
@@ -51,7 +51,7 @@
                 <span class="icon">
                     <ion-icon name="person-circle-outline"></ion-icon>
                 </span>
-                <span class="title">user</span>
+                <span class="title">User</span>
             </a>
         </li>
 

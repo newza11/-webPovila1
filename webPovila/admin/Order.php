@@ -57,7 +57,7 @@
         let currentPage = 1;
         let totalPages = 1;
 
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             loadOrders(currentPage);
 
             document.querySelector('.prev-page').addEventListener('click', () => {
@@ -87,27 +87,33 @@
         }
 
         function displayOrders(orders) {
-            const tableBody = document.getElementById('orderTableBody');
-            tableBody.innerHTML = '';
+    const tableBody = document.getElementById('orderTableBody');
+    tableBody.innerHTML = '';
 
-            orders.forEach(order => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${order.name}</td>
-                    <td>${order.price}</td>
-                    <td>${order.people}</td>
-                    <td>${order.checkin}</td>
-                    <td>${order.checkout}</td>
-                    <td><span class="status ${getStatusClass(order.status)}">${order.status}</span></td>
-                    <td><button onclick="viewSlip('${order.slip}')">View Slip</button></td>
-                    <td>
-                        <a href="edit_order.php?id=${order.id}"><button>Edit</button></a>
-                        <button onclick="deleteOrder(${order.id})">Delete</button>
-                    </td>
-                `;
-                tableBody.appendChild(row);
-            });
-        }
+    orders.forEach(order => {
+        const row = document.createElement('tr');
+        const slipPath = `../${order.slip}`;
+        console.log(slipPath); // ตรวจสอบเส้นทางที่สร้าง
+        
+        row.innerHTML = `
+            <td>${order.name}</td>
+            <td>${order.price}</td>
+            <td>${order.people}</td>
+            <td>${order.checkin}</td>
+            <td>${order.checkout}</td>
+            <td><span class="status ${getStatusClass(order.status)}">${order.status}</span></td>
+            <td>
+                <img src="${slipPath}" alt="Slip" style="width: 50px; height: 50px; cursor: pointer;" onclick="viewSlip('${slipPath}')">
+            </td>
+            <td>
+                <a href="edit_order.php?id=${order.id}"><button>Edit</button></a>
+                <button onclick="deleteOrder(${order.id})">Delete</button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
 
         function updatePagination() {
             document.querySelector('.page-info').textContent = `หน้าที่ ${currentPage} จาก ${totalPages}`;
@@ -142,58 +148,68 @@
             }
         }
 
+        
         function viewSlip(slip) {
-            const modal = document.getElementById("slipModal");
-            const modalImg = document.getElementById("slipImage");
-            modal.style.display = "block";
-            modalImg.src = slip;
+    const modal = document.getElementById("slipModal");
+    const modalImg = document.getElementById("slipImage");
 
-            const span = document.getElementsByClassName("close")[0];
-            span.onclick = function () {
-                modal.style.display = "none";
-            }
-        }
+    // ตรวจสอบว่าเส้นทางของสลิปถูกต้องหรือไม่
+    if (slip) {
+        modal.style.display = "block";
+        modalImg.src = slip;
+        modalImg.style.maxWidth = "90%";  // ทำให้รูปภาพมีขนาดไม่เกิน 90% ของความกว้างหน้าจอ
+        modalImg.style.maxHeight = "80%"; // ทำให้รูปภาพมีขนาดไม่เกิน 80% ของความสูงหน้าจอ
+    } else {
+        alert('No slip available for this order.');
+    }
+
+    const span = document.getElementsByClassName("close")[0];
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+}
+
     </script>
 
     <style>
-        /* Modal styling */
         .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            padding-top: 100px;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0, 0, 0);
-            background-color: rgba(0, 0, 0, 0.9);
-        }
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 50px; /* ลดการเว้นระยะห่างจากขอบบน */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8); /* สีพื้นหลังเข้มขึ้น */
+}
 
-        .modal-content {
-            margin: auto;
-            display: block;
-            width: 80%;
-            max-width: 700px;
-        }
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%; /* ลดขนาดลงให้ไม่เกิน 90% ของความกว้างหน้าจอ */
+    max-height: 80%; /* ลดขนาดลงให้ไม่เกิน 80% ของความสูงหน้าจอ */
+    border-radius: 10px; /* ทำให้ขอบของรูปภาพมีความโค้งมน */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* เพิ่มเงาให้รูปภาพ */
+}
 
-        .close {
-            position: absolute;
-            top: 15px;
-            right: 35px;
-            color: #fff;
-            font-size: 40px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
+.close {
+    position: absolute;
+    top: 10px; /* ปรับให้อยู่ในระยะที่เหมาะสม */
+    right: 20px; /* ลดระยะขอบ */
+    color: #fff;
+    font-size: 35px;
+    font-weight: bold;
+    transition: 0.3s;
+}
 
-        .close:hover,
-        .close:focus {
-            color: #bbb;
-            text-decoration: none;
-            cursor: pointer;
-        }
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
 
         .pagination {
             display: flex;
@@ -211,9 +227,10 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
         .pagination button:hover {
-  background: #0056b3;
-}
+            background: #0056b3;
+        }
 
         .pagination button:disabled {
             background-color: #ccc;
