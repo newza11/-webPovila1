@@ -10,7 +10,7 @@ nav {
     padding: 1rem 13rem;
     display: flex;
     align-items: center;
-    background-color: #FCF7F3;
+    background-color: #fcf0e4;
     border-bottom-style: solid;
     border-color: #e4b58a;
     width: 100%;
@@ -26,13 +26,13 @@ nav {
     padding: 0;
   }
 
-.link1 {
+.link2 {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
 
-.link1 a {
+.link2 a {
     font-weight: 400;
     font-size: 1.1em;
     color: #000;

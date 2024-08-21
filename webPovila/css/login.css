@@ -17,7 +17,9 @@ host {
     justify-content: space-between;
     align-items: center;
     z-index: 99;
-    background-color: #FCF7F3;
+    border-bottom-style: solid;
+  border-color: #e4b58a;
+    background-color: #fcf0e4;
 }
 
 .naigation a {

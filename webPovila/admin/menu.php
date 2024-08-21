@@ -54,6 +54,14 @@
                 <span class="title">User</span>
             </a>
         </li>
+        <li>
+            <a href="contact_user.php">
+                <span class="icon">
+                <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+                </span>
+                <span class="title">Contact</span>
+            </a>
+        </li>
 
         <li>
             <a href="setting.php">
@@ -109,12 +117,7 @@
                     <ion-icon name="menu-outline"></ion-icon>
                 </div>
 
-                <div class="search">
-                    <label>
-                        <input type="text" placeholder="Search here">
-                        <ion-icon name="search-outline"></ion-icon>
-                    </label>
-                </div>
+                
 
                 <div class="user-settings">
     <div class="user" onclick="toggleDropdown()">

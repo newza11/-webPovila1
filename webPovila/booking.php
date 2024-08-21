@@ -55,7 +55,7 @@
     <body>
         <nav>
             <div class="nav__logo">
-                <img src="poo/logo1.jpg" alt="Ocean" width="22" height="80" style="display: flex; width: 100%;">
+                <img src="poo/image2.png" alt="Ocean" width="22" height="80" style="display: flex; width: 100%;">
             </div>
             <ul class="nav__links">
                 <li class="link"><a href="index.php">Home</a></li>

@@ -19,6 +19,9 @@ switch ($section) {
     case 'main':
         $sql = "SELECT * FROM villa_main"; // ดึงข้อมูลสิ่งอำนวยความสะดวกจากฐานข้อมูล
         break;
+        case 'about':
+            $sql = "SELECT * FROM villa_about"; // ดึงข้อมูลสิ่งอำนวยความสะดวกจากฐานข้อมูล
+            break;
     case 'descriptions':
         $sql = "SELECT * FROM villa_descriptions"; // ดึงข้อมูลสิ่งอำนวยความสะดวกจากฐานข้อมูล
         break;

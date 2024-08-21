@@ -1,0 +1,141 @@
+/* Container for contact messages */
+.details2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+  }
+  
+  .recentOrders {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    
+    overflow: hidden;
+  }
+  
+  /* Card Header */
+  .cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .cardHeader h2 {
+    font-size: 2rem;
+    color: #000;
+    margin-bottom: 2rem;
+  }
+  
+  .cardHeader .btn {
+    position: relative;
+    padding: 5px 10px;
+    background: #007bff;
+    text-decoration: none;
+    color: white;
+    border-radius: 6px;
+  }
+  
+  .cardHeader .btn:hover {
+    background: #0056b3;
+  }
+  
+  /* Table Styles */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    border-radius: 10px; /* ให้ตารางมีมุมโค้งมน */
+    overflow: hidden;
+  }
+  
+  table thead {
+    background-color: #007bff;
+    color: rgb(0, 0, 0);
+  }
+  table td.message-cell {
+    max-width: 300px; /* กำหนดความกว้างสูงสุด */
+    word-wrap: break-word; /* ตัดคำถ้ายาวเกินไป */
+    white-space: pre-wrap; /* แสดงข้อความในหลายบรรทัด */
+    max-height: 150px; /* กำหนดความสูงสูงสุด */
+    overflow-y: auto; /* เพิ่มการเลื่อนแนวตั้งหากข้อความยาวเกิน */
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left; /* จัดข้อความให้ชิดซ้าย */
+}
+  table th, table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  table tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Actions (Edit/Delete buttons) */
+  .actions a {
+    margin: 0 5px;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .actions a:hover {
+    text-decoration: underline;
+  }
+  
+  .btn {
+    background: #007bff;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .btn:hover {
+    background: #0056b3;
+  }
+  
+  /* Pagination styles (if needed) */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .pagination a.btn {
+    padding: 8px 16px;
+    margin: 0 5px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pagination a.btn:hover {
+    background: #0056b3;
+  }
+  
+  .pagination .page-info {
+    font-size: 16px;
+    margin: 0 10px;
+  }
+  
+  .pagination a.btn[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  

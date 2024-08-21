@@ -21,16 +21,24 @@ if (!isset($_POST['booking_id'])) {
 $booking_id = $_POST['booking_id'];
 
 // Retrieve booking details
-$query = "SELECT id, checkin, checkout, room, price, name,people,phone, status FROM orders_db WHERE id = ?";
+$query = "SELECT id, checkin, checkout, room, price, name, people, phone, status FROM orders_db WHERE id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $booking_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $booking = $result->fetch_assoc();
 
-if (!$booking) {
+if ($booking) {
+    // ดึงค่าของ price จาก $booking
+    $price = $booking['price'];
+
+    // คำนวณค่า total หลังจากหัก 4000
+    $total = $price - 4000;
+} else {
     die("Booking not found.");
 }
+
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,7 +74,6 @@ if (!$booking) {
             font-weight: bold;
             border-bottom-style: solid;
             border-color: #e4b58a;
-            
         }
 
         .receipt-header p {
@@ -99,7 +106,6 @@ if (!$booking) {
             background-color: #007bff;
             border-color: #007bff;
             border-radius: 40px;
-            
             transition: background-color 0.3s, border-color 0.3s;
         }
 
@@ -121,28 +127,29 @@ if (!$booking) {
     <div class="receipt-container">
         <div class="receipt-header">
             <h2>Booking 🌊บ้านนันท์นภัส พลูวิลล่า</h2>
-            
         </div>
 
         <div class="receipt-details">
-            <p><strong>Name:</strong> <?php echo $booking['name']; ?></p>
-            <p><strong>Phone:</strong> <?php echo $booking['phone']; ?></p>
+            <p><strong>Name:</strong> <?php echo htmlspecialchars($booking['name']); ?></p>
+            <p><strong>Room:</strong> <?php echo htmlspecialchars($booking['room']); ?></p>
             <p><strong>Check In:</strong> <?php echo $booking['checkin']; ?>(14.00 น.)</p>
             <p><strong>Check Out:</strong> <?php echo $booking['checkout']; ?>(12.00 น.)</p>
-            <p><strong>Room:</strong> <?php echo $booking['room']; ?></p>
+            <p><strong>Phone:</strong> <?php echo htmlspecialchars($booking['phone']); ?></p>
             <p><strong>Guests:</strong> <?php echo $booking['people']; ?> คน</p>
-            <p><strong>Price:</strong> <?php echo number_format($booking['price'], 2); ?> บาท</p>
+            <p><strong>Price:</strong> <?php echo number_format($price, 2); ?> บาท</p>
+            
+
             <p>🔆แถมฟรี🔆<br>
                 ❕ฟรีถ่าน 1 ถุง<br>
                 ❕แถมน้ำดื่ม 2 แพ๊ค<br>
                 ❕แถมน้ำแข็ง 2 ถุงใหญ่<br>
                 ❕เป๊ปซี่ขวดใหญ่ 2 ขวด
             </p>
-            <p><strong>💸 ลูกค้าจ่ายส่วนต่างวันเข้าพักจำนวน</strong> <?php echo number_format($booking['price'], 2); ?> บาท<br>
-                และค่าประกันบ้านจำนวน 3,000 บาทกับแม่บ้าน<br>
-                *ค่าประกันลูกค้าจะได้คืนในวันเช็คเอาท์เต็มจำนวนกรณีไม่มีของเสียหายค่ะ ขอบคุณค่ะ*
-                ‼️ติดต่อสอบถามแอดมินเนย‼️<br>
-                ☎️ 098-646-1451
+            <p><strong>💸 ลูกค้าจ่ายส่วนต่างวันเข้าพักจำนวน:</strong> <?php echo number_format($total, 2); ?> บาท</p>
+            และค่าประกันบ้านจำนวน 3,000 บาทกับแม่บ้าน<br>
+            *ค่าประกันลูกค้าจะได้คืนในวันเช็คเอาท์เต็มจำนวนกรณีไม่มีของเสียหายค่ะ ขอบคุณค่ะ*<br>
+            ‼️ติดต่อสอบถามแอดมินเนย‼️<br>
+            ☎️ 098-646-1451
             </p>
         </div>
 
@@ -154,10 +161,3 @@ if (!$booking) {
 </body>
 
 </html>
-
-
-
-<?php
-$stmt->close();
-$conn->close();
-?>

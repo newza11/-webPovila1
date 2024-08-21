@@ -72,12 +72,13 @@ $conn->close();
 
 
 
-
+<div id="detail">
 <div class="container" style="margin-top: 4rem;" >
       <div class="d-flex flex-column align-items-center" id="list-title">
         <h1>นันท์นภัส</h1>
         <h2>นันท์นภัส พลูวิลล่า อัมพวา</h2>
       </div>
+    </div>
     </div>
     <!-- tabel -->
     <div class="container" style="margin-bottom: 7rem;">

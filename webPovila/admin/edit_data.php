@@ -21,6 +21,9 @@ if ($id && $section) {
         case 'main':
             $table = 'villa_main';
             break;
+            case 'about':
+                $table = 'villa_about';
+                break;
         case 'descriptions':
             $table = 'villa_descriptions';
             break;

@@ -96,10 +96,10 @@ $conn->close();
 <body>
     <header>
         <div class="logo">
-            <img src="poo/logo1.jpg" alt="Ocean" width="137" height="80">
+            <img src="poo/image2.png" alt="Ocean" width="137" height="80">
         </div>
         <nav class="navigation">
-            <a href="index.php">Home</a>
+            <a href="index.php">HOME</a>
         </nav>
     </header>
     <div class="settings-container">

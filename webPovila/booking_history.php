@@ -50,12 +50,12 @@ if (isset($_SESSION['user_id'])) {
 </head>
 <body>
 <nav>
-    <div class="nav__logo">
-        <img src="poo/logo1.jpg" alt="Logo" width="22" height="80" style="display: flex; width: 100%;">
-    </div>
+<div class="nav__logo">
+                <img src="poo/image2.png" alt="Logo" width="22" height="80" style="display: flex; width: 100%;">
+            </div>
     <ul class="nav__links1">
-        <li class="link1">
-            <a href="index.php">Home</a>
+        <li class="link2">
+            <a href="index.php">HOME</a>
             <?php if (isset($_SESSION['user_id'])): ?>
                 <div class="user">
                     <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" style="border-radius: 50%;" onclick="toggleDropdown()">

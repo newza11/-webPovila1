@@ -29,7 +29,7 @@
         $profile_picture = $user['profile_picture'] ?: 'default_profile.png';
     }
 
-    $sql_descriptions = "SELECT content FROM villa_descriptions ";
+    $sql_descriptions = "SELECT content ,image_path FROM villa_descriptions ";
     $result_descriptions = $conn->query($sql_descriptions);
 
     if ($result_descriptions->num_rows > 0) {
@@ -38,6 +38,17 @@
             $villa_descriptions[] = $row;
         }
     }
+
+    $sql_about = "SELECT content  FROM villa_about ";
+    $result_about = $conn->query($sql_about);
+
+    if ($result_about->num_rows > 0) {
+        $villa_about = [];
+        while ($row = $result_about->fetch_assoc()) {
+            $villa_about[] = $row;
+        }
+    }
+
     $sql_main = "SELECT content,image_path FROM villa_main ";
     $result_main = $conn->query($sql_main);
 
@@ -75,7 +86,7 @@
         <FontAwesomeIcon icon="fa-brands fa-line" />
         <link rel="stylesheet" href="css/tabel.css">
         <link rel="stylesheet" href="css/searchs.css">
-        
+
 
         <link rel="icon" type="image/png" href="poo/logo2.png">
 
@@ -88,24 +99,32 @@
                 <img src="poo/image2.png" alt="Logo" width="22" height="80" style="display: flex; width: 100%;">
             </div>
             <ul class="nav__links">
-                <li class="link">
-                    <a href="#">Home</a>
-                    <?php if (isset($_SESSION['user_id'])): ?>
+                <li class="center-links">
+                    <a href="index.php">HOME</a>
+                    <a href="index.php#book">BOOKING</a>
+                    <a href="index.php#detail">DETAIL</a>
+                    <a href="index.php#about">ABOUT</a>
+                    <a href="contact.php">CONTACT</a>
+
+                </li>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <li class="user-link">
                         <div class="user">
-                            <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" width="50" height="50" onclick="toggleDropdown()">
+                            <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" width="50" height="50" style="border-radius: 50%;" onclick="toggleDropdown()">
                             <div id="dropdownContent" class="dropdown-content">
                                 <a href="settings.php">Settings</a>
-                                <a href="booking_history.php">booking</a>
+                                <a href="booking_history.php">Booking</a>
                                 <a href="logout.php">Logout</a>
                             </div>
                         </div>
-                    <?php endif; ?>
-                </li>
+                    </li>
+                <?php endif; ?>
                 <?php if (!isset($_SESSION['user_id'])): ?>
-                    <li class="link"><a href="login.php">Login</a></li>
+                    <li class="link1"><a href="login.php">Login</a></li>
                 <?php endif; ?>
             </ul>
         </nav>
+
 
         <script>
             function toggleDropdown() {
@@ -127,7 +146,7 @@
         </script>
         <?php include 'main_index.php'; ?>
 
-
+        <div id="book"></div>
         <header class="section__container header__container" style="margin-bottom: 10rem;">
             <div class="header__image__container">
                 <div class="header__content"></div>
@@ -381,10 +400,22 @@
 
 
             function validateGuests(input) {
-                if (parseInt(input.value) > 20) {
-                    input.value = 20;
+                // ลบตัวเลขทศนิยมออกหากมีการพิมพ์ทศนิยม
+                input.value = input.value.replace(/[^0-9]/g, ''); // อนุญาตเฉพาะเลขจำนวนเต็ม
+
+                // ตรวจสอบว่าค่าตัวเลขไม่ต่ำกว่าค่าต่ำสุดและไม่เกินค่ามากสุด
+                const min = parseInt(input.min);
+                const max = parseInt(input.max);
+                const value = parseInt(input.value);
+
+                if (value < min) {
+                    input.value = min;
+                }
+                if (value > max) {
+                    input.value = max;
                 }
             }
+
 
             document.getElementById('bookingButton').addEventListener('click', function() {
                 const checkin = document.getElementById('checkin').value;
@@ -471,79 +502,244 @@
                 <?php endif; ?>
             });
         </script>
+        <div id="about">
+            <About class="About__container">
 
-        <About class="About__container">
-            <div class="content__container">
-                <div class="image__container">
-                    <img src="poo/1.jpg" alt="Pool Villa Pattaya">
-                </div>
-                <div class="text__container">
-                    <h1 class="about-us-title">ABOUT US</h1>
-                    <h1 class="villa-title">พูลวิลล่าอัมพวา</h1>
-                    <p>
-                        จองพูลวิลล่าอัมพวากับเรา (Pool Villa Amphawa) ที่พักหรูหรา และบ้านพักส่วนตัวที่ตอบโจทย์ความต้องการของคุณ
-                        ไม่ว่าจะเป็นการพักผ่อนอย่างสงบในบรรยากาศที่เป็นธรรมชาติ และเต็มไปด้วยความเป็นส่วนตัว สัมผัสประสบการณ์การพักผ่อนที่แตกต่างกับบริการที่เหนือชั้น
+                <div class="content__container">
+                    <div class="image__container">
+                        <img src="poo/1.jpg" alt="Pool Villa Pattaya">
+                    </div>
+                    <div class="text__container">
+                        <h1 class="about-us-title">ABOUT US</h1>
+                        <h1 class="villa-title"><?= $villa_about[0]['content']; ?></h1>
+                        <p>
+                            <?= $villa_about[1]['content']; ?>
 
-                    </p>
-                    <div class="highlight__box">
-                        <h2>เหตุผลที่ควรเลือกใช้บริการกับเรา</h2>
-                        <ul>
-                            <li>คุ้มค่า ราคายุติธรรม</li>
-                            <li>สะดวกสบาย ติดต่อได้ตลอด 24 ชั่วโมง</li>
-                            <li>ดูแลด้วยใจ </li>
-                        </ul>
+                        </p>
+                        <div class="highlight__box">
+                            <h2> <?= $villa_about[2]['content']; ?></h2>
+                            <ul>
+                                <li> <?= $villa_about[3]['content']; ?></li>
+                                <li> <?= $villa_about[4]['content']; ?></li>
+                                <li> <?= $villa_about[5]['content']; ?></li>
+                            </ul>
 
+                        </div>
                     </div>
                 </div>
-            </div>
+        </div>
 
-            <style>
-                .About__container {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    padding: 5rem 2rem;
-                    position: relative;
-                    background-color: hsl(0, 0%, 99%);
+        <style>
+            .About__container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 5rem 2rem;
+                position: relative;
+                background-color: hsl(0, 0%, 99%);
+            }
+
+            .content__container {
+                display: flex;
+                max-width: 1200px;
+                width: 100%;
+                margin: 0 auto;
+                gap: 2rem;
+                position: relative;
+            }
+
+            .image__container {
+                flex: 1;
+                min-width: 300px;
+                position: relative;
+            }
+
+            .image__container img {
+                width: 100%;
+                height: 850px;
+                /* ปรับความสูงของรูปภาพ */
+                object-fit: cover;
+                /* ปรับให้รูปภาพครอบคลุมพื้นที่และไม่เสียสัดส่วน */
+                border-radius: 10px;
+            }
+
+            .text__container {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                /* ทำให้ข้อความเลื่อนขึ้นด้านบน */
+                margin-top: -2rem;
+                /* เลื่อนขึ้นเล็กน้อย */
+            }
+
+            .about-us-title {
+                font-size: 5rem;
+                /* ขนาดใหญ่กว่า */
+                color: rgba(128, 128, 128, 0.5);
+                /* สีเทาจางๆ */
+                margin-bottom: 2rem;
+                text-align: center;
+            }
+
+            .villa-title {
+                font-size: 2.5rem;
+                color: #000;
+                margin-bottom: 1.5rem;
+                margin-top: 2rem;
+                /* เลื่อนลงมาหน่อย */
+            }
+
+            .text__container p {
+                font-size: 1.2rem;
+                color: #333;
+                margin-bottom: 1.5rem;
+            }
+
+            .highlight__box {
+                background-color: #f7c95c;
+                padding: 1.5rem;
+                position: absolute;
+                top: 45%;
+                /* ปรับตำแหน่งให้กล่องทับรูปภาพเล็กน้อย */
+                left: 550px;
+                /* ขยับกรอบไปทางขวาเล็กน้อยให้ชิดกับรูป */
+                width: 50%;
+                /* ลดความกว้างของกล่องเพื่อให้มีพื้นที่ทางด้านขวามากขึ้น */
+                z-index: 2;
+                /* ทำให้กล่องอยู่ด้านหน้ารูป */
+            }
+
+            .highlight__box h2 {
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+                color: #000;
+            }
+
+            .highlight__box ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .highlight__box ul li {
+                font-size: 1.2rem;
+                margin-bottom: 0.5rem;
+                color: #000;
+            }
+
+            .highlight__box ul li::before {
+                content: '✔';
+                color: #000;
+                margin-right: 0.5rem;
+            }
+
+            .highlight__box button {
+                background-color: #5dbcd2;
+                border: none;
+                padding: 0.8rem 1.5rem;
+                color: #fff;
+                font-size: 1rem;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .highlight__box button:hover {
+                background-color: #499aa8;
+            }
+
+            /* ขนาดหน้าจอปกติ (เดสก์ท็อปใหญ่) */
+            .about-us-title {
+                font-size: 5rem;
+            }
+
+            .villa-title {
+                font-size: 2.5rem;
+            }
+
+            .text__container p {
+                font-size: 1.2rem;
+            }
+
+            .highlight__box h2 {
+                font-size: 1.8rem;
+            }
+
+            .highlight__box ul li {
+                font-size: 1.2rem;
+            }
+
+
+            /* หน้าจอแท็บเล็ต (ขนาดหน้าจอระหว่าง 768px - 1024px) */
+            @media (max-width: 1024px) {
+                .about-us-title {
+                    font-size: 4.0rem;
+                    /* ลดลง 3px */
                 }
 
-                .content__container {
-                    display: flex;
-                    max-width: 1200px;
-                    width: 100%;
-                    margin: 0 auto;
-                    gap: 2rem;
-                    position: relative;
-                }
-
-                .image__container {
-                    flex: 1;
-                    min-width: 300px;
-                    position: relative;
+                .about-us-title {
+                    font-size: 4rem;
+                    /* ขนาดใหญ่กว่า */
+                    color: rgba(128, 128, 128, 0.5);
+                    /* สีเทาจางๆ */
+                    margin-bottom: 2rem;
+                    text-align: center;
                 }
 
                 .image__container img {
                     width: 100%;
-                    height: 850px;
+                    height: 650px;
                     /* ปรับความสูงของรูปภาพ */
                     object-fit: cover;
                     /* ปรับให้รูปภาพครอบคลุมพื้นที่และไม่เสียสัดส่วน */
                     border-radius: 10px;
                 }
 
-                .text__container {
-                    flex: 1;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: flex-start;
-                    /* ทำให้ข้อความเลื่อนขึ้นด้านบน */
-                    margin-top: -2rem;
-                    /* เลื่อนขึ้นเล็กน้อย */
+                .highlight__box {
+                    background-color: #f7c95c;
+                    padding: 1.5rem;
+                    position: absolute;
+                    top: 55%;
+                    /* ปรับตำแหน่งให้กล่องทับรูปภาพเล็กน้อย */
+                    left: 400px;
+                    /* ขยับกรอบไปทางขวาเล็กน้อยให้ชิดกับรูป */
+                    width: 50%;
+                    /* ลดความกว้างของกล่องเพื่อให้มีพื้นที่ทางด้านขวามากขึ้น */
+                    z-index: 2;
+                    /* ทำให้กล่องอยู่ด้านหน้ารูป */
+                }
+
+                .villa-title {
+                    font-size: 2.0rem;
+                    /* ลดลง 3px */
+                }
+
+                .text__container p {
+                    font-size: 1.1rem;
+                    /* ลดลง 3px */
+                }
+
+                .highlight__box h2 {
+                    font-size: 1.3rem;
+                    /* ลดลง 3px */
+                }
+
+                .highlight__box ul li {
+                    font-size: 1.0rem;
+                    /* ลดลง 3px */
+                }
+            }
+
+            /* หน้าจอมือถือใหญ่ (ขนาดหน้าจอระหว่าง 480px - 767px) */
+            @media (max-width: 769px) {
+                .about-us-title {
+                    font-size: 4rem;
+                    /* ลดลงอีก 3px */
                 }
 
                 .about-us-title {
-                    font-size: 5rem;
+                    font-size: 3rem;
                     /* ขนาดใหญ่กว่า */
                     color: rgba(128, 128, 128, 0.5);
                     /* สีเทาจางๆ */
@@ -552,26 +748,20 @@
                 }
 
                 .villa-title {
-                    font-size: 2.5rem;
+                    font-size: 2rem;
                     color: #000;
                     margin-bottom: 1.5rem;
                     margin-top: 2rem;
                     /* เลื่อนลงมาหน่อย */
                 }
 
-                .text__container p {
-                    font-size: 1.2rem;
-                    color: #333;
-                    margin-bottom: 1.5rem;
-                }
-
                 .highlight__box {
                     background-color: #f7c95c;
                     padding: 1.5rem;
                     position: absolute;
-                    top: 45%;
+                    top: 55%;
                     /* ปรับตำแหน่งให้กล่องทับรูปภาพเล็กน้อย */
-                    left: 550px;
+                    left: 250px;
                     /* ขยับกรอบไปทางขวาเล็กน้อยให้ชิดกับรูป */
                     width: 50%;
                     /* ลดความกว้างของกล่องเพื่อให้มีพื้นที่ทางด้านขวามากขึ้น */
@@ -579,226 +769,68 @@
                     /* ทำให้กล่องอยู่ด้านหน้ารูป */
                 }
 
-                .highlight__box h2 {
-                    font-size: 1.8rem;
-                    margin-bottom: 1rem;
-                    color: #000;
-                }
-
-                .highlight__box ul {
-                    list-style-type: none;
-                    padding: 0;
-                    margin: 0;
-                }
-
-                .highlight__box ul li {
-                    font-size: 1.2rem;
-                    margin-bottom: 0.5rem;
-                    color: #000;
-                }
-
-                .highlight__box ul li::before {
-                    content: '✔';
-                    color: #000;
-                    margin-right: 0.5rem;
-                }
-
-                .highlight__box button {
-                    background-color: #5dbcd2;
-                    border: none;
-                    padding: 0.8rem 1.5rem;
-                    color: #fff;
-                    font-size: 1rem;
-                    border-radius: 5px;
-                    cursor: pointer;
-                }
-
-                .highlight__box button:hover {
-                    background-color: #499aa8;
-                }
-
-                /* ขนาดหน้าจอปกติ (เดสก์ท็อปใหญ่) */
-                .about-us-title {
-                    font-size: 5rem;
+                .image__container img {
+                    width: 100%;
+                    height: 650px;
+                    /* ปรับความสูงของรูปภาพ */
+                    object-fit: cover;
+                    /* ปรับให้รูปภาพครอบคลุมพื้นที่และไม่เสียสัดส่วน */
+                    border-radius: 10px;
                 }
 
                 .villa-title {
-                    font-size: 2.5rem;
+                    font-size: 2rem;
+                    /* ลดลงอีก 3px */
                 }
 
                 .text__container p {
-                    font-size: 1.2rem;
+                    font-size: 1rem;
+                    /* ลดลงอีก 3px */
                 }
 
                 .highlight__box h2 {
-                    font-size: 1.8rem;
+                    font-size: 1.2rem;
+                    /* ลดลงอีก 3px */
                 }
 
                 .highlight__box ul li {
-                    font-size: 1.2rem;
+                    font-size: 1rem;
+                    /* ลดลงอีก 3px */
+                }
+            }
+
+            /* หน้าจอมือถือเล็ก (ขนาดหน้าจอเล็กกว่า 480px) */
+            @media (max-width: 480px) {
+                .About__container {
+                    display: none;
                 }
 
-
-                /* หน้าจอแท็บเล็ต (ขนาดหน้าจอระหว่าง 768px - 1024px) */
-                @media (max-width: 1024px) {
-                    .about-us-title {
-                        font-size: 4.0rem;
-                        /* ลดลง 3px */
-                    }
-
-                    .about-us-title {
-                        font-size: 4rem;
-                        /* ขนาดใหญ่กว่า */
-                        color: rgba(128, 128, 128, 0.5);
-                        /* สีเทาจางๆ */
-                        margin-bottom: 2rem;
-                        text-align: center;
-                    }
-
-                    .image__container img {
-                        width: 100%;
-                        height: 650px;
-                        /* ปรับความสูงของรูปภาพ */
-                        object-fit: cover;
-                        /* ปรับให้รูปภาพครอบคลุมพื้นที่และไม่เสียสัดส่วน */
-                        border-radius: 10px;
-                    }
-
-                    .highlight__box {
-                        background-color: #f7c95c;
-                        padding: 1.5rem;
-                        position: absolute;
-                        top: 55%;
-                        /* ปรับตำแหน่งให้กล่องทับรูปภาพเล็กน้อย */
-                        left: 400px;
-                        /* ขยับกรอบไปทางขวาเล็กน้อยให้ชิดกับรูป */
-                        width: 50%;
-                        /* ลดความกว้างของกล่องเพื่อให้มีพื้นที่ทางด้านขวามากขึ้น */
-                        z-index: 2;
-                        /* ทำให้กล่องอยู่ด้านหน้ารูป */
-                    }
-
-                    .villa-title {
-                        font-size: 2.0rem;
-                        /* ลดลง 3px */
-                    }
-
-                    .text__container p {
-                        font-size: 1.1rem;
-                        /* ลดลง 3px */
-                    }
-
-                    .highlight__box h2 {
-                        font-size: 1.3rem;
-                        /* ลดลง 3px */
-                    }
-
-                    .highlight__box ul li {
-                        font-size: 1.0rem;
-                        /* ลดลง 3px */
-                    }
+                .about-us-title {
+                    font-size: 4.1rem;
+                    /* ลดลงอีก 3px */
                 }
 
-                /* หน้าจอมือถือใหญ่ (ขนาดหน้าจอระหว่าง 480px - 767px) */
-                @media (max-width: 769px) {
-                    .about-us-title {
-                        font-size: 4rem;
-                        /* ลดลงอีก 3px */
-                    }
-
-                    .about-us-title {
-                        font-size: 3rem;
-                        /* ขนาดใหญ่กว่า */
-                        color: rgba(128, 128, 128, 0.5);
-                        /* สีเทาจางๆ */
-                        margin-bottom: 2rem;
-                        text-align: center;
-                    }
-
-                    .villa-title {
-                        font-size: 2rem;
-                        color: #000;
-                        margin-bottom: 1.5rem;
-                        margin-top: 2rem;
-                        /* เลื่อนลงมาหน่อย */
-                    }
-
-                    .highlight__box {
-                        background-color: #f7c95c;
-                        padding: 1.5rem;
-                        position: absolute;
-                        top: 55%;
-                        /* ปรับตำแหน่งให้กล่องทับรูปภาพเล็กน้อย */
-                        left: 250px;
-                        /* ขยับกรอบไปทางขวาเล็กน้อยให้ชิดกับรูป */
-                        width: 50%;
-                        /* ลดความกว้างของกล่องเพื่อให้มีพื้นที่ทางด้านขวามากขึ้น */
-                        z-index: 2;
-                        /* ทำให้กล่องอยู่ด้านหน้ารูป */
-                    }
-
-                    .image__container img {
-                        width: 100%;
-                        height: 650px;
-                        /* ปรับความสูงของรูปภาพ */
-                        object-fit: cover;
-                        /* ปรับให้รูปภาพครอบคลุมพื้นที่และไม่เสียสัดส่วน */
-                        border-radius: 10px;
-                    }
-
-                    .villa-title {
-                        font-size: 2rem;
-                        /* ลดลงอีก 3px */
-                    }
-
-                    .text__container p {
-                        font-size: 1rem;
-                        /* ลดลงอีก 3px */
-                    }
-
-                    .highlight__box h2 {
-                        font-size: 1.2rem;
-                        /* ลดลงอีก 3px */
-                    }
-
-                    .highlight__box ul li {
-                        font-size: 1rem;
-                        /* ลดลงอีก 3px */
-                    }
+                .villa-title {
+                    font-size: 1.7rem;
+                    /* ลดลงอีก 3px */
                 }
 
-                /* หน้าจอมือถือเล็ก (ขนาดหน้าจอเล็กกว่า 480px) */
-                @media (max-width: 480px) {
-                    .About__container {
-                        display: none;
-                    }
-
-                    .about-us-title {
-                        font-size: 4.1rem;
-                        /* ลดลงอีก 3px */
-                    }
-
-                    .villa-title {
-                        font-size: 1.7rem;
-                        /* ลดลงอีก 3px */
-                    }
-
-                    .text__container p {
-                        font-size: 0.9rem;
-                        /* ลดลงอีก 3px */
-                    }
-
-                    .highlight__box h2 {
-                        font-size: 1rem;
-                        /* ลดลงอีก 3px */
-                    }
-
-                    .highlight__box ul li {
-                        font-size: 0.9rem;
-                        /* ลดลงอีก 3px */
-                    }
+                .text__container p {
+                    font-size: 0.9rem;
+                    /* ลดลงอีก 3px */
                 }
-            </style>
+
+                .highlight__box h2 {
+                    font-size: 1rem;
+                    /* ลดลงอีก 3px */
+                }
+
+                .highlight__box ul li {
+                    font-size: 0.9rem;
+                    /* ลดลงอีก 3px */
+                }
+            }
+        </style>
         </About>
 
         <map class="map">
@@ -834,17 +866,17 @@
             </div>
         </map> -->
         <footer class="footer">
-            <div class="footer__gold-bar"> 
-                
+            <div class="footer__gold-bar">
+
             </div> <!-- เพิ่มแถบสีทองด้านบนของ footer -->
-            
+
             <div class="footer__container">
                 <div class="footer__section contact-info">
                     <h3>นันท์นภัส</h3>
                     <h4>CONTACT INFO</h4>
-                    <p><i class="fa fa-phone"></i> T. 098 646 1451</p>
-                    <p><i class="fa fa-envelope"></i> nannaphas12345678@gmail.com</p>
-                    <p><i class="fa fa-map-marker"></i> โครงการพูลวิลล่า ต.คลองเขิน อ.อัมพวา จ.สมุทรสงคราม 75110</p>
+                    <p><i class="fa fa-phone"></i> <?= $villa_descriptions[0]['content']; ?></p>
+                    <p><i class="fa fa-envelope"></i> <?= $villa_descriptions[1]['content']; ?></p>
+                    <p><i class="fa fa-map-marker"></i> <?= $villa_descriptions[2]['content']; ?></p>
                     <div class="footer__social">
                         <a href="https://www.facebook.com/profile.php?id=61553502207847"><ion-icon name="logo-facebook"></ion-icon></a>
                         <a href="https://lin.ee/yvY9Aal"><i class="bi bi-line bicustom-bi-line"></i></a>
@@ -854,21 +886,28 @@
                 <div class="footer__section useful-links">
                     <h4>USEFUL LINKS</h4>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Detail Povila </a></li>
-                        <li><a href="#">About Povila</a></li>
-                        <li><a href="#">Contact Us</a></li>
+                        <ul>
+                            <li><a href="index.php">Home</a></li>
+                            <li><a href="index.php#book">Booking Online</a></li>
+                            <li><a href="index.php#detail">Detail Povila</a></li>
+                            <li><a href="index.php#about">About Povila</a></li>
+                            <li><a href="contact.php">Contact Us</a></li>
+                        </ul>
+
+
+
                     </ul>
                 </div>
                 <div class="footer__section gallery">
                     <h4>GALLERY</h4>
                     <div class="footer__gallery">
-                        <img src="poo/1.jpg" alt="Gallery Image 1">
-                        <img src="poo/2.jpg" alt="Gallery Image 2">
-                        <img src="poo/3.jpg" alt="Gallery Image 2">
-                        <img src="poo/4.jpg" alt="Gallery Image 2">
-                        <img src="poo/5.jpg" alt="Gallery Image 2">
-                        <img src="poo/6.jpg" alt="Gallery Image 2">
+                        <img src="<?= $villa_descriptions[0]['image_path']; ?>" alt="Gallery Image 1">
+                        <img src="<?= $villa_descriptions[1]['image_path']; ?>" alt="Gallery Image 2">
+                        <img src="<?= $villa_descriptions[2]['image_path']; ?>" alt="Gallery Image 2">
+                        <img src="<?= $villa_descriptions[3]['image_path']; ?>" alt="Gallery Image 2">
+                        <img src="<?= $villa_descriptions[4]['image_path']; ?>" alt="Gallery Image 2">
+                        <img src="<?= $villa_descriptions[5]['image_path']; ?>" alt="Gallery Image 2">
+
 
                     </div>
                 </div>
@@ -880,7 +919,7 @@
 
 
         <style>
-           
+
         </style>
         <!-- <footer class="footer">
             <div class="footer__container">

@@ -143,6 +143,7 @@
                             <a href="#" class="btn" onclick="loadContent('facilities')">สิ่งอำนวยความสะดวก</a>
                             <a href="#" class="btn" onclick="loadContent('gallery')">อัลบั้มภาพ</a>
                             <a href="#" class="btn" onclick="loadContent('main')">Main</a>
+                            <a href="#" class="btn" onclick="loadContent('about')">about</a>
                             <a href="#" class="btn" onclick="loadContent('descriptions')">Footer</a>
                         </div>
                     </div>

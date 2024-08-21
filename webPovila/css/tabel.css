@@ -292,6 +292,33 @@ body {
   }
 }
 
+@media (max-width: 376px) {
+  .accordion-button {
+    font-size: 0.9rem; /* Adjust button text size */
+  }
+  
+  .accordion-body {
+    font-size: 0.85rem; /* Adjust body text size */
+  }
+
+  #image-display {
+    width: 100%; /* Ensure the image takes full width */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+
+  .tab-pane {
+    padding: 1rem; /* Add padding for better spacing */
+  }
+  #list-messages img {
+    height: 250px;
+    width: 400px;
+    padding: 0 2.5rem;
+  }
+
+}
+
+
 .img-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
@@ -504,6 +531,8 @@ body {
   #list-messages img {
     height: 250px;
     width: 400px;
+    
+
   }
 
   .img-grid {
@@ -581,6 +610,7 @@ body {
   #list-title h1 {
     font-size: 100px;
   }
+  
 
   #list-title h2 {
     font-size: 18px;
@@ -627,5 +657,12 @@ body {
 
   .footer-thumbnail {
     height: 100px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1024px){
+  .search__image__container {
+    margin-top: 20px;
+    margin-bottom: 0;
+    padding-bottom: 2rem;
   }
 }

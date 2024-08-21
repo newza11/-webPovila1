@@ -83,7 +83,7 @@ $conn->close();
 <host>
         
         <div class="logo">
-            <img src="poo/logo1.jpg" alt="Ocean" width="137" height="80">
+            <img src="poo/image2.png" alt="Ocean" width="137" height="80">
           </div>
         <nav class="naigation">
             
