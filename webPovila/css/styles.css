@@ -694,6 +694,10 @@ input::placeholder {
   text-align: left;
   margin-left: 2rem;
 }
+.gallery img{
+    
+  height: 80px;
+}
 
 .useful-links ul {
   list-style: none;
@@ -790,7 +794,17 @@ input::placeholder {
   /* ระยะห่างจากข้อความ */
   background: #C29D68;
 }
+@media (min-width: 700px) and (max-width: 970px) {
+  .gallery{
+    margin-top: 0;
+    margin-bottom: 2.5rem;
+  }
+  .gallery img{
+    width: 80%;
+    height: 140px;
+  }
 
+}
 /* Media Queries */
 @media only screen and (max-width: 1024px) {
   .footer__container {
@@ -829,7 +843,12 @@ input::placeholder {
     font-size: 1.3rem;
     margin-bottom: 1rem;
   }
+  .gallery{
+    margin-top: 0;
+    margin-bottom: 2.5rem;
+  }
  
+
 
   .footer__col {
       text-align: center; /* จัดข้อความให้อยู่กลางในหน้าจอเล็ก */

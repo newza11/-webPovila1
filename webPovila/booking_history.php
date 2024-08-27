@@ -49,29 +49,8 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="css/book_his.css">
 </head>
 <body>
-<nav>
-<div class="nav__logo">
-                <img src="poo/image2.png" alt="Logo" width="22" height="80" style="display: flex; width: 100%;">
-            </div>
-    <ul class="nav__links1">
-        <li class="link2">
-            <a href="index.php">HOME</a>
-            <?php if (isset($_SESSION['user_id'])): ?>
-                <div class="user">
-                    <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" style="border-radius: 50%;" onclick="toggleDropdown()">
-                    <div id="dropdownContent" class="dropdown-content">
-                        <a href="settings.php">Settings</a>
-                        <a href="booking_history.php">Booking</a>
-                        <a href="logout.php">Logout</a>
-                    </div>
-                </div>
-            <?php endif; ?>
-        </li>
-        <?php if (!isset($_SESSION['user_id'])): ?>
-            <li class="link"><a href="login.php">Login</a></li>
-        <?php endif; ?>
-    </ul>
-</nav>
+<?php include 'nav.php'; ?>
+
 <script>
     function toggleDropdown() {
         var dropdown = document.getElementById("dropdownContent");

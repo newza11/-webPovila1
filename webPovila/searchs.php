@@ -1,13 +1,22 @@
-
-
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>บ้านนันท์นภัส พลูวิลล่า อัมพวา</title>
 
+    <title>บ้านนันท์นภัส พลูวิลล่า อัมพวา</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap");
+
+        body {
+            font-family: "Mitr", sans-serif;
+        }
+
+       
+    </style>
 </head>
+
 <body>
     <div class="mobile-container">
         <p class="title-large">บ้านนันท์นภัส</p>
@@ -40,14 +49,15 @@
                     <p id="room-type1">รอ Room</p>
                 </div>
                 <div style="margin: 5px 0 0;">
-                                <p class="price" id="price1" name="price">฿</p>
-                                <p id="security-deposit">ค่าประกัน3000</p>
-                            </div>
+                    <p class="price" id="price1" name="price">฿</p>
+                    <p id="security-deposit">ค่าประกัน3000</p>
+                </div>
                 <div class="room-button" id="bookingButtonContainer1">
-                                <button id="bookingButton1">จอง</button>
-                            </div>
+                    <button id="bookingButton1">จอง</button>
+                </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>

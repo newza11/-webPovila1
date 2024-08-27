@@ -94,36 +94,7 @@
     </head>
 
     <body>
-        <nav>
-            <div class="nav__logo">
-                <img src="poo/image2.png" alt="Logo" width="22" height="80" style="display: flex; width: 100%;">
-            </div>
-            <ul class="nav__links">
-                <li class="center-links">
-                    <a href="index.php">HOME</a>
-                    <a href="index.php#book">BOOKING</a>
-                    <a href="index.php#detail">DETAIL</a>
-                    <a href="index.php#about">ABOUT</a>
-                    <a href="contact.php">CONTACT</a>
-
-                </li>
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    <li class="user-link">
-                        <div class="user">
-                            <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" width="50" height="50" style="border-radius: 50%;" onclick="toggleDropdown()">
-                            <div id="dropdownContent" class="dropdown-content">
-                                <a href="settings.php">Settings</a>
-                                <a href="booking_history.php">Booking</a>
-                                <a href="logout.php">Logout</a>
-                            </div>
-                        </div>
-                    </li>
-                <?php endif; ?>
-                <?php if (!isset($_SESSION['user_id'])): ?>
-                    <li class="link1"><a href="login.php">Login</a></li>
-                <?php endif; ?>
-            </ul>
-        </nav>
+        <?php include 'nav.php'; ?>
 
 
         <script>
@@ -146,9 +117,10 @@
         </script>
         <?php include 'main_index.php'; ?>
 
-        <div id="book"></div>
+
         <header class="section__container header__container" style="margin-bottom: 10rem;">
             <div class="header__image__container">
+                <div id="book"></div>
                 <div class="header__content"></div>
                 <div class="booking__container">
                     <form id="availabilityForm" method="POST">
@@ -429,6 +401,8 @@
                         title: 'กรุณากรอกข้อมูลให้ครบถ้วนก่อนทำการจอง',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'ตกลง'
+                    }).then(() => {
+                        window.location = 'index.php#book';
                     });
                     return;
                 }
@@ -855,21 +829,9 @@
 
 
 
-        <!-- <map class="main">
-            <div class="search_container main_container" style="background-image: url('poo/1.jpg'); background-size: cover; background-position: center; position: relative;">
-                <div style="display: flex; justify-content: center; flex-direction: column; align-items: center;  padding: 20px;">
-                    <p class="p1" style="color: white;"><?= $villa_descriptions[0]['content']; ?></p>
-                    <p class="p3" style="color: white;"><?= $villa_descriptions[1]['content']; ?></p>
-                    <p class="p2" style="color: white;"><?= $villa_descriptions[2]['content']; ?></p>
-                    <p class="p2" style="color: white;"><?= $villa_descriptions[3]['content']; ?></p>
-                </div>
-            </div>
-        </map> -->
+       
         <footer class="footer">
-            <div class="footer__gold-bar">
-
-            </div> <!-- เพิ่มแถบสีทองด้านบนของ footer -->
-
+            <div class="footer__gold-bar"></div>
             <div class="footer__container">
                 <div class="footer__section contact-info">
                     <h3>นันท์นภัส</h3>

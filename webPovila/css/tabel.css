@@ -112,6 +112,27 @@ body {
   }
 }
 
+@media (min-width: 769px) and (max-width: 1024px) {
+  #list-home .text p {
+      font-size: 15px;
+  }
+  #list-messages img {
+    height: 350px;
+    width: 420px;
+  }
+
+  .img-grid img {
+    height: 200px;
+  }
+
+  
+ 
+}
+
+
+
+
+
 #list-profile {
   display: flex;
   flex-direction: row;
@@ -173,11 +194,11 @@ body {
 
 @media (max-width: 576px) {
   #list-profile h1 {
-    font-size: 11px;
+    font-size: 13px;
   }
 
   #list-profile h2 {
-    font-size: 6px;
+    font-size: 10px;
   }
 
   #list-profile img {

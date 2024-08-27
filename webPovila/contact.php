@@ -68,35 +68,8 @@ $conn->close();
 </head>
 
 <body>
-    <nav>
-        <div class="nav__logo">
-            <img src="poo/image2.png" alt="Logo" width="22" height="80" style="display: flex; width: 100%;">
-        </div>
-        <ul class="nav__links">
-            <li class="center-links">
-                <a href="index.php">HOME</a>
-                <a href="index.php#book">BOOKING</a>
-                <a href="index.php#detail">DETAIL</a>
-                <a href="index.php#about">ABOUT</a>
-                <a href="contact.php">CONTACT</a>
-            </li>
-            <?php if (isset($_SESSION['user_id'])): ?>
-                <li class="user-link">
-                    <div class="user">
-                        <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" width="50" height="50" style="border-radius: 50%;" onclick="toggleDropdown()">
-                        <div id="dropdownContent" class="dropdown-content">
-                            <a href="settings.php">Settings</a>
-                            <a href="booking_history.php">Booking</a>
-                            <a href="logout.php">Logout</a>
-                        </div>
-                    </div>
-                </li>
-            <?php endif; ?>
-            <?php if (!isset($_SESSION['user_id'])): ?>
-                <li class="link1"><a href="login.php">Login</a></li>
-            <?php endif; ?>
-        </ul>
-    </nav>
+<?php include 'nav.php'; ?>
+
     <section class="contact">
         <div class="contact-container">
             <!-- Contact Information Section -->

@@ -30,30 +30,7 @@ body {
     border-color: #e4b58a;
 }
 
-nav {
-    margin: 0;
-    padding: 1rem 13rem;
-    display: flex;
-    align-items: center;
-    background-color: #fcf0e4;
-    width: 100%;
-    justify-content: space-between;
-    border-bottom-style: solid;
-    border-color: #e4b58a;
-}
 
-.nav__logo {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--text-dark);
-}
-
-.nav__links {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-}
 
 .link a {
     font-weight: 400;
@@ -69,7 +46,7 @@ nav {
     text-decoration: underline;
 }
 
-.container {
+.container1 {
     display: flex;
     justify-content: space-between;
     width: 80%;
@@ -147,7 +124,7 @@ input[type="text"], input[type="email"], select {
         padding: 1rem 5rem; /* ลดขนาด padding เมื่อหน้าจอเล็กลง */
     }
 
-    .container {
+    .container1 {
         width: 90%; /* เพิ่มความกว้างของ container เพื่อใช้พื้นที่มากขึ้น */
     }
 }
@@ -158,7 +135,7 @@ input[type="text"], input[type="email"], select {
         
     }
 
-    .container {
+    .container1 {
         flex-direction: column; /* จัดเรียงองค์ประกอบในแนวตั้ง */
         width: 100%; /* ขยาย container ให้เต็มหน้าจอ */
        padding: 2rem;
@@ -191,6 +168,13 @@ input[type="text"], input[type="email"], select {
 
     .nav__logo {
         font-size: 1.2rem; /* ลดขนาดโลโก้ในมือถือ */
+
+    }
+    .nav__logo img {
+        
+        height: 55px;
+        
+        
     }
 
     .link a {

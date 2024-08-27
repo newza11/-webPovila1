@@ -126,7 +126,7 @@
 
     .room-button button {
         padding: 4px 10px;
-        background-color: #007bff;
+        background-color: #242424;
         color: #fff;
         border: none;
         border-radius: 5px;
@@ -136,7 +136,7 @@
     }
 
     .room-button button:hover {
-        background-color: #0056b3;
+        background-color: #fbe0c6;
     }
 
     /* Adjust button placement for better appearance */

@@ -55,7 +55,9 @@ body {
     background: #fefefe;
     background-image: url('23.jpg');
     backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px); /* สำหรับมือถือ */
 }
+
 
 .login {
     display: flex;
