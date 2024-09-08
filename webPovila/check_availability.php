@@ -16,14 +16,21 @@ $check_in = $_POST['check_in'];
 $check_out = $_POST['check_out'];
 $people = $_POST['people'];
 
-// คำนวณจำนวนคืนที่เข้าพัก
-$nights = (strtotime($check_out) - strtotime($check_in)) / (60 * 60 * 24); 
+// Define the days to be calculated (check-in day and the day before check-out)
+$dates_to_check = [strtotime($check_in), strtotime('-1 day', strtotime($check_out))];
 
-// Determine the check-in day
-$check_in_day = date('N', strtotime($check_in)); 
+// Check if any of the dates fall on a Friday or Saturday
+$force_six_rooms = false;
+foreach ($dates_to_check as $date) {
+    $current_day = date('N', $date);
+    if ($current_day == 5 || $current_day == 6) { // If Friday or Saturday
+        $force_six_rooms = true;
+        break;
+    }
+}
 
-// Automatically select 6 rooms if it's Friday or Saturday
-if ($check_in_day == 5 || $check_in_day == 6) {
+// Automatically select 6 rooms if any of the dates fall on Friday or Saturday
+if ($force_six_rooms) {
     $room = '6ห้อง';
 } else {
     $room = $_POST['room'];
@@ -36,29 +43,42 @@ $price_stmt->bind_param("s", $room);
 $price_stmt->execute();
 $price_result = $price_stmt->get_result();
 $price_row = $price_result->fetch_assoc();
-$room_price = $price_row['price'];
+$base_price = $price_row['price'];
 
-// Adjust the price based on the check-in day
-if ($check_in_day == 5) { 
-    $room_price += 3000;
-} elseif ($check_in_day == 6) { 
-    $room_price += 5000;
+// Initialize total price
+$total_price = 0;
+
+// Loop through each day from check-in to the day before check-out
+$current_date = strtotime($check_in);
+$last_date = strtotime('-1 day', strtotime($check_out));
+
+while ($current_date <= $last_date) {
+    $current_day = date('N', $current_date); // Get day of the week
+
+    // Set the daily price based on the day of the week
+    $daily_price = $base_price;
+    if ($current_day == 5) { 
+        $daily_price += 3000; // Friday
+    } elseif ($current_day == 6) { 
+        $daily_price += 5000; // Saturday
+    }
+
+    // Add daily price to the total price
+    $total_price += $daily_price;
+
+    // Move to the next day
+    $current_date = strtotime('+1 day', $current_date);
 }
 
-// คำนวณราคารวมสำหรับจำนวนคืนที่พัก
-$total_price = $room_price * $nights;
-
-// Loop เพื่อตรวจสอบวันที่ตั้งแต่ check_in จนถึงวันก่อน check_out
+// Check if the selected dates are fully booked
 $is_full = false;
 $current_date = strtotime($check_in);
-$last_date = strtotime('-1 day', strtotime($check_out)); // หาวันสุดท้ายที่ต้องเช็ค (วันก่อน check_out)
-
-$full_dates = []; // สร้าง array เพื่อเก็บวันที่ห้องถูกจองเต็ม
+$full_dates = [];
 
 while ($current_date <= $last_date) {
     $current_date_str = date('Y-m-d', $current_date);
 
-    // เช็คแต่ละวันในช่วงเข้าพักว่าถูกจองเต็มหรือไม่
+    // Check each day in the range if the room is fully booked
     $query = "SELECT COUNT(*) as total_booked FROM orders_db 
               WHERE checkin = ?";
 
@@ -71,20 +91,19 @@ while ($current_date <= $last_date) {
 
     if ($total_booked > 0) {
         $is_full = true;
-        $full_dates[] = $current_date_str; // เก็บวันที่เต็ม
+        $full_dates[] = $current_date_str; // Save fully booked date
     }
 
-    // เพิ่มวัน
+    // Move to the next day
     $current_date = strtotime('+1 day', $current_date);
 }
 
-// แสดงผลลัพธ์ตามการเช็คว่าเต็มหรือไม่
+// Show the result based on availability
 if ($is_full) {
-    // ห้องพักถูกจองเต็มในช่วงวันที่เลือก
     $response = array(
         "availability" => "เต็ม",
         "is_full" => true,
-        "full_dates" => $full_dates, // ส่งวันที่เต็มไปยัง client
+        "full_dates" => $full_dates,
         "checkin" => $check_in,
         "checkout" => $check_out,
         "room" => $room,
@@ -92,7 +111,6 @@ if ($is_full) {
         "security_deposit" => "ค่าประกัน3000"
     );
 } else {
-    // ห้องว่างในช่วงวันที่เลือก
     $response = array(
         "availability" => "ว่าง",
         "is_full" => false,
@@ -104,7 +122,7 @@ if ($is_full) {
     );
 }
 
-// เก็บข้อมูลใน session
+// Store session data
 $_SESSION['checkin'] = $check_in;
 $_SESSION['checkout'] = $check_out;
 $_SESSION['room'] = $room;
@@ -117,3 +135,4 @@ $stmt->close();
 $price_stmt->close();
 $conn->close();
 ?>
+    

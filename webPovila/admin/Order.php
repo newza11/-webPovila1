@@ -18,7 +18,21 @@
                 <div class="cardHeader">
                     <h1>Order List</h1>
                     <a href="add_order.php"><button>Add Order</button></a>
-                    <a href="Room_Price_List.php"><button>Edit Price</button></a>
+
+                    <!-- เพิ่มการเลือกสถานะคำสั่งซื้อ -->
+                    <label for="statusFilter">Filter by Status:</label>
+                    <select id="statusFilter" onchange="filterOrders()">
+                        <option value="all">All</option>
+                        <option value="check">Check</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancel">Cancel</option>
+                        <option value="Waiting to enter">Waiting to enter</option>
+                    </select>
+
+                    
+                    
+
+                    <!-- ตารางแสดงคำสั่งซื้อ -->
                     <table>
                         <thead>
                             <tr>
@@ -52,7 +66,9 @@
         <img class="modal-content" id="slipImage">
     </div>
 
+    <!-- สคริปต์สำหรับโหลดและแสดงรายการ -->
     <script>
+        let allOrders = []; // ตัวแปรเก็บคำสั่งซื้อทั้งหมด
         const itemsPerPage = 10; // จำนวนรายการที่จะแสดงต่อหน้า
         let currentPage = 1;
         let totalPages = 1;
@@ -79,41 +95,58 @@
             fetch('fetch_orders.php')
                 .then(response => response.json())
                 .then(data => {
+                    allOrders = data; // เก็บข้อมูลทั้งหมดในตัวแปร allOrders
                     totalPages = Math.ceil(data.length / itemsPerPage);
-                    displayOrders(data.slice((page - 1) * itemsPerPage, page * itemsPerPage));
+                    displayOrders(filterData(data), page);
                     updatePagination();
                 })
                 .catch(error => console.error('Error fetching orders:', error));
         }
 
-        function displayOrders(orders) {
-    const tableBody = document.getElementById('orderTableBody');
-    tableBody.innerHTML = '';
+        function displayOrders(orders, page) {
+            const tableBody = document.getElementById('orderTableBody');
+            tableBody.innerHTML = '';
 
-    orders.forEach(order => {
-        const row = document.createElement('tr');
-        const slipPath = `../${order.slip}`;
-        console.log(slipPath); // ตรวจสอบเส้นทางที่สร้าง
-        
-        row.innerHTML = `
-            <td>${order.name}</td>
-            <td>${order.price}</td>
-            <td>${order.people}</td>
-            <td>${order.checkin}</td>
-            <td>${order.checkout}</td>
-            <td><span class="status ${getStatusClass(order.status)}">${order.status}</span></td>
-            <td>
-                <img src="${slipPath}" alt="Slip" style="width: 50px; height: 50px; cursor: pointer;" onclick="viewSlip('${slipPath}')">
-            </td>
-            <td>
-                <a href="edit_order.php?id=${order.id}"><button>Edit</button></a>
-                <button onclick="deleteOrder(${order.id})">Delete</button>
-            </td>
-        `;
-        tableBody.appendChild(row);
-    });
-}
+            const paginatedOrders = orders.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+            paginatedOrders.forEach(order => {
+                const row = document.createElement('tr');
+                const slipPath = `../${order.slip}`;
+                
+                row.innerHTML = `
+                    <td>${order.name}</td>
+                    <td>${order.price}</td>
+                    <td>${order.people}</td>
+                    <td>${order.checkin}</td>
+                    <td>${order.checkout}</td>
+                    <td><span class="status ${getStatusClass(order.status)}">${order.status}</span></td>
+                    <td>
+                        <img src="${slipPath}" alt="Slip" style="width: 50px; height: 50px; cursor: pointer;" onclick="viewSlip('${slipPath}')">
+                    </td>
+                    <td>
+                        <a href="edit_order.php?id=${order.id}"><button>Edit</button></a>
+                        <button onclick="deleteOrder(${order.id})">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
 
+        function filterData(data) {
+            const statusFilter = document.getElementById('statusFilter').value;
+            
+            if (statusFilter === 'all') {
+                return data;
+            }
+
+            return data.filter(order => order.status === statusFilter);
+        }
+
+        function filterOrders() {
+            const filteredOrders = filterData(allOrders);
+            displayOrders(filteredOrders, currentPage);
+            totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+            updatePagination();
+        }
 
         function updatePagination() {
             document.querySelector('.page-info').textContent = `หน้าที่ ${currentPage} จาก ${totalPages}`;
@@ -148,68 +181,78 @@
             }
         }
 
-        
         function viewSlip(slip) {
-    const modal = document.getElementById("slipModal");
-    const modalImg = document.getElementById("slipImage");
+            const modal = document.getElementById("slipModal");
+            const modalImg = document.getElementById("slipImage");
 
-    // ตรวจสอบว่าเส้นทางของสลิปถูกต้องหรือไม่
-    if (slip) {
-        modal.style.display = "block";
-        modalImg.src = slip;
-        modalImg.style.maxWidth = "90%";  // ทำให้รูปภาพมีขนาดไม่เกิน 90% ของความกว้างหน้าจอ
-        modalImg.style.maxHeight = "80%"; // ทำให้รูปภาพมีขนาดไม่เกิน 80% ของความสูงหน้าจอ
-    } else {
-        alert('No slip available for this order.');
-    }
+            // ตรวจสอบว่าเส้นทางของสลิปถูกต้องหรือไม่
+            if (slip) {
+                modal.style.display = "block";
+                modalImg.src = slip;
+                modalImg.style.maxWidth = "90%"; // ทำให้รูปภาพมีขนาดไม่เกิน 90% ของความกว้างหน้าจอ
+                modalImg.style.maxHeight = "80%"; // ทำให้รูปภาพมีขนาดไม่เกิน 80% ของความสูงหน้าจอ
+            } else {
+                alert('No slip available for this order.');
+            }
 
-    const span = document.getElementsByClassName("close")[0];
-    span.onclick = function () {
-        modal.style.display = "none";
-    }
-}
-
+            const span = document.getElementsByClassName("close")[0];
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+        }
     </script>
+</body>
+
+</html>
+
 
     <style>
         .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    padding-top: 50px; /* ลดการเว้นระยะห่างจากขอบบน */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.8); /* สีพื้นหลังเข้มขึ้น */
-}
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 50px;
+            /* ลดการเว้นระยะห่างจากขอบบน */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            /* สีพื้นหลังเข้มขึ้น */
+        }
 
-.modal-content {
-    margin: auto;
-    display: block;
-    max-width: 90%; /* ลดขนาดลงให้ไม่เกิน 90% ของความกว้างหน้าจอ */
-    max-height: 80%; /* ลดขนาดลงให้ไม่เกิน 80% ของความสูงหน้าจอ */
-    border-radius: 10px; /* ทำให้ขอบของรูปภาพมีความโค้งมน */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* เพิ่มเงาให้รูปภาพ */
-}
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            /* ลดขนาดลงให้ไม่เกิน 90% ของความกว้างหน้าจอ */
+            max-height: 80%;
+            /* ลดขนาดลงให้ไม่เกิน 80% ของความสูงหน้าจอ */
+            border-radius: 10px;
+            /* ทำให้ขอบของรูปภาพมีความโค้งมน */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            /* เพิ่มเงาให้รูปภาพ */
+        }
 
-.close {
-    position: absolute;
-    top: 10px; /* ปรับให้อยู่ในระยะที่เหมาะสม */
-    right: 20px; /* ลดระยะขอบ */
-    color: #fff;
-    font-size: 35px;
-    font-weight: bold;
-    transition: 0.3s;
-}
+        .close {
+            position: absolute;
+            top: 10px;
+            /* ปรับให้อยู่ในระยะที่เหมาะสม */
+            right: 20px;
+            /* ลดระยะขอบ */
+            color: #fff;
+            font-size: 35px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
 
-.close:hover,
-.close:focus {
-    color: #bbb;
-    text-decoration: none;
-    cursor: pointer;
-}
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
 
         .pagination {
             display: flex;

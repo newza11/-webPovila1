@@ -1,4 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
 
+
+body {
+    
+    font-family: "Poppins", sans-serif;
+   
+}
+td{
+    font-family: "Mitr", sans-serif;
+}
 .nav__logo {
     font-size: 1.5rem;
     font-weight: 600;

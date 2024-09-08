@@ -85,24 +85,42 @@
                 <div class="customer-info">
                     <h2>กรอกข้อมูลของท่าน</h2>
                     <form action="booking.php" method="POST" class="fff">
-                        <label for="name">ชื่อ</label>
-                        <input type="text" id="name" name="name" required>
+                        <label for="name">ชื่อเล่น</label>
+                        <input type="text" id="name" name="name" required oninput="validateText(this)" pattern="[A-Za-zก-๙]+" inputmode="text">
+
                         <label for="first-name">ชื่อจริง</label>
-                        <input type="text" id="firstname" name="firstname" required>
+                        <input type="text" id="firstname" name="firstname" required oninput="validateText(this)" pattern="[A-Za-zก-๙]+" inputmode="text">
 
                         <label for="last-name">นามสกุล</label>
-                        <input type="text" id="lastname" name="lastname" required>
+                        <input type="text" id="lastname" name="lastname" required oninput="validateText(this)" pattern="[A-Za-zก-๙]+" inputmode="text">
 
-
-
-                        <label for="phone">หมายเลขติดต่อ (แนะนำให้ระบุของมือถือ)</label>
-                        <input type="text" id="phone" name="phone" required>
+                        <label for="phone">หมายเลขเบอร์โทรติดต่อ</label>
+                        <input type="text" id="phone" name="phone" oninput="validateGuests(this)" min="0" step="10" required>
 
                         <button type="submit" class="submit-btn">ทำการจอง</button>
                     </form>
                 </div>
             </div>
         </div>
+        <script>
+            function validateText(input) {
+                
+                input.value = input.value.replace(/[0-9]/g, '');
+            }
+
+            function validateGuests(input) {
+
+                input.value = input.value.replace(/[^0-9]/g, '');
+                const min = parseInt(input.min);
+
+                const value = parseInt(input.value);
+
+                if (value < min) {
+                    input.value = min;
+                }
+
+            }
+        </script>
     </body>
 
     </html>

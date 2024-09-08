@@ -115,7 +115,9 @@
                 }
             }
         </script>
-        <?php include 'main_index.php'; ?>
+
+<?php include 'main_index.php'; ?>
+        
 
 
         <header class="section__container header__container" style="margin-bottom: 10rem;">
@@ -144,14 +146,26 @@
                             <div class="input__group">
                                 <input list="rooms" id="room" name="room" placeholder="Room" required>
                                 <datalist id="rooms">
-                                    <option value="3ห้อง">
-                                    <option value="4ห้อง">
-                                    <option value="5ห้อง">
-                                    <option value="6ห้อง">
+                                    <option value="3ห้อง">3ห้อง</option>
+                                    <option value="4ห้อง">4ห้อง</option>
+                                    <option value="5ห้อง">5ห้อง</option>
+                                    <option value="6ห้อง">6ห้อง</option>
                                 </datalist>
+
+                                <!-- <select id="room" name="room" required>
+                                    <datalist id="rooms">
+                                        <option value="" disabled selected>Select Room</option>
+                                        <option value="3ห้อง">3ห้อง</option>
+                                        <option value="4ห้อง">4ห้อง</option>
+                                        <option value="5ห้อง">5ห้อง</option>
+                                        <option value="6ห้อง">6ห้อง</option>
+                                    </datalist>
+                                </select> -->
                             </div>
                         </div>
-                        <button type="submit" class="btn">ค้นหา</button>
+                        
+                            <button type="submit" class="btn">ค้นหา</button>
+                      
                     </form>
                 </div>
             </div>
@@ -164,6 +178,7 @@
 
         <search class="search">
             <div class="section__container search_container ">
+            <div id="main"></div>
 
                 <div class="search__image__container">
                     <div class="frame-content">
@@ -190,6 +205,7 @@
                             <br><?= $villa_main[2]['content']; ?>
                         </p>
                     </div>
+                    
                     <div class="toteo__container">
                         <div class="fontp" style="margin: -8rem;">
                             <div class="fontf" style="display: flex;">
@@ -220,6 +236,7 @@
             </div>
         </search>
         <?php include 'searchs.php'; ?>
+        
 
 
 
@@ -322,53 +339,77 @@
 
             // เมื่อกดปุ่มตรวจสอบความว่าง
             $(function() {
-                $("#availabilityForm").on("submit", function(event) {
-                    event.preventDefault(); // ป้องกันไม่ให้ฟอร์มรีเฟรชหน้า
+    $("#availabilityForm").on("submit", function(event) {
+        event.preventDefault(); // ป้องกันไม่ให้ฟอร์มรีเฟรชหน้า
 
-                    // ส่งข้อมูลฟอร์มไปตรวจสอบความว่างของห้อง
-                    $.ajax({
-                        url: 'check_availability.php',
-                        type: 'POST',
-                        data: $(this).serialize(), // ส่งข้อมูลฟอร์ม
-                        success: function(response) {
-                            console.log(response);
+        // ส่งข้อมูลฟอร์มไปตรวจสอบความว่างของห้อง
+        $.ajax({
+            url: 'check_availability.php',
+            type: 'POST',
+            data: $(this).serialize(), // ส่งข้อมูลฟอร์ม
+            success: function(response) {
+                console.log(response);
 
-                            try {
-                                var data = JSON.parse(response); // แปลง response เป็น JSON
-                                if (data.availability) {
-                                    $("#status").text(data.availability).css("color", data.availability === "เต็ม" ? "red" : "green");
-                                    $("#checkin-date").text(data.checkin);
-                                    $("#checkin-date1").text(data.checkin);
-                                    $("#checkout-date").text(data.checkout);
-                                    $("#checkout-date1").text(data.checkout);
-                                    $("#room-type").text(data.room);
-                                    $("#room-type1").text(data.room);
-                                    $("#price").text(data.price);
-                                    $("#price1").text(data.price); // แสดงราคาที่นี่
-                                    $("#security-deposit").text(data.security_deposit);
+                try {
+                    var data = JSON.parse(response); // แปลง response เป็น JSON
+                    if (data.availability) {
+                        $("#status").text(data.availability).css("color", data.availability === "เต็ม" ? "red" : "green");
+                        $("#checkin-date").text(data.checkin);
+                        $("#checkin-date1").text(data.checkin);
+                        $("#checkout-date").text(data.checkout);
+                        $("#checkout-date1").text(data.checkout);
+                        $("#room-type").text(data.room);
+                        $("#room-type1").text(data.room);
+                        $("#price").text(data.price);
+                        $("#price1").text(data.price); // แสดงราคาที่นี่
+                        $("#security-deposit").text(data.security_deposit);
 
-                                    // แสดงหรือซ่อนปุ่มการจองตามความว่าง
-                                    if (data.is_full) {
-                                        $("#bookingButtonContainer").hide(); // ซ่อนปุ่มการจองหากห้องเต็ม
-                                        $("#bookingButtonContainer1").hide(); // ซ่อนปุ่มการจองอีกปุ่ม
-                                    } else {
-                                        $("#bookingButtonContainer").show(); // แสดงปุ่มการจองหากห้องว่าง
-                                        $("#bookingButtonContainer1").show(); // แสดงปุ่มการจองอีกปุ่ม
-                                    }
-                                } else {
-                                    $("#availability").text("No availability data.");
-                                }
-                            } catch (e) {
-                                console.log(e);
-                                $("#availability").text("Invalid response from server.");
-                            }
-                        },
-                        error: function() {
-                            $("#availability").text("Error checking availability.");
+                        // แสดงหรือซ่อนปุ่มการจองตามความว่าง
+                        if (data.is_full) {
+                            $("#bookingButtonContainer").hide(); // ซ่อนปุ่มการจองหากห้องเต็ม
+                            $("#bookingButtonContainer1").hide(); // ซ่อนปุ่มการจองอีกปุ่ม
+                        } else {
+                            $("#bookingButtonContainer").show(); // แสดงปุ่มการจองหากห้องว่าง
+                            $("#bookingButtonContainer1").show(); // แสดงปุ่มการจองอีกปุ่ม
                         }
-                    });
-                });
+
+                        // นำผู้ใช้ไปที่ index.php#main หลังจากการตรวจสอบเสร็จสิ้น
+                        window.location.href = 'index.php#main';
+                    } else {
+                        $("#availability").text("No availability data.");
+                    }
+                } catch (e) {
+                    console.log(e);
+                    $("#availability").text("Invalid response from server.");
+                }
+            },
+            error: function() {
+                $("#availability").text("Error checking availability.");
+            }
+        });
+    });
+});
+
+
+
+
+            document.getElementById('room').addEventListener('input', function() {
+                var input = this.value;
+                var list = document.getElementById('rooms').options;
+                var isValid = false;
+
+                for (var i = 0; i < list.length; i++) {
+                    if (input === list[i].value) {
+                        isValid = true;
+                        break;
+                    }
+                }
+
+                if (!isValid) {
+                    this.value = '';
+                }
             });
+
 
 
             function validateGuests(input) {
@@ -388,8 +429,20 @@
                 }
             }
 
-
             document.getElementById('bookingButton').addEventListener('click', function() {
+
+                <?php if (!isset($_SESSION['user_id'])): ?>
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'กรุณาเข้าสู่ระบบก่อนทำการจอง',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'เข้าสู่ระบบ'
+                    }).then(() => {
+                        window.location = 'login.php';
+                    });
+                    return;
+                <?php endif; ?>
+
                 const checkin = document.getElementById('checkin').value;
                 const checkout = document.getElementById('checkout').value;
                 const people = document.getElementById('people').value;
@@ -401,8 +454,6 @@
                         title: 'กรุณากรอกข้อมูลให้ครบถ้วนก่อนทำการจอง',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'ตกลง'
-                    }).then(() => {
-                        window.location = 'index.php#book';
                     });
                     return;
                 }
@@ -420,19 +471,9 @@
                     return;
                 }
 
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    window.location = 'booking.php';
-                <?php else: ?>
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'กรุณาเข้าสู่ระบบก่อนทำการจอง',
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'เข้าสู่ระบบ'
-                    }).then(() => {
-                        window.location = 'login.php';
-                    });
-                <?php endif; ?>
+                window.location = 'booking.php';
             });
+
             document.getElementById('bookingButton1').addEventListener('click', function() {
                 const checkin = document.getElementById('checkin').value;
                 const checkout = document.getElementById('checkout').value;
@@ -476,343 +517,16 @@
                 <?php endif; ?>
             });
         </script>
-        <div id="about">
-            <About class="About__container">
 
-                <div class="content__container">
-                    <div class="image__container">
-                        <img src="poo/1.jpg" alt="Pool Villa Pattaya">
-                    </div>
-                    <div class="text__container">
-                        <h1 class="about-us-title">ABOUT US</h1>
-                        <h1 class="villa-title"><?= $villa_about[0]['content']; ?></h1>
-                        <p>
-                            <?= $villa_about[1]['content']; ?>
+        <?php include 'adout.php'; ?>
 
-                        </p>
-                        <div class="highlight__box">
-                            <h2> <?= $villa_about[2]['content']; ?></h2>
-                            <ul>
-                                <li> <?= $villa_about[3]['content']; ?></li>
-                                <li> <?= $villa_about[4]['content']; ?></li>
-                                <li> <?= $villa_about[5]['content']; ?></li>
-                            </ul>
-
-                        </div>
-                    </div>
-                </div>
-        </div>
-
-        <style>
-            .About__container {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                padding: 5rem 2rem;
-                position: relative;
-                background-color: hsl(0, 0%, 99%);
-            }
-
-            .content__container {
-                display: flex;
-                max-width: 1200px;
-                width: 100%;
-                margin: 0 auto;
-                gap: 2rem;
-                position: relative;
-            }
-
-            .image__container {
-                flex: 1;
-                min-width: 300px;
-                position: relative;
-            }
-
-            .image__container img {
-                width: 100%;
-                height: 850px;
-                /* ปรับความสูงของรูปภาพ */
-                object-fit: cover;
-                /* ปรับให้รูปภาพครอบคลุมพื้นที่และไม่เสียสัดส่วน */
-                border-radius: 10px;
-            }
-
-            .text__container {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-start;
-                /* ทำให้ข้อความเลื่อนขึ้นด้านบน */
-                margin-top: -2rem;
-                /* เลื่อนขึ้นเล็กน้อย */
-            }
-
-            .about-us-title {
-                font-size: 5rem;
-                /* ขนาดใหญ่กว่า */
-                color: rgba(128, 128, 128, 0.5);
-                /* สีเทาจางๆ */
-                margin-bottom: 2rem;
-                text-align: center;
-            }
-
-            .villa-title {
-                font-size: 2.5rem;
-                color: #000;
-                margin-bottom: 1.5rem;
-                margin-top: 2rem;
-                /* เลื่อนลงมาหน่อย */
-            }
-
-            .text__container p {
-                font-size: 1.2rem;
-                color: #333;
-                margin-bottom: 1.5rem;
-            }
-
-            .highlight__box {
-                background-color: #f7c95c;
-                padding: 1.5rem;
-                position: absolute;
-                top: 45%;
-                /* ปรับตำแหน่งให้กล่องทับรูปภาพเล็กน้อย */
-                left: 550px;
-                /* ขยับกรอบไปทางขวาเล็กน้อยให้ชิดกับรูป */
-                width: 50%;
-                /* ลดความกว้างของกล่องเพื่อให้มีพื้นที่ทางด้านขวามากขึ้น */
-                z-index: 2;
-                /* ทำให้กล่องอยู่ด้านหน้ารูป */
-            }
-
-            .highlight__box h2 {
-                font-size: 1.8rem;
-                margin-bottom: 1rem;
-                color: #000;
-            }
-
-            .highlight__box ul {
-                list-style-type: none;
-                padding: 0;
-                margin: 0;
-            }
-
-            .highlight__box ul li {
-                font-size: 1.2rem;
-                margin-bottom: 0.5rem;
-                color: #000;
-            }
-
-            .highlight__box ul li::before {
-                content: '✔';
-                color: #000;
-                margin-right: 0.5rem;
-            }
-
-            .highlight__box button {
-                background-color: #5dbcd2;
-                border: none;
-                padding: 0.8rem 1.5rem;
-                color: #fff;
-                font-size: 1rem;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-
-            .highlight__box button:hover {
-                background-color: #499aa8;
-            }
-
-            /* ขนาดหน้าจอปกติ (เดสก์ท็อปใหญ่) */
-            .about-us-title {
-                font-size: 5rem;
-            }
-
-            .villa-title {
-                font-size: 2.5rem;
-            }
-
-            .text__container p {
-                font-size: 1.2rem;
-            }
-
-            .highlight__box h2 {
-                font-size: 1.8rem;
-            }
-
-            .highlight__box ul li {
-                font-size: 1.2rem;
-            }
-
-
-            /* หน้าจอแท็บเล็ต (ขนาดหน้าจอระหว่าง 768px - 1024px) */
-            @media (max-width: 1024px) {
-                .about-us-title {
-                    font-size: 4.0rem;
-                    /* ลดลง 3px */
-                }
-
-                .about-us-title {
-                    font-size: 4rem;
-                    /* ขนาดใหญ่กว่า */
-                    color: rgba(128, 128, 128, 0.5);
-                    /* สีเทาจางๆ */
-                    margin-bottom: 2rem;
-                    text-align: center;
-                }
-
-                .image__container img {
-                    width: 100%;
-                    height: 650px;
-                    /* ปรับความสูงของรูปภาพ */
-                    object-fit: cover;
-                    /* ปรับให้รูปภาพครอบคลุมพื้นที่และไม่เสียสัดส่วน */
-                    border-radius: 10px;
-                }
-
-                .highlight__box {
-                    background-color: #f7c95c;
-                    padding: 1.5rem;
-                    position: absolute;
-                    top: 55%;
-                    /* ปรับตำแหน่งให้กล่องทับรูปภาพเล็กน้อย */
-                    left: 400px;
-                    /* ขยับกรอบไปทางขวาเล็กน้อยให้ชิดกับรูป */
-                    width: 50%;
-                    /* ลดความกว้างของกล่องเพื่อให้มีพื้นที่ทางด้านขวามากขึ้น */
-                    z-index: 2;
-                    /* ทำให้กล่องอยู่ด้านหน้ารูป */
-                }
-
-                .villa-title {
-                    font-size: 2.0rem;
-                    /* ลดลง 3px */
-                }
-
-                .text__container p {
-                    font-size: 1.1rem;
-                    /* ลดลง 3px */
-                }
-
-                .highlight__box h2 {
-                    font-size: 1.3rem;
-                    /* ลดลง 3px */
-                }
-
-                .highlight__box ul li {
-                    font-size: 1.0rem;
-                    /* ลดลง 3px */
-                }
-            }
-
-            /* หน้าจอมือถือใหญ่ (ขนาดหน้าจอระหว่าง 480px - 767px) */
-            @media (max-width: 769px) {
-                .about-us-title {
-                    font-size: 4rem;
-                    /* ลดลงอีก 3px */
-                }
-
-                .about-us-title {
-                    font-size: 3rem;
-                    /* ขนาดใหญ่กว่า */
-                    color: rgba(128, 128, 128, 0.5);
-                    /* สีเทาจางๆ */
-                    margin-bottom: 2rem;
-                    text-align: center;
-                }
-
-                .villa-title {
-                    font-size: 2rem;
-                    color: #000;
-                    margin-bottom: 1.5rem;
-                    margin-top: 2rem;
-                    /* เลื่อนลงมาหน่อย */
-                }
-
-                .highlight__box {
-                    background-color: #f7c95c;
-                    padding: 1.5rem;
-                    position: absolute;
-                    top: 55%;
-                    /* ปรับตำแหน่งให้กล่องทับรูปภาพเล็กน้อย */
-                    left: 250px;
-                    /* ขยับกรอบไปทางขวาเล็กน้อยให้ชิดกับรูป */
-                    width: 50%;
-                    /* ลดความกว้างของกล่องเพื่อให้มีพื้นที่ทางด้านขวามากขึ้น */
-                    z-index: 2;
-                    /* ทำให้กล่องอยู่ด้านหน้ารูป */
-                }
-
-                .image__container img {
-                    width: 100%;
-                    height: 650px;
-                    /* ปรับความสูงของรูปภาพ */
-                    object-fit: cover;
-                    /* ปรับให้รูปภาพครอบคลุมพื้นที่และไม่เสียสัดส่วน */
-                    border-radius: 10px;
-                }
-
-                .villa-title {
-                    font-size: 2rem;
-                    /* ลดลงอีก 3px */
-                }
-
-                .text__container p {
-                    font-size: 1rem;
-                    /* ลดลงอีก 3px */
-                }
-
-                .highlight__box h2 {
-                    font-size: 1.2rem;
-                    /* ลดลงอีก 3px */
-                }
-
-                .highlight__box ul li {
-                    font-size: 1rem;
-                    /* ลดลงอีก 3px */
-                }
-            }
-
-            /* หน้าจอมือถือเล็ก (ขนาดหน้าจอเล็กกว่า 480px) */
-            @media (max-width: 480px) {
-                .About__container {
-                    display: none;
-                }
-
-                .about-us-title {
-                    font-size: 4.1rem;
-                    /* ลดลงอีก 3px */
-                }
-
-                .villa-title {
-                    font-size: 1.7rem;
-                    /* ลดลงอีก 3px */
-                }
-
-                .text__container p {
-                    font-size: 0.9rem;
-                    /* ลดลงอีก 3px */
-                }
-
-                .highlight__box h2 {
-                    font-size: 1rem;
-                    /* ลดลงอีก 3px */
-                }
-
-                .highlight__box ul li {
-                    font-size: 0.9rem;
-                    /* ลดลงอีก 3px */
-                }
-            }
-        </style>
-        </About>
 
         <map class="map">
             <div class="search_container map_container">
                 <div style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
                     <p class="p1">นันท์นภัส พลูวิลล่า </p>
                     <p class="p2">โครงการพูลวิลล่า ต.คลองเขิน อ.อัมพวา จ.สมุทรสงคราม 75110</p>
-                    <p class="gmap">GOOGLE MAP</p>
+                    <p class="gmap"><a href="https://www.google.com/maps/place/%E0%B8%99%E0%B8%B1%E0%B8%99%E0%B8%97%E0%B9%8C%E0%B8%99%E0%B8%A0%E0%B8%B1%E0%B8%AA+%E0%B8%9E%E0%B8%B9%E0%B8%A5%E0%B8%A7%E0%B8%B4%E0%B8%A5%E0%B8%A5%E0%B9%88%E0%B8%B2+%E0%B8%AD%E0%B8%B1%E0%B8%A1%E0%B8%9E%E0%B8%A7%E0%B8%B2/@13.454659,99.992528,16z/data=!4m6!3m5!1s0x30e2d1c1a39528f5:0x7f60cbad8c2e4880!8m2!3d13.4546592!4d99.9925277!16s%2Fg%2F11vwv0lq6l?hl=th&entry=ttu&g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D">GOOGLE MAP</a></p>
                     <div class="map_container">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4629.3529431693105!2d99.99007584881043!3d13.453483995064683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e2d1c1a39528f5%3A0x7f60cbad8c2e4880!2z4LiZ4Lix4LiZ4LiX4LmM4LiZ4Lig4Lix4LiqIOC4nuC4ueC4peC4p-C4tOC4peC4peC5iOC4siDguK3guLHguKHguJ7guKfguLI!5e0!3m2!1sth!2sth!4v1724046879458!5m2!1sth!2sth"
                             style="border:0;"
@@ -829,7 +543,7 @@
 
 
 
-       
+
         <footer class="footer">
             <div class="footer__gold-bar"></div>
             <div class="footer__container">
@@ -841,6 +555,7 @@
                     <p><i class="fa fa-map-marker"></i> <?= $villa_descriptions[2]['content']; ?></p>
                     <div class="footer__social">
                         <a href="https://www.facebook.com/profile.php?id=61553502207847"><ion-icon name="logo-facebook"></ion-icon></a>
+                        <a href="https://www.instagram.com/nnongaenoey/?hl=th"><ion-icon name="logo-instagram"></ion-icon></a>
                         <a href="https://lin.ee/yvY9Aal"><i class="bi bi-line bicustom-bi-line"></i></a>
 
                     </div>
@@ -855,8 +570,6 @@
                             <li><a href="index.php#about">About Povila</a></li>
                             <li><a href="contact.php">Contact Us</a></li>
                         </ul>
-
-
 
                     </ul>
                 </div>

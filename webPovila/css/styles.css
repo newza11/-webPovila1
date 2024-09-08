@@ -33,6 +33,13 @@ html {
   
   
 }
+.section__container1 {
+  max-width: var(--max-width);
+  margin: auto;
+  padding: 0rem 0rem;
+  
+  
+}
 
 .section__header {
   font-size: 2rem;
@@ -106,7 +113,7 @@ html {
  
 
 body {
-  font-family: "Kanit", "Poppins", sans-serif;
+      font-family: "Mitr", sans-serif;
   
 }
 nav {
@@ -490,7 +497,7 @@ input::placeholder {
 .map_container {
   display: grid;
   padding: 2rem 1rem 5rem 1rem;
-  font-family: "Kanit", sans-serif;
+  font-family: "Mitr", sans-serif;
   
 }
 .main {
@@ -803,6 +810,16 @@ input::placeholder {
     width: 80%;
     height: 140px;
   }
+}
+  @media (min-width: 768px) and (max-width: 970px) {
+    
+    .booking__container .btn{
+      font-size: 1rem;
+       margin: 15px;
+       margin-bottom: 20px;
+       padding: 0.5rem 1rem;
+    }
+
 
 }
 /* Media Queries */
@@ -872,6 +889,7 @@ input::placeholder {
   margin-top: 0px;
   text-align: left;
   margin-left: 2rem;
+  display: none;
 }
 .gallery h4 {
   font-size: 20px;
@@ -994,12 +1012,13 @@ input::placeholder {
       cursor: pointer; /* ให้กลายเป็นปุ่มกด */
       text-align: center; /* จัดข้อความให้อยู่ตรงกลาง */
       display: inline-block; /* เพื่อควบคุมขนาด */
-      transition: background-color 0.3s ease; /* เพิ่ม transition สำหรับ hover */
+      transition: background-color 0.3s ease, transform 0.3s ease; /* เพิ่ม transition สำหรับ hover และ transform */
   }
   
   .gmap:hover {
       background-color: #f0f0f0; /* เปลี่ยนสีพื้นหลังเมื่อ hover */
       color: #000; /* เปลี่ยนสีข้อความเมื่อ hover */
+      transform: scale(1.05); /* ขยายขนาดเมื่อ hover */
   }
    .search .search_container {
         padding: 20px;
@@ -1018,7 +1037,8 @@ input::placeholder {
     }
     .search{
       background-color: #e4b58a ;
-      background-image: -webkit-linear-gradient(90deg, #ffffff 0%, #FCF7F3 50%, #faf0e8 100%);
+      background-image: -webkit-linear-gradient(90deg, #fdfdfd 1%, #FCF7F3 40%, #faf0e8 100%);
+      /* background-image: -webkit-linear-gradient(90deg, #ffffff 1%, #FCF7F3 40%, #faf0e8 100%); */
 
     }
     .search_container .map_container {
@@ -1060,11 +1080,16 @@ input::placeholder {
 
     @media only screen and (max-width: 480px) {
         .map_container .p1 {
-        font-size: 1rem; /* Default font size */
+        font-size: 20px; /* Default font size */
     }
     .map_container .p2 {
-        font-size: 0.6rem; /* Default font size */
+        font-size: 13px; /* Default font size */
     }
+
+    .booking__container{
+      width: calc(100% - 10rem);
+    }
+
 
     .main_container .p1 {
       font-size: 14.2px;
@@ -1121,10 +1146,12 @@ input::placeholder {
     font-size: 12px; /* ลดขนาดตัวอักษร */
     max-width: 90%; /* บีบฟอร์มให้แคบลง */
     margin: 0 auto; /* จัดฟอร์มให้อยู่ตรงกลาง */
+    
+
   }
   .header__image__container{
     width: 100%;
-    height: 100px;
+    min-height: 350px;
     margin: 0 ;
     
   }
@@ -1168,6 +1195,10 @@ input::placeholder {
     vertical-align: .2rem;
     
 
+}
+.gmap a{
+  color: #000;
+  text-decoration: none;
 }
 
 ion-icon {

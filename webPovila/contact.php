@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $alertMessage = "error";
     }
-    
+
     $stmt->close();
 }
 
@@ -68,7 +68,8 @@ $conn->close();
 </head>
 
 <body>
-<?php include 'nav.php'; ?>
+
+    <?php include 'nav.php'; ?>
 
     <section class="contact">
         <div class="contact-container">
@@ -109,9 +110,9 @@ $conn->close();
             <div class="contact-right">
                 <h2>GET IN TOUCH</h2>
                 <form action="contact.php" method="POST">
-                    <input type="text" name="name" placeholder="Your Name" required>
-                    <input type="email" name="email" placeholder="Enter Your Email" required>
-                    <input type="text" name="phone" placeholder="My Phone" required>
+                    <input type="text" name="name" placeholder="Your Name" required oninput="validateText(this)" pattern="[A-Za-zก-๙]+" inputmode="text">
+                    <input type="email" name="email" placeholder="Enter Your Email"  required oninput="validateText(this)" pattern="[A-Za-zก-๙]+" inputmode="text">
+                    <input type="text" name="phone" placeholder="My Phone" oninput="validateGuests(this)" min="0" step="10" required>
 
                     <textarea name="message" placeholder="Write Message" required></textarea>
                     <button type="submit">Send Message</button>
@@ -120,6 +121,8 @@ $conn->close();
 
         </div>
     </section>
+
+    
 
     <!-- แสดงผล SweetAlert เมื่อการดำเนินการสำเร็จหรือเกิดข้อผิดพลาด -->
     <script>
@@ -140,23 +143,43 @@ $conn->close();
         <?php endif; ?>
     </script>
     <script>
-    function toggleDropdown() {
-        var dropdown = document.getElementById("dropdownContent");
-        dropdown.classList.toggle("show");
-    }
+        function toggleDropdown() {
+            var dropdown = document.getElementById("dropdownContent");
+            dropdown.classList.toggle("show");
+        }
 
-    window.onclick = function(event) {
-        if (!event.target.matches('.user img')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            for (var i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
+        window.onclick = function(event) {
+            if (!event.target.matches('.user img')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
                 }
             }
         }
-    }
-</script>
+    </script>
+
+    <script>
+        function validateText(input) {
+
+            input.value = input.value.replace(/[0-9]/g, '');
+        }
+
+        function validateGuests(input) {
+            // ลบตัวเลขทศนิยมออกหากมีการพิมพ์ทศนิยม
+            input.value = input.value.replace(/[^0-9]/g, '');
+            const min = parseInt(input.min);
+
+            const value = parseInt(input.value);
+
+            if (value < min) {
+                input.value = min;
+            }
+
+        }
+    </script>
 
 </body>
 

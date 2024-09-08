@@ -24,6 +24,10 @@
             width: 130px;
             height: 80px;
         }
+        .nav__logo  {
+            width: 130px;
+            height: 80px;
+        }
 
         .nav__links {
             list-style: none;
@@ -107,6 +111,13 @@
                 justify-content: space-between;
                 position: relative;
             }
+            .link1 a{
+                border: none;
+            }
+            .nav__logo  {
+            width: 130px;
+            height: 55px;
+        }
 
             .nav__logo img {
                 width: 100px;
@@ -116,6 +127,7 @@
             .hamburger {
                 display: flex;
                 margin-left: 10rem;
+
             }
 
             .nav__links {
@@ -135,6 +147,10 @@
                 flex-direction: column;
                 gap: 1rem;
                 width: 100%;
+            }
+            .aboutddd{
+                display: none;
+
             }
 
             .nav__links.active {
@@ -172,8 +188,8 @@
         <li class="center-links">
             <a href="index.php">HOME</a>
             <a href="index.php#book">BOOKING</a>
-            <a href="index.php#detail">DETAIL</a>
-            <a href="index.php#about">ABOUT</a>
+            <a  href="index.php#detail">DETAIL</a>
+            <a  class="aboutddd" href="index.php#about">ABOUT</a>
             <a href="contact.php">CONTACT</a>
         </li>
     </ul>
