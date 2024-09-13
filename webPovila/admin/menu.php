@@ -1,3 +1,34 @@
+<?php
+    session_start();
+
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "my_website";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    
+
+
+$user_id = $_SESSION['user_id'];
+
+// ดึงรูปโปรไฟล์จากฐานข้อมูล
+$query = "SELECT profile_picture FROM login_user WHERE id = '$user_id'";
+$result = mysqli_query($conn, $query);
+$row = mysqli_fetch_assoc($result);
+
+?>
+
+
+
+
+
 <div class="navigation">
     <ul>
         <li class="active">
@@ -46,6 +77,17 @@
         </li>
 
         <li>
+            <a href="manage_holidays.php">
+                <span class="icon">
+                    <ion-icon name="calendar-outline"></ion-icon>
+                </span>
+                <span class="title">holidays</span>
+            </a>
+        </li>
+
+
+        
+        <li>
             <a href="user.php">
                 <span class="icon">
                     <ion-icon name="person-circle-outline"></ion-icon>
@@ -62,14 +104,14 @@
             </a>
         </li>
 
-        <li>
+        <!-- <li>
             <a href="setting.php">
                 <span class="icon">
                     <ion-icon name="settings-outline"></ion-icon>
                 </span>
                 <span class="title">Settings</span>
             </a>
-        </li>
+        </li> -->
 
         <li>
             <a href="confirm_signout.php">
@@ -144,7 +186,7 @@
             </div>
             <div class="dropdown" id="userDropdown">
                 <a href="setting.php">Settings</a>
-                <a href="../index.php">back to Home</a>
+                <!-- <a href="../index.php">back to Home</a> -->
                 <a href="confirm_signout.php">SignOut</a>
             </div>
         </div>

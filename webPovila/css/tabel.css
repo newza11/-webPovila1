@@ -590,14 +590,7 @@ body {
   #list-home .text h1 {
     font-size: 11.4px;
   }
-  
-  
-
-
-
 }
-
-
 /* Styles for Tablet Devices (> 576px and <= 768px) */
 @media (min-width: 577px) and (max-width: 768px) {
   #list-title h1 {

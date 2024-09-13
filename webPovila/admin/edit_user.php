@@ -1,18 +1,24 @@
 <?php
 include 'db_connection.php';
 
-if (isset($_GET['id'])) {
-    $id = htmlspecialchars($_GET['id']); // Ensure input is sanitized
+$id = null;
 
-    // Fetch user details by ID
+// Fetch user details by ID if it's provided via GET request
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $id = $_GET['id'];
+} elseif (isset($_POST['id']) && is_numeric($_POST['id'])) {
+    $id = $_POST['id'];
+}
+
+if ($id) {
     $sql = "SELECT * FROM login_user WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id); // Bind parameter as integer
+    $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc(); // Fetch user data
+        $user = $result->fetch_assoc();
     } else {
         echo "User not found";
         exit();
@@ -22,28 +28,26 @@ if (isset($_GET['id'])) {
     exit();
 }
 
-
-
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = $_POST['id']; // Use POST method to get ID
-    $username = htmlspecialchars($_POST['username']); // Sanitize input
+    $id = $_POST['id'];
+    $username = $_POST['username'];
     $password = $_POST['password'];
     $role = $_POST['role'];
 
-    // Fetch current user information to check existing password
-    $sql = "SELECT * FROM login_user WHERE id = ?";
+    // Fetch current user information
+    $sql = "SELECT password FROM login_user WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
+    $current_password = $result->fetch_assoc()['password'];
 
     // Check if password is empty; if yes, keep the current password
     if (empty($password)) {
-        $hashed_password = $user['password'];
+        $hashed_password = $current_password;
     } else {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT); // Hash the new password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     }
 
     // Update user details
@@ -52,11 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("sssi", $username, $hashed_password, $role, $id);
 
     if ($stmt->execute()) {
-        // Redirect to user.php after successful update
-        header("Location: user.php");
-        exit();
+        $update_success = true;
     } else {
-        echo "Error: " . $stmt->error;
+        $update_success = false;
     }
 
     $conn->close();
@@ -68,6 +70,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
     <title>Update User</title>
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/order.css">
@@ -135,5 +143,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
     <?php include '../mains.php'; ?>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            <?php if (isset($update_success)): ?>
+                <?php if ($update_success): ?>
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'User updated successfully.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = 'user.php';
+                        }
+                    });
+                <?php else: ?>
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'There was an error updating the user.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                <?php endif; ?>
+            <?php endif; ?>
+        });
+    </script>
 </body>
 </html>

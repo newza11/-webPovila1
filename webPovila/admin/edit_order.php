@@ -64,6 +64,8 @@ $conn->close();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Edit Order</title>
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/order.css">
@@ -138,21 +140,35 @@ $conn->close();
         </div>
     </div>
     <script>
-        document.getElementById('editOrder').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            fetch('edit_order.php?id=<?php echo htmlspecialchars($order_id); ?>', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
+    document.getElementById('editOrder').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        fetch('edit_order.php?id=<?php echo htmlspecialchars($order_id); ?>', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: data.message,
+            }).then(() => {
                 window.location.href = 'order.php'; // Redirect to order list page
-            })
-            .catch(error => console.error('Error updating order:', error));
+            });
+        })
+        .catch(error => {
+            console.error('Error updating order:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'There was an issue updating the order. Please try again.',
+            });
         });
-    </script>
+    });
+</script>
+
     <?php include '../mains.php'; ?>
 </body>
 </html>

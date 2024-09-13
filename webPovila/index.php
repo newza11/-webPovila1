@@ -6,16 +6,14 @@
     $password = "";
     $dbname = "my_website";
 
-    // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Check connection
+
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $profile_picture = 'default_profile.png'; // Default profile picture
-
+    $profile_picture = 'default_profile.png';
     if (isset($_SESSION['user_id'])) {
         $user_id = $_SESSION['user_id'];
 
@@ -116,8 +114,8 @@
             }
         </script>
 
-<?php include 'main_index.php'; ?>
-        
+        <?php include 'main_index.php'; ?>
+
 
 
         <header class="section__container header__container" style="margin-bottom: 10rem;">
@@ -125,7 +123,7 @@
                 <div id="book"></div>
                 <div class="header__content"></div>
                 <div class="booking__container">
-                    <form id="availabilityForm" method="POST">
+                    <form id="availabilityForm" method="POST" onsubmit="redirectToMain(event)">
                         <div class="form__group">
                             <div class="input__group">
                                 <input id="checkin" name="check_in" placeholder="Check In" required>
@@ -151,22 +149,15 @@
                                     <option value="5ห้อง">5ห้อง</option>
                                     <option value="6ห้อง">6ห้อง</option>
                                 </datalist>
-
-                                <!-- <select id="room" name="room" required>
-                                    <datalist id="rooms">
-                                        <option value="" disabled selected>Select Room</option>
-                                        <option value="3ห้อง">3ห้อง</option>
-                                        <option value="4ห้อง">4ห้อง</option>
-                                        <option value="5ห้อง">5ห้อง</option>
-                                        <option value="6ห้อง">6ห้อง</option>
-                                    </datalist>
-                                </select> -->
                             </div>
                         </div>
-                        
-                            <button type="submit" class="btn">ค้นหา</button>
-                      
+
+                        <button type="submit" class="btn">ค้นหา</button>
                     </form>
+
+
+
+
                 </div>
             </div>
         </header>
@@ -175,25 +166,28 @@
         <div class="availability-status">
             <p id="availability"></p>
         </div>
+        <?php include 'searchs.php'; ?>
 
         <search class="search">
+            <div id="book1"></div>
+
+
             <div class="section__container search_container ">
-            <div id="main"></div>
 
                 <div class="search__image__container">
                     <div class="frame-content">
                         <p class="top-left-text"><?= $villa_main[3]['content']; ?></p>
                         <p id="status" class="top-left-text1" style="font-size: 20px;"></p>
                         <div class="images_container1">
-                            <img class="mainimg" src="<?= $villa_main[0]['image_path']; ?>" ,alt="">
+                            <img class="mainimg" src="<?= $villa_main[0]['image_path']; ?>" alt="">
                         </div>
                         <div class="images_container2">
-                            <img class="mainimg1" src="<?= $villa_main[1]['image_path']; ?>" , alt="">
-                            <img class="mainimg1" src="<?= $villa_main[2]['image_path']; ?>" ,alt="">
-                            <img class="mainimg1" src="<?= $villa_main[3]['image_path']; ?>" , alt="">
-                            <img class="mainimg1" src="<?= $villa_main[4]['image_path']; ?>" ,alt="">
-                            <img class="mainimg1" src="<?= $villa_main[5]['image_path']; ?>" , alt="">
-                            <img class="mainimg1" src="<?= $villa_main[6]['image_path']; ?>" , alt="">
+                            <img class="mainimg1" src="<?= $villa_main[1]['image_path']; ?>" alt="">
+                            <img class="mainimg1" src="<?= $villa_main[2]['image_path']; ?>" alt="">
+                            <img class="mainimg1" src="<?= $villa_main[3]['image_path']; ?>" alt="">
+                            <img class="mainimg1" src="<?= $villa_main[4]['image_path']; ?>" alt="">
+                            <img class="mainimg1" src="<?= $villa_main[5]['image_path']; ?>" alt="">
+                            <img class="mainimg1" src="<?= $villa_main[6]['image_path']; ?>" alt="">
                         </div>
                     </div>
 
@@ -205,7 +199,7 @@
                             <br><?= $villa_main[2]['content']; ?>
                         </p>
                     </div>
-                    
+
                     <div class="toteo__container">
                         <div class="fontp" style="margin: -8rem;">
                             <div class="fontf" style="display: flex;">
@@ -226,6 +220,7 @@
                                 <p class="price" id="price" name="price">฿</p>
                                 <p id="security-deposit">ค่าประกัน3000</p>
                             </div>
+
                             <div class="button" id="bookingButtonContainer">
                                 <button id="bookingButton">จอง</button>
                             </div>
@@ -233,57 +228,73 @@
                     </div>
                 </div>
             </div>
-            </div>
+
         </search>
-        <?php include 'searchs.php'; ?>
-        
-
-
-
-
 
 
 
 
         <script>
             $(function() {
-                var fullDates = []; // เก็บวันที่เต็ม
-                var checkinDate = null; // ตัวแปรสำหรับเก็บวันที่ checkin
+                var fullDates = [];
+                var holidayDates = [];
+                var checkinDate = null;
 
-                // ดึงวันที่เต็มจากเซิร์ฟเวอร์
+
                 $.ajax({
-                    url: 'check_full_dates.php', // ไฟล์ PHP ที่ดึงข้อมูลวันที่เต็ม
+                    url: 'check_full_dates.php',
                     type: 'GET',
                     dataType: 'json',
                     success: function(response) {
-                        fullDates = response; // เก็บวันที่เต็มในตัวแปร fullDates
+                        fullDates = response.fullDates;
+                        holidayDates = response.holidayDates;
 
-                        console.log("วันที่ถูกจองเต็ม:", fullDates); // ตรวจสอบวันที่เต็มใน console
+                        console.log("วันที่ถูกจองเต็ม:", fullDates)
 
-                        // ตั้งค่า datepicker สำหรับ Check In
+
                         $("#checkin").datepicker({
                             dateFormat: "yy-mm-dd",
                             minDate: 0,
                             beforeShowDay: function(date) {
                                 var formattedDate = $.datepicker.formatDate('yy-mm-dd', date);
                                 if (fullDates.indexOf(formattedDate) !== -1) {
-                                    return [false, "full-booked", "เต็ม"]; // ปิดวันที่เต็มและใส่คลาส CSS full-booked
+                                    return [false, "full-booked", "เต็ม"];
                                 } else {
-                                    return [true, "available", "ว่าง"]; // เปิดวันที่ว่างและใส่คลาส CSS available
+                                    return [true, "available", "ว่าง"];
                                 }
                             },
                             onSelect: function(dateText) {
-                                checkinDate = new Date(dateText); // เก็บวันที่ checkin
-                                var dayOfWeek = checkinDate.getDay(); // 0 = Sunday, 5 = Friday, 6 = Saturday
+                                checkinDate = new Date(dateText);
+                                var dayOfWeek = checkinDate.getDay();
+                                var formattedCheckinDate = $.datepicker.formatDate('yy-mm-dd', checkinDate);
 
-                                // หากเป็นวันศุกร์หรือเสาร์ เลือก "6ห้อง" อัตโนมัติ
-                                if (dayOfWeek === 5 || dayOfWeek === 6) {
+
+
+                                // ตรวจสอบว่าเป็นวันหยุดหรือไม่
+                                if (holidayDates.includes(formattedCheckinDate)) {
                                     $("#room").val("6ห้อง");
                                     $("#room").prop("disabled", true);
-                                    alert("ห้อง 6ห้อง ถูกเลือกอัตโนมัติเนื่องจากเป็นวันศุกร์หรือเสาร์");
+                                    Swal.fire({
+                                        title: '6ห้อง ถูกเลือกอัตโนมัติ',
+                                        text: 'เนื่องจากเป็นวันหยุดหยุดนขัตฤกษ์,วันปีใหม่,สงกรานต์',
+                                        icon: 'info',
+                                        confirmButtonText: 'ตกลง'
+                                    });
+                                }
+                                // ตรวจสอบว่าเป็นวันศุกร์หรือเสาร์หรือไม่ (ไม่รวมวันหยุด)
+                                else if (dayOfWeek === 5 || dayOfWeek === 6) {
+                                    $("#room").val("6ห้อง");
+                                    $("#room").prop("disabled", true);
+                                    Swal.fire({
+                                        title: '6ห้อง ถูกเลือกอัตโนมัติ',
+                                        text: 'เนื่องจากเป็นวันศุกร์หรือเสาร์',
+                                        icon: 'info',
+                                        confirmButtonText: 'ตกลง'
+                                    });
                                 } else {
                                     $("#room").prop("disabled", false);
                                 }
+
 
                                 // กำหนด Check Out ให้เป็นวันถัดไปอัตโนมัติ
                                 var checkoutDate = new Date(checkinDate.getTime() + 1 * 24 * 60 * 60 * 1000);
@@ -310,7 +321,7 @@
                                     }
                                 });
 
-                                $("#checkout").prop('readonly', false); // ทำให้เลือก Check Out ได้อีกครั้ง
+                                $("#checkout").prop('readonly', false);
                             }
                         });
 
@@ -320,9 +331,9 @@
                             beforeShowDay: function(date) {
                                 var formattedDate = $.datepicker.formatDate('yy-mm-dd', date);
                                 if (fullDates.indexOf(formattedDate) !== -1) {
-                                    return [false, "full-booked", "เต็ม"]; // ปิดวันที่เต็ม
+                                    return [false, "full-booked", "เต็ม"];
                                 } else {
-                                    return [true, "available", "ว่าง"]; // เปิดวันที่ว่าง
+                                    return [true, "available", "ว่าง"];
                                 }
                             }
                         });
@@ -337,58 +348,79 @@
 
 
 
-            // เมื่อกดปุ่มตรวจสอบความว่าง
             $(function() {
-    $("#availabilityForm").on("submit", function(event) {
-        event.preventDefault(); // ป้องกันไม่ให้ฟอร์มรีเฟรชหน้า
+                $("#availabilityForm").on("submit", function(event) {
+                    event.preventDefault();
 
-        // ส่งข้อมูลฟอร์มไปตรวจสอบความว่างของห้อง
-        $.ajax({
-            url: 'check_availability.php',
-            type: 'POST',
-            data: $(this).serialize(), // ส่งข้อมูลฟอร์ม
-            success: function(response) {
-                console.log(response);
+                    $.ajax({
+                        url: 'check_availability.php',
+                        type: 'POST',
+                        data: $(this).serialize(),
+                        success: function(response) {
+                            console.log(response);
 
-                try {
-                    var data = JSON.parse(response); // แปลง response เป็น JSON
-                    if (data.availability) {
-                        $("#status").text(data.availability).css("color", data.availability === "เต็ม" ? "red" : "green");
-                        $("#checkin-date").text(data.checkin);
-                        $("#checkin-date1").text(data.checkin);
-                        $("#checkout-date").text(data.checkout);
-                        $("#checkout-date1").text(data.checkout);
-                        $("#room-type").text(data.room);
-                        $("#room-type1").text(data.room);
-                        $("#price").text(data.price);
-                        $("#price1").text(data.price); // แสดงราคาที่นี่
-                        $("#security-deposit").text(data.security_deposit);
+                            try {
+                                var data = JSON.parse(response);
+                                if (data.availability) {
+                                    $("#status").text(data.availability).css("color", data.availability === "เต็ม" ? "red" : "green");
+                                    $("#checkin-date").text(data.checkin);
+                                    $("#checkin-date1").text(data.checkin);
+                                    $("#checkout-date").text(data.checkout);
+                                    $("#checkout-date1").text(data.checkout);
+                                    $("#room-type").text(data.room);
+                                    $("#room-type1").text(data.room);
+                                    $("#price").text(data.price);
+                                    $("#price1").text(data.price);
+                                    $("#security-deposit").text(data.security_deposit);
 
-                        // แสดงหรือซ่อนปุ่มการจองตามความว่าง
-                        if (data.is_full) {
-                            $("#bookingButtonContainer").hide(); // ซ่อนปุ่มการจองหากห้องเต็ม
-                            $("#bookingButtonContainer1").hide(); // ซ่อนปุ่มการจองอีกปุ่ม
-                        } else {
-                            $("#bookingButtonContainer").show(); // แสดงปุ่มการจองหากห้องว่าง
-                            $("#bookingButtonContainer1").show(); // แสดงปุ่มการจองอีกปุ่ม
+                                    if (data.is_full) {
+                                        $("#bookingButtonContainer").hide();
+                                        $("#bookingButtonContainer1").hide();
+                                    } else {
+                                        $("#bookingButtonContainer").show();
+                                        $("#bookingButtonContainer1").show();
+                                    }
+
+                                    // เช็คว่ามี #book1 หรือไม่
+                                    const book1Section = document.getElementById('book1');
+                                    const book2Section = document.getElementById('book2');
+
+                                    if (book1Section) {
+                                        window.location.href = 'index.php#book1';
+                                    } else if (book2Section) {
+                                        window.location.href = 'index.php#book2';
+                                    } else {
+                                        // ถ้าไม่มีทั้งสอง #book1 และ #book2
+                                        console.log("Both book1 and book2 are not found.");
+                                    }
+
+                                    setTimeout(() => {
+                                        // เลื่อนลงไปยังส่วนที่พบ
+                                        if (book1Section) {
+                                            book1Section.scrollIntoView({
+                                                behavior: 'smooth'
+                                            });
+                                        } else if (book2Section) {
+                                            book2Section.scrollIntoView({
+                                                behavior: 'smooth'
+                                            });
+                                        }
+                                    }, 500);
+                                } else {
+                                    $("#availability").text("No availability data.");
+                                }
+                            } catch (e) {
+                                console.log(e);
+                                $("#availability").text("Invalid response from server.");
+                            }
+                        },
+                        error: function() {
+                            $("#availability").text("Error checking availability.");
                         }
+                    });
+                });
+            });
 
-                        // นำผู้ใช้ไปที่ index.php#main หลังจากการตรวจสอบเสร็จสิ้น
-                        window.location.href = 'index.php#main';
-                    } else {
-                        $("#availability").text("No availability data.");
-                    }
-                } catch (e) {
-                    console.log(e);
-                    $("#availability").text("Invalid response from server.");
-                }
-            },
-            error: function() {
-                $("#availability").text("Error checking availability.");
-            }
-        });
-    });
-});
 
 
 
@@ -413,10 +445,10 @@
 
 
             function validateGuests(input) {
-                // ลบตัวเลขทศนิยมออกหากมีการพิมพ์ทศนิยม
-                input.value = input.value.replace(/[^0-9]/g, ''); // อนุญาตเฉพาะเลขจำนวนเต็ม
 
-                // ตรวจสอบว่าค่าตัวเลขไม่ต่ำกว่าค่าต่ำสุดและไม่เกินค่ามากสุด
+                input.value = input.value.replace(/[^0-9]/g, '');
+
+
                 const min = parseInt(input.min);
                 const max = parseInt(input.max);
                 const value = parseInt(input.value);
@@ -475,6 +507,19 @@
             });
 
             document.getElementById('bookingButton1').addEventListener('click', function() {
+
+                <?php if (!isset($_SESSION['user_id'])): ?>
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'กรุณาเข้าสู่ระบบก่อนทำการจอง',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'เข้าสู่ระบบ'
+                    }).then(() => {
+                        window.location = 'login.php';
+                    });
+                    return;
+                <?php endif; ?>
+
                 const checkin = document.getElementById('checkin').value;
                 const checkout = document.getElementById('checkout').value;
                 const people = document.getElementById('people').value;
@@ -503,18 +548,7 @@
                     return;
                 }
 
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    window.location = 'booking.php';
-                <?php else: ?>
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'กรุณาเข้าสู่ระบบก่อนทำการจอง',
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'เข้าสู่ระบบ'
-                    }).then(() => {
-                        window.location = 'login.php';
-                    });
-                <?php endif; ?>
+                window.location = 'booking.php';
             });
         </script>
 

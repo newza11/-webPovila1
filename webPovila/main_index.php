@@ -531,8 +531,6 @@ $conn->close();
         "<?= $villaImages[21]['image_path']; ?>",
         "<?= $villaImages[22]['image_path']; ?>",
         
-
-        
         
       ];
 

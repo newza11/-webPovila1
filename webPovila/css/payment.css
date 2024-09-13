@@ -138,7 +138,7 @@ button:hover {
 /* Responsive Design */
 @media (max-width: 768px) {
     body {
-        padding: 10px;
+        padding: 30px 10px 10px 10px;
     }
 
     .container {

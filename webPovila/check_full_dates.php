@@ -17,6 +17,12 @@ $result = $conn->query($query);
 
 $full_dates = [];
 
+// เก็บวันที่ปัจจุบันไว้ในตัวแปร $today
+$today = date('Y-m-d');
+
+// เพิ่มวันที่ปัจจุบันเข้าไปใน full_dates เพื่อไม่ให้สามารถจองได้
+$full_dates[] = $today;
+
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $checkin = new DateTime($row['checkin']);
@@ -34,9 +40,22 @@ if ($result->num_rows > 0) {
     }
 }
 
+$holiday_dates = [];
+$holiday_query = "SELECT holiday_date FROM holidays_db";
+$holiday_result = $conn->query($holiday_query);
+
+if ($holiday_result->num_rows > 0) {
+    while ($row = $holiday_result->fetch_assoc()) {
+        $holiday_dates[] = $row['holiday_date'];  // เก็บวันที่ใน holiday_dates
+    }
+}
+
 // ส่งผลลัพธ์ในรูปแบบ JSON
 header('Content-Type: application/json');
-echo json_encode($full_dates);
+echo json_encode([
+    'fullDates' => $full_dates,
+    'holidayDates' => $holiday_dates
+]);
 
 $conn->close();
 ?>

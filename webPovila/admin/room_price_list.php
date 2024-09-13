@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/order.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     <link rel="stylesheet" href="../css/user.css">
     <title>Room Price List</title>
 </head>
@@ -18,6 +20,7 @@
                 <div class="cardHeader">
                     <h2>Room Price List</h2>
                     <a href="add_room.php" class="btn">Add Room</a>
+                    
                 </div>
 
                 <table>
@@ -58,11 +61,23 @@
         </div>
     </div>
 
+    
     <script>
         function confirmDelete(roomId) {
-            if (confirm('Are you sure you want to delete this room?')) {
-                window.location.href = `delete_room.php?id=${roomId}`;
-            }
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `delete_room.php?id=${roomId}`;
+                }
+            });
         }
     </script>
 

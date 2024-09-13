@@ -19,6 +19,7 @@
 
 <body>
     <div class="mobile-container">
+    <div id="book2"></div>
         <p class="title-large">บ้านนันท์นภัส</p>
         <p class="title-medium">พลูวิลล่า อัมพวา</p>
 

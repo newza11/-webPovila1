@@ -20,8 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql = "INSERT INTO login_user (name, email, password, role) VALUES ('$username', '$email', '$hashed_password', '$role')";
 
         if ($conn->query($sql) === TRUE) {
-            header("Location: user.php");
-            exit();
+            $success_message = "User added successfully.";
         } else {
             $error_message = "Error: " . $sql . "<br>" . $conn->error;
         }
@@ -39,6 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Add User</title>
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/order.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     <style>
         .form-container {
             max-width: 600px;
@@ -90,9 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container">
         <div class="form-container">
             <h1>Add User</h1>
-            <?php if (!empty($error_message)) : ?>
-                <div class="error-message"><?php echo $error_message; ?></div>
-            <?php endif; ?>
             <form action="add_user.php" method="POST">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
@@ -110,5 +108,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
     <?php include '../mains.php'; ?>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            <?php if (isset($error_message)): ?>
+                Swal.fire({
+                    title: 'Error!',
+                    text: '<?php echo $error_message; ?>',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            <?php elseif (isset($success_message)): ?>
+                Swal.fire({
+                    title: 'Success!',
+                    text: '<?php echo $success_message; ?>',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = 'user.php';
+                    }
+                });
+            <?php endif; ?>
+        });
+    </script>
 </body>
 </html>

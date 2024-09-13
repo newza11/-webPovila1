@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Order List</title>
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/order.css">
@@ -170,16 +172,40 @@
         }
 
         function deleteOrder(orderId) {
-            if (confirm('Are you sure you want to delete this order?')) {
-                fetch(`delete_order.php?id=${orderId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        alert(data.message);
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'You won\'t be able to revert this!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`delete_order.php?id=${orderId}`)
+                .then(response => response.json())
+                .then(data => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted!',
+                        text: data.message,
+                    }).then(() => {
                         loadOrders(currentPage); // Reload orders for the current page
-                    })
-                    .catch(error => console.error('Error deleting order:', error));
-            }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error deleting order:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'There was an issue deleting the order. Please try again.',
+                    });
+                });
         }
+    });
+}
+
 
         function viewSlip(slip) {
             const modal = document.getElementById("slipModal");

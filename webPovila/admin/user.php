@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="../css/order.css">
     <link rel="stylesheet" href="../css/user.css">
     <title>User Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 </head>
 
 <body>
@@ -52,7 +54,7 @@
                                 echo "<td>{$row['email']}</td>";
                                 echo "<td>{$row['role']}</td>";
                                 echo "<td>
-                                        <a href='update_user.php?id={$row['id']}' class='btn'>Edit</a>
+                                        <a href='edit_user.php?id={$row['id']}' class='btn'>Edit</a>
                                         <a href='#' onclick='confirmDelete({$row['id']})' class='btn'>Delete</a>
                                       </td>";
                                 echo "</tr>";
@@ -89,11 +91,23 @@
     </div>
     
     <?php include '../mains.php'; ?>
+
     <script>
         function confirmDelete(userId) {
-            if (confirm('Are you sure you want to delete this user?')) {
-                window.location.href = `delete_user.php?id=${userId}`;
-            }
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `delete_user.php?id=${userId}`;
+                }
+            });
         }
     </script>
 </body>

@@ -19,17 +19,32 @@ $people = $_POST['people'];
 // Define the days to be calculated (check-in day and the day before check-out)
 $dates_to_check = [strtotime($check_in), strtotime('-1 day', strtotime($check_out))];
 
-// Check if any of the dates fall on a Friday or Saturday
+// Fetch holidays from the database (between check-in and check-out)
+$holiday_query = "SELECT holiday_date, holiday_price FROM holidays_db WHERE holiday_date BETWEEN ? AND ?";
+$holiday_stmt = $conn->prepare($holiday_query);
+$holiday_stmt->bind_param("ss", $check_in, $check_out);
+$holiday_stmt->execute();
+$holiday_result = $holiday_stmt->get_result();
+
+$holidays = [];
+while ($holiday_row = $holiday_result->fetch_assoc()) {
+    $holidays[$holiday_row['holiday_date']] = $holiday_row['holiday_price']; // เก็บวันที่ของวันหยุดในฟอร์แมต Y-m-d
+}
+
+// Check if any of the dates fall on a Friday, Saturday, or a holiday
 $force_six_rooms = false;
 foreach ($dates_to_check as $date) {
     $current_day = date('N', $date);
-    if ($current_day == 5 || $current_day == 6) { // If Friday or Saturday
+    $current_date_str = date('Y-m-d', $date); // ฟอร์แมตวันที่เป็น Y-m-d
+
+    // ตรวจสอบว่าเป็นวันศุกร์หรือเสาร์ หรือวันหยุด
+    if ($current_day == 5 || $current_day == 6 || $current_day == 7 || isset($holidays[$current_date_str])) {
         $force_six_rooms = true;
         break;
     }
 }
 
-// Automatically select 6 rooms if any of the dates fall on Friday or Saturday
+// Automatically select 6 rooms if any of the dates fall on Friday, Saturday, or a holiday
 if ($force_six_rooms) {
     $room = '6ห้อง';
 } else {
@@ -54,6 +69,7 @@ $last_date = strtotime('-1 day', strtotime($check_out));
 
 while ($current_date <= $last_date) {
     $current_day = date('N', $current_date); // Get day of the week
+    $current_date_str = date('Y-m-d', $current_date); // Format date
 
     // Set the daily price based on the day of the week
     $daily_price = $base_price;
@@ -61,6 +77,11 @@ while ($current_date <= $last_date) {
         $daily_price += 3000; // Friday
     } elseif ($current_day == 6) { 
         $daily_price += 5000; // Saturday
+    }
+
+    // Check if the date is a holiday and apply holiday price if available
+    if (isset($holidays[$current_date_str])) {
+        $daily_price = $holidays[$current_date_str]; // Use holiday price if available
     }
 
     // Add daily price to the total price
@@ -133,6 +154,6 @@ echo json_encode($response);
 
 $stmt->close();
 $price_stmt->close();
+$holiday_stmt->close();
 $conn->close();
 ?>
-    

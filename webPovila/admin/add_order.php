@@ -39,6 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Add Order</title>
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/order.css">
@@ -82,6 +84,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .form-container form button:hover {
             background-color: #0056b3;
         }
+
+        .form-container form select {
+    margin-bottom: 15px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
     </style>
 </head>
 <body>
@@ -111,22 +121,76 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </form>
         </div>
     </div>
+        
     <script>
-        document.getElementById('addOrder').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            fetch('add_order.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
+    document.getElementById('checkin').addEventListener('focus', function() {
+        this.click();
+    });
+
+    document.getElementById('checkout').addEventListener('focus', function() {
+        this.click();
+    });
+
+    document.getElementById('checkin').addEventListener('change', function() {
+        const checkin = new Date(this.value);
+        
+        // Set checkout to same year and month but next day by default
+        let checkout = new Date(checkin);
+        checkout.setDate(checkin.getDate() + 1); // Set default to next day
+
+        // Format the checkout date in YYYY-MM-DD format
+        const checkoutDate = checkout.toISOString().split('T')[0];
+
+        // Set the value of the checkout field
+        document.getElementById('checkout').value = checkoutDate;
+    });
+
+    // Handle form submission
+    document.getElementById('addOrder').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const checkin = document.getElementById('checkin').value;
+        const checkout = document.getElementById('checkout').value;
+
+        // Ensure that checkout date is after checkin date
+        if (new Date(checkout) <= new Date(checkin)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Checkout date must be after check-in date.',
+            });
+            return; // Stop form submission if invalid
+        }
+
+        const formData = new FormData(this);
+        fetch('add_order.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: data.message,
+            }).then(() => {
                 window.location.href = 'order.php'; // Redirect to order list page
-            })
-            .catch(error => console.error('Error adding order:', error));
+            });
+        })
+        .catch(error => {
+            console.error('Error adding order:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'There was an issue adding the order. Please try again.',
+            });
         });
-    </script>
+    });
+</script>
+
+
+
+
      <?php include '../mains.php'; ?>
 </body>
 </html>

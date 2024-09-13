@@ -37,6 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Settings</title>
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="../css/admin.css">
@@ -119,8 +120,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         localStorage.setItem('username', username);
         
 
-        alert('Settings saved!');
+        Swal.fire({
+        title: 'Settings Saved!',
+        text: 'Your settings have been successfully saved.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Redirect to admin.php after the user clicks OK
+            window.location.href = 'admin.php';
+        }
     });
+});
 </script>
 
 <!-- ====== ionicons ======= -->

@@ -1232,3 +1232,10 @@ ion-icon {
   }
 }
 
+.ui-datepicker .today-highlight a {
+  border: 2px solid gray;  /* กำหนดกรอบสีเทา */
+  background-color: transparent !important;  /* ไม่มีพื้นหลัง */
+  color: black !important;  /* ตัวอักษรสีดำ */
+}
+
+

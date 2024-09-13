@@ -87,7 +87,7 @@ $conn->close();
           </div>
         <nav class="naigation">
             
-            <a href="index.php">Home</a>
+            <a href="index.php">HOME</a>
             
         </nav>
     
