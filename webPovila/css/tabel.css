@@ -597,6 +597,12 @@ body {
     font-size: 60px;
   }
 
+  .search__image__container {
+    margin-top: 20px;
+    margin-bottom: 0;
+    padding-bottom: 2rem;
+}
+
   #list-title h2 {
     font-size: 16px;
   }

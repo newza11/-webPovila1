@@ -88,7 +88,7 @@ $conn->close();
         <div class="login-header">
             <header>Login</header>
             <?php if ($message): ?>
-            <p><?php echo $message; ?></p>
+            <p style="color: red;" ><?php echo $message; ?></p>
         <?php endif; ?>
         </div>
         <div class="input-box">

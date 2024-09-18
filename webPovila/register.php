@@ -98,7 +98,7 @@ $conn->close();
             <div class="register-header">
                 <header>Register</header>
                 <?php if ($message): ?>
-                    <p><?php echo $message; ?></p>
+                    <p style="color: red;"><?php echo $message; ?></p>
                 <?php endif; ?>
             </div>
 

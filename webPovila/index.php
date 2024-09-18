@@ -610,26 +610,148 @@
                 <div class="footer__section gallery">
                     <h4>GALLERY</h4>
                     <div class="footer__gallery">
-                        <img src="<?= $villa_descriptions[0]['image_path']; ?>" alt="Gallery Image 1">
-                        <img src="<?= $villa_descriptions[1]['image_path']; ?>" alt="Gallery Image 2">
-                        <img src="<?= $villa_descriptions[2]['image_path']; ?>" alt="Gallery Image 2">
-                        <img src="<?= $villa_descriptions[3]['image_path']; ?>" alt="Gallery Image 2">
-                        <img src="<?= $villa_descriptions[4]['image_path']; ?>" alt="Gallery Image 2">
-                        <img src="<?= $villa_descriptions[5]['image_path']; ?>" alt="Gallery Image 2">
-
-
+                        <img src="<?= $villa_descriptions[0]['image_path']; ?>" alt="Gallery Image 1" onclick="openModal();currentSlide(1)">
+                        <img src="<?= $villa_descriptions[1]['image_path']; ?>" alt="Gallery Image 2" onclick="openModal();currentSlide(2)">
+                        <img src="<?= $villa_descriptions[2]['image_path']; ?>" alt="Gallery Image 3" onclick="openModal();currentSlide(3)">
+                        <img src="<?= $villa_descriptions[3]['image_path']; ?>" alt="Gallery Image 4" onclick="openModal();currentSlide(4)">
+                        <img src="<?= $villa_descriptions[4]['image_path']; ?>" alt="Gallery Image 5" onclick="openModal();currentSlide(5)">
+                        <img src="<?= $villa_descriptions[5]['image_path']; ?>" alt="Gallery Image 6" onclick="openModal();currentSlide(6)">
                     </div>
+                    <div id="lightboxModal" class="modal">
+                        <span class="close cursor" onclick="closeModal()">&times;</span>
+                        <div class="modal-content">
+                            <div class="mySlides">
+                                <img src="<?= $villa_descriptions[0]['image_path']; ?>" alt="Gallery Image 1">
+                            </div>
+                            <div class="mySlides">
+                                <img src="<?= $villa_descriptions[1]['image_path']; ?>" alt="Gallery Image 2">
+                            </div>
+                            <div class="mySlides">
+                                <img src="<?= $villa_descriptions[2]['image_path']; ?>" alt="Gallery Image 3">
+                            </div>
+                            <div class="mySlides">
+                                <img src="<?= $villa_descriptions[3]['image_path']; ?>" alt="Gallery Image 4">
+                            </div>
+                            <div class="mySlides">
+                                <img src="<?= $villa_descriptions[4]['image_path']; ?>" alt="Gallery Image 5">
+                            </div>
+                            <div class="mySlides">
+                                <img src="<?= $villa_descriptions[5]['image_path']; ?>" alt="Gallery Image 6">
+                            </div>
+                            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
             <div class="footer__gold"></div>
         </footer>
+        <!-- <script>
+            function openModal() {
+                document.getElementById("lightboxModal").style.display = "block";
+            }
+
+            function closeModal() {
+                document.getElementById("lightboxModal").style.display = "none";
+            }
+
+            var slideIndex = 1;
+            showSlides(slideIndex);
+
+            function plusSlides(n) {
+                showSlides(slideIndex += n);
+            }
+
+            function currentSlide(n) {
+                showSlides(slideIndex = n);
+            }
+
+            function showSlides(n) {
+                var slides = document.getElementsByClassName("mySlides");
+                if (n > slides.length) {
+                    slideIndex = 1;
+                }
+                if (n < 1) {
+                    slideIndex = slides.length;
+                }
+                for (var i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                }
+                slides[slideIndex - 1].style.display = "block";
+            }
+        </script> -->
 
 
 
-        <style>
 
-        </style>
+        <!-- <style>
+            Modal styling
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                padding-top: 100px;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.9);
+            }
+
+            .modal-content {
+                position: relative;
+                margin: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 300px;
+                height: 300px;
+            }
+
+            .mySlides {
+                display: none;
+                max-width: 100%;
+                max-height: 100%;
+                width: 300px;
+                /* Fixed width */
+                height: 300px;
+                /* Fixed height */
+            }
+
+            .prev,
+            .next {
+                cursor: pointer;
+                position: absolute;
+                top: 50%;
+                padding: 16px;
+                color: white;
+                font-weight: bold;
+                font-size: 24px;
+                user-select: none;
+                background-color: rgba(0, 0, 0, 0.5);
+                transform: translateY(-50%);
+            }
+
+            .prev {
+                left: 0;
+            }
+
+            .next {
+                right: 0;
+            }
+
+            .close {
+                position: absolute;
+                top: 15px;
+                right: 35px;
+                color: white;
+                font-size: 40px;
+                font-weight: bold;
+                cursor: pointer;
+            }
+        </style> -->
         <!-- <footer class="footer">
             <div class="footer__container">
                 <div class="footer__col">

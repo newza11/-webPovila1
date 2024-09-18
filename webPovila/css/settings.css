@@ -312,7 +312,7 @@ button:hover {
 
 @media only screen and (max-width: 480px) {
     .logo img {
-        margin-left: 80px; /* ปรับขนาด padding เมื่อหน้าจอเล็กลง */
+        margin-left: 10px; /* ปรับขนาด padding เมื่อหน้าจอเล็กลง */
         
     }
     .link1 a {
@@ -321,7 +321,7 @@ button:hover {
 
     
     .navigation  {
-        padding-right: 80px;
+        padding-right: 30px;
     }
     
     

@@ -15,6 +15,19 @@
 .cardHeader h1 {
     margin: 0;
 }
+#statusFilter{
+    padding: 10px 20px 10px 10px;
+    
+    border: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 1rem;
+    border: solid 1px;
+}
+
 
 .btn {
     padding: 10px 20px;
