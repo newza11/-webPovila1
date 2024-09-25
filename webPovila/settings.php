@@ -24,7 +24,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = trim($_POST['name']);
     $new_password = trim($_POST['new_password']);
     $user_id = $_SESSION['user_id'];
-    $profile_picture_path = $_SESSION['profile_picture'] ?? 'path/to/default/profile.jpg'; // Default to existing or default picture
+
+    // Fetch current profile picture from the database
+    $sql = "SELECT profile_picture FROM login_user WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+    $profile_picture_path = $user['profile_picture'] ?? 'path/to/default/profile.jpg';
 
     // Handle image upload
     if (!empty($_FILES['profile_picture']['name'])) {
@@ -36,7 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($check !== false) {
             if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $target_file)) {
                 $profile_picture_path = $target_file; // Update the profile picture path
-                $_SESSION['profile_picture'] = $profile_picture_path; // Save file path in session
                 $message = 'Your profile picture has been updated.';
             } else {
                 $message = 'There was an error uploading your profile picture.';
@@ -62,6 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($stmt->execute()) {
             $_SESSION['user_name'] = $name;
+            $_SESSION['profile_picture'] = $profile_picture_path; // Update session with new profile picture path
             $message = 'Your information has been updated.';
             header("Location: index.php");
             exit();
@@ -71,6 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+// Fetch user data
 $sql = "SELECT * FROM login_user WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $_SESSION['user_id']);

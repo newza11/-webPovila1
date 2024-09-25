@@ -111,7 +111,7 @@ $conn->close();
                 <h2>GET IN TOUCH</h2>
                 <form action="contact.php" method="POST">
                     <input type="text" name="name" placeholder="Your Name" required oninput="validateText(this)" pattern="[A-Za-zก-๙]+" inputmode="text">
-                    <input type="email" name="email" placeholder="Enter Your Email"   inputmode="text">
+                    <input type="email" name="email" placeholder="Enter Your Email" inputmode="text">
                     <input type="text" name="phone" placeholder="My Phone" oninput="validateGuests(this)" min="0" step="10" required>
 
                     <textarea name="message" placeholder="Write Message" required></textarea>
@@ -122,23 +122,23 @@ $conn->close();
         </div>
     </section>
 
-    
+
 
     <!-- แสดงผล SweetAlert เมื่อการดำเนินการสำเร็จหรือเกิดข้อผิดพลาด -->
     <script>
         <?php if ($alertMessage == "success") : ?>
             Swal.fire({
-                title: 'ดำเนินการสำเร็จ!',
-                text: 'ข้อความของคุณถูกส่งแล้ว',
+                title: 'Success!',
+                text: 'Your message has been sent.',
                 icon: 'success',
-                confirmButtonText: 'ตกลง'
+                confirmButtonText: 'OK'
             });
         <?php elseif ($alertMessage == "error") : ?>
             Swal.fire({
-                title: 'เกิดข้อผิดพลาด!',
-                text: 'ไม่สามารถส่งข้อความได้ โปรดลองอีกครั้ง',
+                title: 'Error!',
+                text: 'Failed to send the message. Please try again.',
                 icon: 'error',
-                confirmButtonText: 'ตกลง'
+                confirmButtonText: 'OK'
             });
         <?php endif; ?>
     </script>

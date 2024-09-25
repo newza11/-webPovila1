@@ -1,4 +1,7 @@
 <?php
+
+session_start();
+
 // Backend PHP Logic for adding a room
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     include 'db_connection.php';

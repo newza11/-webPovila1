@@ -1,6 +1,9 @@
 <?php
 include 'db_connection.php';
 
+session_start();
+
+
 // Check if the room ID is provided in the URL
 if (isset($_GET['id'])) {
     $roomId = htmlspecialchars($_GET['id']);

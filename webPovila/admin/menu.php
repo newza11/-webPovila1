@@ -1,5 +1,5 @@
 <?php
-    session_start();
+  
 
     $servername = "localhost";
     $username = "root";
@@ -172,13 +172,7 @@ $row = mysqli_fetch_assoc($result);
             <ion-icon name="menu-outline"></ion-icon>
         </div>
 
-        <!-- <div class="search">
-            <label>
-                <input type="text" id="searchInput" placeholder="Search here">
-                <ion-icon name="search-outline"></ion-icon>
-            </label>
-            <div id="searchResults"></div>
-        </div> -->
+       
 
         <div class="user-settings">
             <div class="user" onclick="toggleDropdown()">
@@ -206,41 +200,6 @@ $row = mysqli_fetch_assoc($result);
             document.getElementById('userDropdown').classList.toggle('show');
         }
 
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const query = this.value;
-
-            if (query.length > 2) { // Only start searching when the query length is more than 2 characters
-                fetch('search_users.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        body: 'query=' + encodeURIComponent(query)
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Handle the data returned from the server
-                        displaySearchResults(data);
-                    })
-                    .catch(error => console.error('Error:', error));
-            } else {
-                document.getElementById('searchResults').innerHTML = ''; // Clear results if query is too short
-            }
-        });
-
-        function displaySearchResults(results) {
-            const resultsContainer = document.getElementById('searchResults');
-            resultsContainer.innerHTML = '';
-
-            if (results.length > 0) {
-                results.forEach(result => {
-                    let resultElement = document.createElement('div');
-                    resultElement.textContent = `User: ${result.name}, Order ID: ${result.id}`;
-                    resultsContainer.appendChild(resultElement);
-                });
-            } else {
-                resultsContainer.textContent = 'No results found.';
-            }
-        }
+        
     </script>
 

@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,6 +10,10 @@
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/contact_user.css">
     <link rel="stylesheet" href="../css/order.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.22/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.22/dist/sweetalert2.min.js"></script>
+
     <title>Contact Messages</title>
     <style>
         .pagination {
@@ -46,7 +53,8 @@
             margin-top: 20px;
         }
 
-        table th, table td {
+        table th,
+        table td {
             padding: 10px;
             text-align: left;
             border-bottom: 1px solid #ddd;
@@ -156,12 +164,25 @@
 
     <script>
         function confirmDelete(contactId) {
-            if (confirm('Are you sure you want to delete this message?')) {
-                window.location.href = `delete_contact.php?id=${contactId}`;
-            }
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Do you want to delete this message?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect to the delete_contact.php page with the contact ID
+                    window.location.href = `delete_contact.php?id=${contactId}`;
+                }
+            });
         }
 
-        document.addEventListener('DOMContentLoaded', function () {
+
+        document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('.prev-page').addEventListener('click', () => {
                 if (<?php echo $page; ?> > 1) {
                     window.location.href = `?page=<?php echo $page - 1; ?>`;
