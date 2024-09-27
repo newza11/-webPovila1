@@ -121,8 +121,9 @@ session_start();
         }
 
         .selected-btn:hover {
-            background-color: #004099;
+            background-color: #007bff;
             box-shadow: 0px 12px 20px rgba(0, 64, 153, 0.5);
+            color: #fff;
             /* เงาเมื่อโฮเวอร์ */
         }
     </style>

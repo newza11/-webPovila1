@@ -30,19 +30,33 @@ $monthlyRevenueResult = $conn->query($monthlyRevenueSql);
 $monthlyRevenueRow = $monthlyRevenueResult->fetch_assoc();
 $monthlyRevenue = $monthlyRevenueRow['monthlyRevenue'];
 
-// Fetch monthly revenue for the current year
-$yearlyRevenueSql = "SELECT MONTH(checkin) as month, SUM(price) as revenue FROM orders_db WHERE YEAR(checkin) = YEAR(CURRENT_DATE()) GROUP BY MONTH(checkin)";
-$yearlyRevenueResult = $conn->query($yearlyRevenueSql);
+// Define array for month abbreviations
+$monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+// Fetch yearly revenue for the past 2 years, current year, and next 2 years
+$years = [2022, 2023, 2024, 2025, 2026];
 $yearlyRevenue = [];
-while ($row = $yearlyRevenueResult->fetch_assoc()) {
-    $yearlyRevenue[(int)$row['month']] = $row['revenue'];
+
+foreach ($years as $year) {
+    $yearlyRevenueSql = "SELECT MONTH(checkin) as month, SUM(price) as revenue 
+                         FROM orders_db 
+                         WHERE YEAR(checkin) = $year 
+                         GROUP BY MONTH(checkin)";
+    $yearlyRevenueResult = $conn->query($yearlyRevenueSql);
+    $yearlyRevenue[$year] = array_fill_keys($monthNames, 0); // Initialize each month to 0
+
+    while ($row = $yearlyRevenueResult->fetch_assoc()) {
+        $monthIndex = (int)$row['month'] - 1; // Get index (0-11) for the month
+        $monthName = $monthNames[$monthIndex]; // Get the month name (e.g., Jan, Feb)
+        $yearlyRevenue[$year][$monthName] = $row['revenue'];
+    }
 }
 
 // Fetch total users
 $totalUsersResult = $conn->query("SELECT COUNT(*) AS totalUsers FROM login_user");
 $totalUsers = $totalUsersResult->fetch_assoc()['totalUsers'];
 
-// Placeholder for total expenses
+// Placeholder for total expenses (if you have this data, fetch it from the database)
 $totalExpenses = 0;
 
 // Calculate total income
@@ -59,6 +73,7 @@ if ($recentOrdersResult->num_rows > 0) {
     }
 }
 
+// Data structure for JSON response
 $data = [
     'totalOrders' => $totalOrders,
     'totalRevenue' => $totalRevenue,
@@ -69,6 +84,8 @@ $data = [
     'totalIncome' => $totalIncome,
     'recentOrders' => $recentOrders
 ];
+
+// Send JSON response
 header('Content-Type: application/json');
 echo json_encode($data);
 

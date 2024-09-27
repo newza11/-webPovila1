@@ -113,7 +113,17 @@ body {
 }
 
 .contact-right form input,
-.contact-right form select,
+.contact-right form select {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    background-color: #272727;
+    border: none;
+    border: 1px solid #acacac4f;
+    color: #ffffff;
+    height: 60px;
+}
+
 .contact-right form textarea {
     width: 100%;
     padding: 0.75rem;
@@ -123,6 +133,10 @@ body {
     border: 1px solid #acacac4f;
     color: #ffffff;
     height: 60px;
+}
+textarea::placeholder {
+    color: #fff; /* เปลี่ยนสีข้อความ placeholder เป็นสีขาว */
+    opacity: 1; /* ทำให้ข้อความ placeholder ชัดเจน */
 }
 
 .contact-right form button {

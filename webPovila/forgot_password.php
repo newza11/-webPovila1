@@ -1,5 +1,5 @@
 <?php
-require 'vendor/autoload.php'; // ใช้ autoload ของ Composer
+require 'vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\Exception;
 // ฟังก์ชันสร้าง token
 function generateToken()
 {
-    return bin2hex(random_bytes(16)); // สร้าง token แบบสุ่ม
+    return bin2hex(random_bytes(16));
 }
 
 // เชื่อมต่อฐานข้อมูล

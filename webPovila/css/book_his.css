@@ -9,7 +9,18 @@ body {
 }
 td{
     font-family: "Mitr", sans-serif;
+   
 }
+.container {
+    border: 3px solid #e4b58a; /* สีและขนาดของเส้นขอบ */
+    border-radius: 15px; /* ทำให้มุมเส้นขอบมน */
+    padding: 20px; /* เพิ่มระยะห่างระหว่างเนื้อหาภายในและเส้นขอบ */
+    background-color: #ffffff; /* พื้นหลังสีขาวด้านในกรอบ */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* เพิ่มเงาให้ดูมีมิติ */
+    margin-top: 70px; /* เพิ่มระยะห่างจากส่วนบนของหน้า */
+}
+
+
 .nav__logo {
     font-size: 1.5rem;
     font-weight: 600;
