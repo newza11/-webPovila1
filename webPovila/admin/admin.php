@@ -44,7 +44,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
 
             <div class="card">
                 <div>
-                    <div class="numbers" id="monthlyRevenue">0B</div>
+                    <div class="numbers" id="monthlyRevenue">0฿</div>
                     <div class="cardName">รายรับ (เดือนนี้)</div>
                 </div>
 
@@ -66,7 +66,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
 
             <div class="card">
                 <div>
-                    <div class="numbers" id="totalIncome">0B</div>
+                    <div class="numbers" id="totalIncome">0฿</div>
                     <div class="cardName">ยอดรวม</div>
                 </div>
 
@@ -122,9 +122,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
 
                 // Update cards with fetched data
                 document.getElementById('totalOrders').textContent = data.totalOrders;
-                document.getElementById('monthlyRevenue').textContent = data.monthlyRevenue + 'B';
+                document.getElementById('monthlyRevenue').textContent = data.monthlyRevenue + '฿';
                 document.getElementById('totalUsers').textContent = data.totalUsers;
-                document.getElementById('totalIncome').textContent = data.totalIncome + 'B';
+                document.getElementById('totalIncome').textContent = data.totalIncome + '฿';
 
                 // Sort recent orders by status
                 data.recentOrders.sort((a, b) => {

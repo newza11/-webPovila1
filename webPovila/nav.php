@@ -210,7 +210,7 @@
                 <div id="dropdownContent" class="dropdown-content">
                     <a href="settings.php">Settings</a>
                     <a href="booking_history.php">Booking</a>
-                    <a href="logout.php">Logout</a>
+                    <a href="#" onclick="confirmLogout()">Logout</a>
                 </div>
             </div>
         </div>
@@ -237,6 +237,26 @@
         });
     });
 </script>
+<script>
+function confirmLogout() {
+    Swal.fire({
+        title: 'คุณแน่ใจหรือไม่?',
+        text: "ยืนยันออกจากระบบ",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'ใช่, ออกจากระบบ!',
+        cancelButtonText: 'ยกเลิก'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'logout.php'; // Redirect to the logout page if confirmed
+        }
+    });
+}
+</script>
+
+
 
 </body>
 </html>
