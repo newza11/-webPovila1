@@ -1,4 +1,13 @@
 <?php
+session_start();
+
+// Check if the user is logged in as Admin
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
+    header('Location: login.php');
+    exit();
+}
+
+// Connection to your database
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -62,8 +71,14 @@ $totalExpenses = 0;
 // Calculate total income
 $totalIncome = $totalRevenue - $totalExpenses;
 
-// Fetch recent orders (limit 9 rows)
-$recentOrdersSql = "SELECT * FROM orders_db ORDER BY checkin DESC LIMIT 9";
+// Fetch recent orders (limit 9 rows) and sort by status
+$recentOrdersSql = "SELECT * FROM orders_db ORDER BY 
+                    CASE 
+                        WHEN status = 'Waiting to enter' THEN 1
+                        WHEN status = 'check' THEN 2
+                        WHEN status = 'Completed' THEN 3
+                        ELSE 4
+                    END, checkin DESC LIMIT 9";
 $recentOrdersResult = $conn->query($recentOrdersSql);
 
 $recentOrders = [];

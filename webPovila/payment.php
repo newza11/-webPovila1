@@ -144,13 +144,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ':user_id' => $id
                 ]);
 
-                // ส่งแจ้งเตือนไปยัง LINE Notify พร้อมรูปภาพสลิปที่อัปโหลด
-                
-                $image_url = 'https://yourdomain.com/uploads/' . basename($uploadFile);
-                echo $image_url; // พิมพ์ URL ออกมาเพื่อตรวจสอบว่าถูกต้องหรือไม่
-
+               
                 // ส่งแจ้งเตือนไปยัง LINE Notify
-                send_line_notify("มีการจองใหม่: \nชื่อ: $first_name $last_name\nเบอร์โทร: $phone\nห้อง: $room\nจำนวนคน : $people คน\n เช็คอิน: $check_in\nเช็คเอาท์: $check_out\nจำนวนเงิน: $room_price บาท " , '8P2luXB4DgY19xzz2GV4xTQih8FKVgDwljafZi4cTbZ', $image_url);
+                send_line_notify("มีการจองใหม่: \nชื่อ: $first_name $last_name\nเบอร์โทร: $phone\nห้อง: $room\nจำนวนคน : $people คน\n เช็คอิน: $check_in\nเช็คเอาท์: $check_out\nจำนวนเงิน: $room_price บาท " , '8P2luXB4DgY19xzz2GV4xTQih8FKVgDwljafZi4cTbZ' );
 
                 // Redirect to a completion page
                 header('Location: Completed.php');

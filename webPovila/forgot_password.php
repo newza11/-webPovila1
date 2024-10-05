@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
                 $mail->Port       = 587;
 
                 // Recipients
-                $mail->setFrom('kulwadee45@gmail.com', 'Mailer');
+                $mail->setFrom('kulwadee45@gmail.com', 'Povila');
                 $mail->addAddress($userEmail);  // ส่งอีเมลไปยังที่อยู่ที่กรอก
 
                 // Content

@@ -144,10 +144,10 @@
                             <div class="input__group">
                                 <input list="rooms" id="room" name="room" placeholder="Room" required>
                                 <datalist id="rooms">
-                                    <option value="3ห้อง">3ห้อง</option>
-                                    <option value="4ห้อง">4ห้อง</option>
-                                    <option value="5ห้อง">5ห้อง</option>
-                                    <option value="6ห้อง">6ห้อง</option>
+                                    <option value="3ห้อง"></option>
+                                    <option value="4ห้อง"></option>
+                                    <option value="5ห้อง"></option>
+                                    <option value="6ห้อง"></option>
                                 </datalist>
                             </div>
                         </div>

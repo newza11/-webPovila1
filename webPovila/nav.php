@@ -228,12 +228,12 @@
         dropdownContent.classList.toggle("show");
     }
 
-    // ปิดเมนูแฮมเบอร์เกอร์เมื่อผู้ใช้คลิกที่ลิงก์
+   
     const navLinks = document.querySelectorAll('.center-links a');
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
             const navLinksContainer = document.getElementById("navLinks");
-            navLinksContainer.classList.remove("active"); // ปิดเมนูเมื่อคลิกลิงก์
+            navLinksContainer.classList.remove("active");
         });
     });
 </script>
@@ -250,7 +250,7 @@ function confirmLogout() {
         cancelButtonText: 'ยกเลิก'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = 'logout.php'; // Redirect to the logout page if confirmed
+            window.location.href = 'logout.php';
         }
     });
 }
