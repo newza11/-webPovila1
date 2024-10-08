@@ -21,9 +21,10 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
 </head>
 
 <body>
+<?php include 'menu.php'; ?> 
     <!-- =============== Navigation ================ -->
     <div class="container">
-        <?php include 'menu.php'; ?>
+       
 
         <!-- ======================= Cards ================== -->
         <div class="cardBox">

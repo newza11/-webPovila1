@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['query'])) {
     $servername = "localhost";
     $username = "your_username";
     $password = "your_password";
-    $dbname = "my_website";
+    $dbname = "u642212680_poolvilla";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 

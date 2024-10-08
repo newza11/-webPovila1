@@ -1,8 +1,8 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "my_website";
+  $servername = "localhost";
+  $username = "u642212680_poolvilla";
+  $password = "0613989655Za";
+  $dbname = "u642212680_poolvilla";
 
 // สร้างการเชื่อมต่อ
 $conn = new mysqli($servername, $username, $password, $dbname);

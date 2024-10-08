@@ -6,9 +6,9 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "my_website";
+$username = "u642212680_poolvilla";
+$password = "0613989655Za";
+$dbname = "u642212680_poolvilla";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
-    $profile_picture_path = $user['profile_picture'] ?? 'path/to/default/profile.jpg';
+    $profile_picture_path = $user['profile_picture'] ?? 'uploads/profiletest.jpg';
 
     // Handle image upload
     if (!empty($_FILES['profile_picture']['name'])) {
@@ -118,7 +118,7 @@ $conn->close();
         <?php endif; ?>
         <form id="settingsForm" action="settings.php" method="POST" enctype="multipart/form-data">
             <div class="profile-pic">
-                <img id="profileImage" src="<?php echo $user['profile_picture'] ? $user['profile_picture'] : 'path/to/default/profile.jpg'; ?>" alt="Profile Picture">
+                <img id="profileImage" src="<?php echo $user['profile_picture'] ? $user['profile_picture'] : 'uploads/profiletest.jpg'; ?>" alt="Profile Picture">
                 <input type="file" id="profilePicInput" accept="image/*" name="profile_picture" onchange="previewProfileImage(event)">
                 <label for="profilePicInput">Change Profile Picture</label>
             </div>

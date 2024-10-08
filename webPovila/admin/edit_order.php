@@ -3,9 +3,9 @@
 session_start();
 
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "my_website";
+$username = "u642212680_poolvilla";
+$password = "0613989655Za";
+$dbname = "u642212680_poolvilla";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -158,7 +158,7 @@ $conn->close();
                 title: 'Success',
                 text: data.message,
             }).then(() => {
-                window.location.href = 'order.php'; // Redirect to order list page
+                window.location.href = 'Order.php'; // Redirect to order list page
             });
         })
         .catch(error => {

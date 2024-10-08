@@ -12,9 +12,9 @@ function generateToken()
 
 // เชื่อมต่อฐานข้อมูล
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "my_website";
+$username = "u642212680_poolvilla";
+$password = "0613989655Za";
+$dbname = "u642212680_poolvilla";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
 
                 // Content
                 $mail->isHTML(true);
-                $resetLink = "http://localhost/webPovila/webPovila/reset_password.php?token=" . $token; // สร้างลิงค์รีเซ็ตรหัสผ่าน
+                $resetLink = "https://poolvila.nnmg.shop/reset_password.php?token=" . $token; // สร้างลิงค์รีเซ็ตรหัสผ่าน
                 $mail->Subject = 'Reset Password Poolvila';
                 $mail->Body    = 'กรุณาคลิกที่ลิงค์นี้เพื่อตั้งค่ารหัสผ่านใหม่: <a href="' . $resetLink . '">รีเซ็ตรหัสผ่าน</a>';
                 $mail->AltBody = 'กรุณาคลิกที่ลิงค์นี้เพื่อตั้งค่ารหัสผ่านใหม่: ' . $resetLink;
@@ -91,7 +91,7 @@ $conn->close();
 </head>
 <style>
     .login {
-        height: 350px;
+        height: 370px;
     }
 
     .login-header p {
@@ -122,11 +122,16 @@ $conn->close();
 
 .back-btn {
     display: inline-block; /* ทำให้สามารถใช้ padding */
+    margin-top: 10px;
     
    
     color: black; /* สีข้อความ */
     text-decoration: none; /* ไม่ให้มีเส้นใต้ */
     border-radius: 5px; /* มุมมน */
+}
+.back-to-login a{
+    font-weight: 600;
+    color: black;
 }
 
 
@@ -153,7 +158,7 @@ $conn->close();
         <form action="forgot_password.php" method="POST">
             <div class="login-header">
                 <header>Forgot Password</header>
-                <p>กรุณากรอกอีเมลของคุณ</p>
+                <p>Enter your email</p>
             </div>
             <div class="input-box">
                 <input type="email" class="input-field" name="email" placeholder="Enter your email" required>
@@ -162,8 +167,8 @@ $conn->close();
                 <button class="submit-btn" id="submit"></button>
                 <label for="submit">Forgot Password</label>
             </div>
-            <div class="back-to-login">
-                <a href="login.php" class="back-btn">Back to Login</a>
+            <div class="back-to-login" class="">
+                <p>Back To <a href="login.php" class="back-btn">Login</a></p>
             </div>
         </form>
 

@@ -52,14 +52,14 @@
 
     /* ปรับขนาดฟอนต์ */
     .title-large {
-        font-size: 20px; /* ขนาดฟอนต์ที่เล็กลง */
+        font-size: 23px; /* ขนาดฟอนต์ที่เล็กลง */
         margin: 0rem 1rem;
         text-align: center;
     }
 
     .title-medium {
         font-size: 16px; /* ขนาดฟอนต์ที่เล็กลง */
-        margin: 0rem 1rem;
+        margin: 4px 1rem;
         text-align: center;
     }
 
@@ -72,7 +72,7 @@
     }
 
     .info-container p {
-        font-size: 8px;
+        font-size: 10px;
     }
 
     .check-dates {
@@ -125,13 +125,14 @@
     }
 
     .room-button button {
-        padding: 4px 10px;
+        padding: 4px 8px;
         background-color: #242424;
         color: #fff;
         border: none;
         border-radius: 5px;
         cursor: pointer;
         margin-left: 10px; /* เพิ่มช่องว่างระหว่างปุ่มกับข้อความ */
+        font-size: 10px;
         
     }
 

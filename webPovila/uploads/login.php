@@ -10,9 +10,9 @@ if (isset($_SESSION['user_id'])) {
 // echo $_SESSION['user_id'];
 
 $servername = "localhost"; // Change if your MySQL server is on a different host
-$username = "root"; // Your MySQL username
-$password = ""; // Your MySQL password
-$dbname = "my_website"; // Your database name
+$username = "u642212680_poolvilla"; // Your MySQL username
+$password = "0613989655Za"; // Your MySQL password
+$dbname = "u642212680_poolvilla"; // Your database name
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+$profile_picture = isset($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : 'uploads/profiletest.jpg';
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +15,7 @@
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap');
-
-        nav {
+         nav {
             margin: 0;
             display: flex;
             align-items: center;
@@ -176,6 +183,7 @@
                 display: block;
             }
         }
+    
     </style>
 </head>
 <body>
@@ -188,8 +196,8 @@
         <li class="center-links">
             <a href="index.php">HOME</a>
             <a href="index.php#book">BOOKING</a>
-            <a  href="index.php#detail">DETAIL</a>
-            <a  class="aboutddd" href="index.php#about">ABOUT</a>
+            <a href="index.php#detail">DETAIL</a>
+            <a class="aboutddd" href="index.php#about">ABOUT</a>
             <a href="contact.php">CONTACT</a>
         </li>
     </ul>
@@ -206,7 +214,7 @@
     <?php if (isset($_SESSION['user_id'])): ?>
         <div class="user-link">
             <div class="user">
-                <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" width="50" height="50" onclick="toggleDropdown()">
+                <img src="<?php echo htmlspecialchars($profile_picture); ?>" alt="Profile Picture" width="50" height="50" onclick="toggleDropdown()">
                 <div id="dropdownContent" class="dropdown-content">
                     <a href="settings.php">Settings</a>
                     <a href="booking_history.php">Booking</a>
@@ -228,7 +236,6 @@
         dropdownContent.classList.toggle("show");
     }
 
-   
     const navLinks = document.querySelectorAll('.center-links a');
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
@@ -255,8 +262,6 @@ function confirmLogout() {
     });
 }
 </script>
-
-
 
 </body>
 </html>

@@ -49,8 +49,8 @@
                     <p>Room</p>
                     <p id="room-type1">รอ Room</p>
                 </div>
-                <div style="margin: 5px 0 0;">
-                    <p class="price" id="price1" name="price">฿</p>
+                <div style="">
+                    <p class="price" id="price1" name="price"></p>
                     <p id="security-deposit">ค่าประกัน3000</p>
                 </div>
                 <div class="room-button" id="bookingButtonContainer1">
