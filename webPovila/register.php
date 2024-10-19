@@ -106,7 +106,7 @@ $conn->close();
                 <input type="text" class="input-field" placeholder="Email" name="email" required>
             </div>
             <div class="input-box">
-                <input type="text" class="input-field" placeholder="Name" name="name" required>
+                <input type="text" class="input-field" placeholder="Name" name="name" autocomplete="off" required>
             </div>
             <div class="input-box">
                 <input type="password" class="input-field" placeholder="Password" name="password" required>

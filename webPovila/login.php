@@ -123,7 +123,7 @@ $conn->close();
                 <?php endif; ?>
             </div>
             <div class="input-box">
-                <input type="text" class="input-field" placeholder="Email" id="email" name="email" required>
+                <input type="text" class="input-field" placeholder="Email" id="email" name="email" autocomplete="off" required>
             </div>
             <div class="input-box">
                 <input type="password" class="input-field" placeholder="Password" id="password" name="password" required>

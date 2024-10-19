@@ -67,8 +67,8 @@
             <div class="details">
                 <div class="header">
                     <h2>รายละเอียดการจอง</h2>
-                    <p>Povila: นันท์นภัส พลูวิลล่า</p>
-                    <p>ที่อยู่: เลขที่ 88/1 ถนน รพช. สส. 3046 อ.เมืองสมุทรสงคราม จ.สมุทรสงคราม</p>
+                    <p>Povila: นันท์นภัส พลูวิลล่า</p> 
+                    <p>ที่อยู่: เลขที่ 88/1 ถนน รพช. สส. 3046 อ.เมืองสมุทรสงคราม จ.สมุทรสงคราม 75110</p>
                     <p>Check-in: <?php echo htmlspecialchars($check_in, ENT_QUOTES, 'UTF-8'); ?> (เข้า 14.00)</p>
                     <p>Check-out: <?php echo htmlspecialchars($check_out, ENT_QUOTES, 'UTF-8'); ?> (ออก 12.00)</p>
                     <p>ห้อง: <?php echo htmlspecialchars($room, ENT_QUOTES, 'UTF-8'); ?>นอน</p>

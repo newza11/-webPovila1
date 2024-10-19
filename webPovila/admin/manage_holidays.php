@@ -151,7 +151,9 @@ session_start();
                                 echo "<tr>";
                                 echo "<td>{$row['holiday_name']}</td>";
                                 echo "<td>{$row['holiday_date']}</td>";
-                                echo "<td>{$row['holiday_price']}</td>";
+                                echo "<td>" . number_format($row['holiday_price']) . "</td>";
+
+                                
                                 echo "<td>
                                         <a href='edit_holiday.php?id={$row['holiday_date']}' class='btn'>Edit Holiday</a>
                                         <button class='btn delete-btn' data-id='{$row['holiday_date']}'>Delete</button>

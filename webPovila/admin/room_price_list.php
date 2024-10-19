@@ -45,7 +45,8 @@ session_start();
                             while ($row = $result->fetch_assoc()) {
                                 echo "<tr>";
                                 echo "<td>{$row['room']}</td>";
-                                echo "<td>{$row['price']}</td>";
+                                echo "<td>" . number_format($row['price']) . "</td>";
+                                
                                 echo "<td>
                                         <a href='edit_price.php?id={$row['room']}' class='btn'>Edit Price</a>
                                         <a href='#' onclick='confirmDelete({$row['room']})' class='btn'>Delete</a>

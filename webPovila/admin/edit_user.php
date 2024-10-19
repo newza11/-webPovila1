@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php include 'menu.php'; ?>
     <div class="container">
         <div class="form-container">
-            <h1>Update User</h1>
+            <h1>Edit User</h1>
             <form action="edit_user.php" method="POST">
                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($user['id']); ?>">
                 <label for="username">Username:</label>
@@ -141,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <option value="User" <?php echo ($user['role'] === 'User') ? 'selected' : ''; ?>>User</option>
                     <option value="Admin" <?php echo ($user['role'] === 'Admin') ? 'selected' : ''; ?>>Admin</option>
                 </select>
-                <button type="submit">Update User</button>
+                <button type="submit">Edit User</button>
             </form>
         </div>
     </div>

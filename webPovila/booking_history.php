@@ -41,6 +41,7 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -49,72 +50,77 @@ $conn->close();
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="css/book_his.css">
 </head>
+
 <body>
-<?php include 'nav.php'; ?>
+    <?php include 'nav.php'; ?>
 
-<script>
-    function toggleDropdown() {
-        var dropdown = document.getElementById("dropdownContent");
-        dropdown.classList.toggle("show");
-    }
+    <script>
+        function toggleDropdown() {
+            var dropdown = document.getElementById("dropdownContent");
+            dropdown.classList.toggle("show");
+        }
 
-    window.onclick = function(event) {
-        if (!event.target.matches('.user img')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            for (var i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
+        window.onclick = function(event) {
+            if (!event.target.matches('.user img')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
                 }
             }
         }
-    }
-</script>
-<div class="container">
-    <h2 class="mt-4">Booking History</h2>
-    <table class="table table-striped mt-4">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Check In</th>
-                <th>Check Out</th>
-                <th>Room</th>
-                <th>Price</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if ($result->num_rows > 0): ?>
-                <?php while ($row = $result->fetch_assoc()): ?>
-                    <tr>
-                        <td><?php echo $row['name'];  ?></td>
-                        <td><?php echo $row['checkin']; ?></td>
-                        <td><?php echo $row['checkout']; ?></td>
-                        <td><?php echo $row['room']; ?></td>
-                        <td><?php echo $row['price']; ?></td>
-                        <td><?php echo $row['status']; ?></td>
-                        <td>
-    <?php if ($row['status'] === 'check'): ?>
-        <button type="button" class="btn btn-secondary" disabled>กำลังตรวจสอบ</button>
-    <?php else: ?>
-        <form action="generate_receipt.php" method="post" target="_blank">
-            <input type="hidden" name="booking_id" value="<?php echo $row['id']; ?>">
-            <button type="submit" class="btn btn-primary">Generate Receipt</button>
-        </form>
-    <?php endif; ?>
-</td>
-                    </tr>
-                <?php endwhile; ?>
-            <?php else: ?>
+    </script>
+    <div class="container">
+        <h2 class="mt-4">Booking History</h2>
+        <table class="table table-striped mt-4">
+            <thead>
                 <tr>
-                    <td colspan="7">No bookings found.</td>
+                    <th>Name</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
+                    <th>Room</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Actions</th>
                 </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                <?php if ($result->num_rows > 0): ?>
+                    <?php while ($row = $result->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo $row['name'];  ?></td>
+                            <td><?php echo $row['checkin']; ?></td>
+                            <td><?php echo $row['checkout']; ?></td>
+                            <td><?php echo $row['room']; ?></td>
+                            <td><?php echo $row['price']; ?></td>
+                            <td><?php echo $row['status']; ?></td>
+                            <td>
+                                <?php if ($row['status'] === 'check'): ?>
+                                    <button type="button" class="btn btn-secondary" disabled>Checking</button>
+                                <?php elseif ($row['status'] === 'Cancel'): ?>
+                                    <button type="button" class="btn btn-danger" style="background-color: red;"  disabled>Cancelled</button>
+
+                                <?php else: ?>
+                                    <form action="generate_receipt.php" method="post" target="_blank">
+                                        <input type="hidden" name="booking_id" value="<?php echo $row['id']; ?>">
+                                        <button type="submit" class="btn btn-primary">Generate Receipt</button>
+                                    </form>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="7">No bookings found.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
 </body>
+
 </html>
 
 <?php

@@ -1,62 +1,70 @@
-        <?php
-        session_start();
+<?php
+session_start();
 
-        $servername = "localhost";
-        $username = "u642212680_poolvilla";
-        $password = "0613989655Za";
-        $dbname = "u642212680_poolvilla";
+$servername = "localhost";
+$username = "u642212680_poolvilla";
+$password = "0613989655Za";
+$dbname = "u642212680_poolvilla";
 
-        $conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
+// ตรวจสอบการเชื่อมต่อ
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+// ตั้งค่ารูปโปรไฟล์เริ่มต้น
+$profile_picture = 'uploads/profiletest.jpg';
 
-        $profile_picture = 'default_profile.png';
-        if (isset($_SESSION['user_id'])) {
-            $user_id = $_SESSION['user_id'];
+// ตรวจสอบว่าผู้ใช้ล็อกอินหรือไม่
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
 
-            $query = "SELECT profile_picture FROM login_user WHERE id = ?";
-            $stmt = $conn->prepare($query);
-            $stmt->bind_param("i", $user_id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $user = $result->fetch_assoc();
+    // ดึงรูปโปรไฟล์จากฐานข้อมูล
+    $query = "SELECT profile_picture FROM login_user WHERE id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
 
-            $profile_picture = $user['profile_picture'] ?: 'default_profile.png';
-        }
+    // ถ้าผู้ใช้มีรูปโปรไฟล์ ให้ใช้รูปนั้น ถ้าไม่มีก็ใช้ default
+    $profile_picture = !empty($user['profile_picture']) ? $user['profile_picture'] : 'uploads/profiletest.jpg';
+}
 
-        $sql_descriptions = "SELECT content ,image_path FROM villa_descriptions ";
-        $result_descriptions = $conn->query($sql_descriptions);
+// ดึงข้อมูลเกี่ยวกับวิลล่าจากตาราง villa_descriptions
+$villa_descriptions = [];
+$sql_descriptions = "SELECT content, image_path FROM villa_descriptions";
+$result_descriptions = $conn->query($sql_descriptions);
 
-        if ($result_descriptions->num_rows > 0) {
-            $villa_descriptions = [];
-            while ($row = $result_descriptions->fetch_assoc()) {
-                $villa_descriptions[] = $row;
-            }
-        }
+if ($result_descriptions->num_rows > 0) {
+    while ($row = $result_descriptions->fetch_assoc()) {
+        $villa_descriptions[] = $row;
+    }
+}
 
-        $sql_about = "SELECT content  FROM villa_about ";
-        $result_about = $conn->query($sql_about);
+// ดึงข้อมูลเกี่ยวกับเกี่ยวกับวิลล่าจากตาราง villa_about
+$villa_about = [];
+$sql_about = "SELECT content FROM villa_about";
+$result_about = $conn->query($sql_about);
 
-        if ($result_about->num_rows > 0) {
-            $villa_about = [];
-            while ($row = $result_about->fetch_assoc()) {
-                $villa_about[] = $row;
-            }
-        }
+if ($result_about->num_rows > 0) {
+    while ($row = $result_about->fetch_assoc()) {
+        $villa_about[] = $row;
+    }
+}
 
-        $sql_main = "SELECT content,image_path FROM villa_main ";
-        $result_main = $conn->query($sql_main);
+// ดึงข้อมูลหลักของวิลล่าจากตาราง villa_main
+$villa_main = [];
+$sql_main = "SELECT content, image_path FROM villa_main";
+$result_main = $conn->query($sql_main);
 
-        if ($result_main->num_rows > 0) {
-            $villa_main = [];
-            while ($row = $result_main->fetch_assoc()) {
-                $villa_main[] = $row;
-            }
-        }
-        ?>
+if ($result_main->num_rows > 0) {
+    while ($row = $result_main->fetch_assoc()) {
+        $villa_main[] = $row;
+    }
+}
+?>
 
 
 
@@ -450,8 +458,7 @@
                 }
                 });
 
-
-
+                
                 function validateGuests(input) {
 
                 input.value=input.value.replace(/[^0-9]/g, '' );

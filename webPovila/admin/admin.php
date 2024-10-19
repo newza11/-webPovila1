@@ -41,7 +41,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
             <div class="card">
                 <div>
                     <div class="numbers" id="monthlyRevenue">0฿</div>
-                    <div class="cardName">รายรับ (เดือนนี้)</div>
+                    <div class="cardName">Revenue (This Month)</div>
                 </div>
                 <div class="iconBx1">
                     <ion-icon name="arrow-up-circle-outline"></ion-icon>
@@ -51,7 +51,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
             <div class="card" onclick="window.location.href='user.php';">
                 <div>
                     <div class="numbers" id="totalUsers">0</div>
-                    <div class="cardName">จำนวน User</div>
+                    <div class="cardName">User</div>
                 </div>
                 <div class="iconBx2">
                     <ion-icon name="people-outline"></ion-icon>
@@ -61,7 +61,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
             <div class="card">
                 <div>
                     <div class="numbers" id="totalIncome">0฿</div>
-                    <div class="cardName">ยอดรวม</div>
+                    <div class="cardName">Total Revenue</div>
                 </div>
                 <div class="iconBx3">
                     <ion-icon name="cash-outline"></ion-icon>
@@ -126,7 +126,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${order.name}</td>
-                        <td>${order.price}</td>
+                        <td>${Number(order.price).toLocaleString()}</td>
                         <td>${order.people}</td>
                         <td>${order.checkin}</td>
                         <td>${order.checkout}</td>

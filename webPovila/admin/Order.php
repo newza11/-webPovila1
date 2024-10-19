@@ -120,7 +120,7 @@ session_start();
                 
                 row.innerHTML = `
                     <td>${order.name}</td>
-                    <td>${order.price}</td>
+                    <td>${Number(order.price).toLocaleString()}</td>
                     <td>${order.people}</td>
                     <td>${order.checkin}</td>
                     <td>${order.checkout}</td>
